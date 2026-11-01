@@ -116,17 +116,21 @@
       function drawBox(box, label, index) {
         const colors = ["#e34635", "#1674bd", "#15846b", "#a84f9c", "#d28b13"];
         const color = colors[index % colors.length];
+        const scale = canvas.width / image.naturalWidth;
+        const x = box.x * scale;
+        const y = box.y * scale;
         context.save();
         context.strokeStyle = color;
-        context.lineWidth = Math.max(1, canvas.width / image.naturalWidth / 2);
-        context.strokeRect(box.x, box.y, box.width, box.height);
+        context.lineWidth = Math.max(2, scale / 2);
+        context.strokeRect(x, y, box.width * scale, box.height * scale);
         if (label) {
-          context.font = `${Math.max(7, canvas.width / image.naturalWidth * 5)}px sans-serif`;
+          context.font = `${Math.max(7, scale * 5)}px sans-serif`;
           const labelWidth = context.measureText(label).width + 4;
           context.fillStyle = color;
-          context.fillRect(box.x, Math.max(0, box.y - 7), labelWidth, 7);
+          const labelY = Math.max(0, y - scale * 7);
+          context.fillRect(x, labelY, labelWidth, scale * 7);
           context.fillStyle = "#fff";
-          context.fillText(label, box.x + 2, Math.max(6, box.y - 1));
+          context.fillText(label, x + 2, Math.max(scale * 6, labelY + scale * 6));
         }
         context.restore();
       }

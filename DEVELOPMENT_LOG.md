@@ -59,6 +59,7 @@ No AI functionality, lesson workflow, assessment workflow, grading, XP, or Pixel
 - `python scripts/pixel-art/validate_assets.py` — PASS; all generated assets validated.
 - Visual preview inspection — PASS for reviewability; several grouped components remain ambiguous and unapproved.
 - Browser region editor — PASS; loaded a real source sheet and drew two distinct regions within its coordinate frame.
+- Editor coordinate mapping — PASS; at a responsive 650.5px CSS canvas size, a drag at source (200, 20) reports (200, 20) and paints the box at the corresponding 3x backing-pixel location.
 
 ### Remaining Stage 2 Work
 
