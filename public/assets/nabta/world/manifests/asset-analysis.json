@@ -1,0 +1,900 @@
+{
+  "schema_version": 1,
+  "pixel_scaling": "nearest-neighbor previews only; source pixels are unchanged",
+  "sheets": [
+    {
+      "id": "free_pixel_16_woods",
+      "source_file": "free_pixel_16_woods.png",
+      "source_path": "public/assets/nabta/world/source/free_pixel_16_woods.png",
+      "source_sha256": "8b31588ae4299cf2b11c888e9ed6c872b6ae0b0b9301fae19fe5a0751632d812",
+      "category": "objects",
+      "dimensions": {
+        "width": 352,
+        "height": 192
+      },
+      "mode": "RGBA",
+      "alpha": {
+        "minimum": 0,
+        "maximum": 255,
+        "transparent_pixel_count": 44789,
+        "opaque_pixel_count": 22086,
+        "partial_alpha_pixel_count": 709,
+        "partial_alpha_values": [
+          37,
+          55,
+          57,
+          69,
+          139
+        ]
+      },
+      "component_count": 43,
+      "components": [
+        {
+          "x": 275,
+          "y": 10,
+          "width": 59,
+          "height": 70,
+          "alpha_pixel_count": 3010,
+          "id": "free_pixel_16_woods_component_001",
+          "exported_file": "public/assets/nabta/world/sprites/candidates/free_pixel_16_woods/free_pixel_16_woods_component_001.png",
+          "review_status": "pending_manual_review",
+          "is_approved_asset": false
+        },
+        {
+          "x": 151,
+          "y": 23,
+          "width": 66,
+          "height": 66,
+          "alpha_pixel_count": 2815,
+          "id": "free_pixel_16_woods_component_002",
+          "exported_file": "public/assets/nabta/world/sprites/candidates/free_pixel_16_woods/free_pixel_16_woods_component_002.png",
+          "review_status": "pending_manual_review",
+          "is_approved_asset": false
+        },
+        {
+          "x": 23,
+          "y": 24,
+          "width": 66,
+          "height": 65,
+          "alpha_pixel_count": 2732,
+          "id": "free_pixel_16_woods_component_003",
+          "exported_file": "public/assets/nabta/world/sprites/candidates/free_pixel_16_woods/free_pixel_16_woods_component_003.png",
+          "review_status": "pending_manual_review",
+          "is_approved_asset": false
+        },
+        {
+          "x": 96,
+          "y": 32,
+          "width": 7,
+          "height": 7,
+          "alpha_pixel_count": 35,
+          "id": "free_pixel_16_woods_component_004",
+          "exported_file": "public/assets/nabta/world/sprites/candidates/free_pixel_16_woods/free_pixel_16_woods_component_004.png",
+          "review_status": "pending_manual_review",
+          "is_approved_asset": false
+        },
+        {
+          "x": 121,
+          "y": 32,
+          "width": 7,
+          "height": 7,
+          "alpha_pixel_count": 36,
+          "id": "free_pixel_16_woods_component_005",
+          "exported_file": "public/assets/nabta/world/sprites/candidates/free_pixel_16_woods/free_pixel_16_woods_component_005.png",
+          "review_status": "pending_manual_review",
+          "is_approved_asset": false
+        },
+        {
+          "x": 224,
+          "y": 36,
+          "width": 16,
+          "height": 12,
+          "alpha_pixel_count": 135,
+          "id": "free_pixel_16_woods_component_006",
+          "exported_file": "public/assets/nabta/world/sprites/candidates/free_pixel_16_woods/free_pixel_16_woods_component_006.png",
+          "review_status": "pending_manual_review",
+          "is_approved_asset": false
+        },
+        {
+          "x": 260,
+          "y": 39,
+          "width": 9,
+          "height": 9,
+          "alpha_pixel_count": 48,
+          "id": "free_pixel_16_woods_component_007",
+          "exported_file": "public/assets/nabta/world/sprites/candidates/free_pixel_16_woods/free_pixel_16_woods_component_007.png",
+          "review_status": "pending_manual_review",
+          "is_approved_asset": false
+        },
+        {
+          "x": 104,
+          "y": 41,
+          "width": 24,
+          "height": 23,
+          "alpha_pixel_count": 322,
+          "id": "free_pixel_16_woods_component_008",
+          "exported_file": "public/assets/nabta/world/sprites/candidates/free_pixel_16_woods/free_pixel_16_woods_component_008.png",
+          "review_status": "pending_manual_review",
+          "is_approved_asset": false
+        },
+        {
+          "x": 244,
+          "y": 41,
+          "width": 8,
+          "height": 5,
+          "alpha_pixel_count": 28,
+          "id": "free_pixel_16_woods_component_009",
+          "exported_file": "public/assets/nabta/world/sprites/candidates/free_pixel_16_woods/free_pixel_16_woods_component_009.png",
+          "review_status": "pending_manual_review",
+          "is_approved_asset": false
+        },
+        {
+          "x": 225,
+          "y": 52,
+          "width": 14,
+          "height": 12,
+          "alpha_pixel_count": 115,
+          "id": "free_pixel_16_woods_component_010",
+          "exported_file": "public/assets/nabta/world/sprites/candidates/free_pixel_16_woods/free_pixel_16_woods_component_010.png",
+          "review_status": "pending_manual_review",
+          "is_approved_asset": false
+        },
+        {
+          "x": 249,
+          "y": 53,
+          "width": 6,
+          "height": 6,
+          "alpha_pixel_count": 21,
+          "id": "free_pixel_16_woods_component_011",
+          "exported_file": "public/assets/nabta/world/sprites/candidates/free_pixel_16_woods/free_pixel_16_woods_component_011.png",
+          "review_status": "pending_manual_review",
+          "is_approved_asset": false
+        },
+        {
+          "x": 99,
+          "y": 54,
+          "width": 11,
+          "height": 8,
+          "alpha_pixel_count": 31,
+          "id": "free_pixel_16_woods_component_012",
+          "exported_file": "public/assets/nabta/world/sprites/candidates/free_pixel_16_woods/free_pixel_16_woods_component_012.png",
+          "review_status": "pending_manual_review",
+          "is_approved_asset": false
+        },
+        {
+          "x": 258,
+          "y": 54,
+          "width": 11,
+          "height": 10,
+          "alpha_pixel_count": 76,
+          "id": "free_pixel_16_woods_component_013",
+          "exported_file": "public/assets/nabta/world/sprites/candidates/free_pixel_16_woods/free_pixel_16_woods_component_013.png",
+          "review_status": "pending_manual_review",
+          "is_approved_asset": false
+        },
+        {
+          "x": 241,
+          "y": 57,
+          "width": 7,
+          "height": 7,
+          "alpha_pixel_count": 29,
+          "id": "free_pixel_16_woods_component_014",
+          "exported_file": "public/assets/nabta/world/sprites/candidates/free_pixel_16_woods/free_pixel_16_woods_component_014.png",
+          "review_status": "pending_manual_review",
+          "is_approved_asset": false
+        },
+        {
+          "x": 115,
+          "y": 65,
+          "width": 2,
+          "height": 2,
+          "alpha_pixel_count": 4,
+          "id": "free_pixel_16_woods_component_015",
+          "exported_file": "public/assets/nabta/world/sprites/candidates/free_pixel_16_woods/free_pixel_16_woods_component_015.png",
+          "review_status": "pending_manual_review",
+          "is_approved_asset": false
+        },
+        {
+          "x": 117,
+          "y": 68,
+          "width": 8,
+          "height": 7,
+          "alpha_pixel_count": 44,
+          "id": "free_pixel_16_woods_component_016",
+          "exported_file": "public/assets/nabta/world/sprites/candidates/free_pixel_16_woods/free_pixel_16_woods_component_016.png",
+          "review_status": "pending_manual_review",
+          "is_approved_asset": false
+        },
+        {
+          "x": 103,
+          "y": 70,
+          "width": 3,
+          "height": 5,
+          "alpha_pixel_count": 9,
+          "id": "free_pixel_16_woods_component_017",
+          "exported_file": "public/assets/nabta/world/sprites/candidates/free_pixel_16_woods/free_pixel_16_woods_component_017.png",
+          "review_status": "pending_manual_review",
+          "is_approved_asset": false
+        },
+        {
+          "x": 228,
+          "y": 70,
+          "width": 10,
+          "height": 9,
+          "alpha_pixel_count": 63,
+          "id": "free_pixel_16_woods_component_018",
+          "exported_file": "public/assets/nabta/world/sprites/candidates/free_pixel_16_woods/free_pixel_16_woods_component_018.png",
+          "review_status": "pending_manual_review",
+          "is_approved_asset": false
+        },
+        {
+          "x": 100,
+          "y": 72,
+          "width": 2,
+          "height": 4,
+          "alpha_pixel_count": 6,
+          "id": "free_pixel_16_woods_component_019",
+          "exported_file": "public/assets/nabta/world/sprites/candidates/free_pixel_16_woods/free_pixel_16_woods_component_019.png",
+          "review_status": "pending_manual_review",
+          "is_approved_asset": false
+        },
+        {
+          "x": 105,
+          "y": 73,
+          "width": 3,
+          "height": 5,
+          "alpha_pixel_count": 9,
+          "id": "free_pixel_16_woods_component_020",
+          "exported_file": "public/assets/nabta/world/sprites/candidates/free_pixel_16_woods/free_pixel_16_woods_component_020.png",
+          "review_status": "pending_manual_review",
+          "is_approved_asset": false
+        },
+        {
+          "x": 243,
+          "y": 74,
+          "width": 10,
+          "height": 6,
+          "alpha_pixel_count": 33,
+          "id": "free_pixel_16_woods_component_021",
+          "exported_file": "public/assets/nabta/world/sprites/candidates/free_pixel_16_woods/free_pixel_16_woods_component_021.png",
+          "review_status": "pending_manual_review",
+          "is_approved_asset": false
+        },
+        {
+          "x": 112,
+          "y": 80,
+          "width": 7,
+          "height": 8,
+          "alpha_pixel_count": 41,
+          "id": "free_pixel_16_woods_component_022",
+          "exported_file": "public/assets/nabta/world/sprites/candidates/free_pixel_16_woods/free_pixel_16_woods_component_022.png",
+          "review_status": "pending_manual_review",
+          "is_approved_asset": false
+        },
+        {
+          "x": 136,
+          "y": 80,
+          "width": 8,
+          "height": 7,
+          "alpha_pixel_count": 41,
+          "id": "free_pixel_16_woods_component_023",
+          "exported_file": "public/assets/nabta/world/sprites/candidates/free_pixel_16_woods/free_pixel_16_woods_component_023.png",
+          "review_status": "pending_manual_review",
+          "is_approved_asset": false
+        },
+        {
+          "x": 231,
+          "y": 80,
+          "width": 19,
+          "height": 16,
+          "alpha_pixel_count": 184,
+          "id": "free_pixel_16_woods_component_024",
+          "exported_file": "public/assets/nabta/world/sprites/candidates/free_pixel_16_woods/free_pixel_16_woods_component_024.png",
+          "review_status": "pending_manual_review",
+          "is_approved_asset": false
+        },
+        {
+          "x": 89,
+          "y": 84,
+          "width": 4,
+          "height": 4,
+          "alpha_pixel_count": 12,
+          "id": "free_pixel_16_woods_component_025",
+          "exported_file": "public/assets/nabta/world/sprites/candidates/free_pixel_16_woods/free_pixel_16_woods_component_025.png",
+          "review_status": "pending_manual_review",
+          "is_approved_asset": false
+        },
+        {
+          "x": 105,
+          "y": 84,
+          "width": 4,
+          "height": 4,
+          "alpha_pixel_count": 12,
+          "id": "free_pixel_16_woods_component_026",
+          "exported_file": "public/assets/nabta/world/sprites/candidates/free_pixel_16_woods/free_pixel_16_woods_component_026.png",
+          "review_status": "pending_manual_review",
+          "is_approved_asset": false
+        },
+        {
+          "x": 81,
+          "y": 87,
+          "width": 14,
+          "height": 7,
+          "alpha_pixel_count": 47,
+          "id": "free_pixel_16_woods_component_027",
+          "exported_file": "public/assets/nabta/world/sprites/candidates/free_pixel_16_woods/free_pixel_16_woods_component_027.png",
+          "review_status": "pending_manual_review",
+          "is_approved_asset": false
+        },
+        {
+          "x": 97,
+          "y": 87,
+          "width": 14,
+          "height": 7,
+          "alpha_pixel_count": 48,
+          "id": "free_pixel_16_woods_component_028",
+          "exported_file": "public/assets/nabta/world/sprites/candidates/free_pixel_16_woods/free_pixel_16_woods_component_028.png",
+          "review_status": "pending_manual_review",
+          "is_approved_asset": false
+        },
+        {
+          "x": 121,
+          "y": 88,
+          "width": 15,
+          "height": 8,
+          "alpha_pixel_count": 82,
+          "id": "free_pixel_16_woods_component_029",
+          "exported_file": "public/assets/nabta/world/sprites/candidates/free_pixel_16_woods/free_pixel_16_woods_component_029.png",
+          "review_status": "pending_manual_review",
+          "is_approved_asset": false
+        },
+        {
+          "x": 275,
+          "y": 92,
+          "width": 28,
+          "height": 36,
+          "alpha_pixel_count": 668,
+          "id": "free_pixel_16_woods_component_030",
+          "exported_file": "public/assets/nabta/world/sprites/candidates/free_pixel_16_woods/free_pixel_16_woods_component_030.png",
+          "review_status": "pending_manual_review",
+          "is_approved_asset": false
+        },
+        {
+          "x": 144,
+          "y": 96,
+          "width": 80,
+          "height": 80,
+          "alpha_pixel_count": 5632,
+          "id": "free_pixel_16_woods_component_031",
+          "exported_file": "public/assets/nabta/world/sprites/candidates/free_pixel_16_woods/free_pixel_16_woods_component_031.png",
+          "review_status": "pending_manual_review",
+          "is_approved_asset": false
+        },
+        {
+          "x": 308,
+          "y": 97,
+          "width": 25,
+          "height": 31,
+          "alpha_pixel_count": 450,
+          "id": "free_pixel_16_woods_component_032",
+          "exported_file": "public/assets/nabta/world/sprites/candidates/free_pixel_16_woods/free_pixel_16_woods_component_032.png",
+          "review_status": "pending_manual_review",
+          "is_approved_asset": false
+        },
+        {
+          "x": 240,
+          "y": 98,
+          "width": 16,
+          "height": 13,
+          "alpha_pixel_count": 135,
+          "id": "free_pixel_16_woods_component_033",
+          "exported_file": "public/assets/nabta/world/sprites/candidates/free_pixel_16_woods/free_pixel_16_woods_component_033.png",
+          "review_status": "pending_manual_review",
+          "is_approved_asset": false
+        },
+        {
+          "x": 17,
+          "y": 100,
+          "width": 78,
+          "height": 75,
+          "alpha_pixel_count": 4065,
+          "id": "free_pixel_16_woods_component_034",
+          "exported_file": "public/assets/nabta/world/sprites/candidates/free_pixel_16_woods/free_pixel_16_woods_component_034.png",
+          "review_status": "pending_manual_review",
+          "is_approved_asset": false
+        },
+        {
+          "x": 80,
+          "y": 112,
+          "width": 48,
+          "height": 64,
+          "alpha_pixel_count": 1464,
+          "id": "free_pixel_16_woods_component_035",
+          "exported_file": "public/assets/nabta/world/sprites/candidates/free_pixel_16_woods/free_pixel_16_woods_component_035.png",
+          "review_status": "pending_manual_review",
+          "is_approved_asset": false
+        },
+        {
+          "x": 258,
+          "y": 117,
+          "width": 5,
+          "height": 2,
+          "alpha_pixel_count": 5,
+          "id": "free_pixel_16_woods_component_036",
+          "exported_file": "public/assets/nabta/world/sprites/candidates/free_pixel_16_woods/free_pixel_16_woods_component_036.png",
+          "review_status": "pending_manual_review",
+          "is_approved_asset": false
+        },
+        {
+          "x": 227,
+          "y": 119,
+          "width": 12,
+          "height": 3,
+          "alpha_pixel_count": 16,
+          "id": "free_pixel_16_woods_component_037",
+          "exported_file": "public/assets/nabta/world/sprites/candidates/free_pixel_16_woods/free_pixel_16_woods_component_037.png",
+          "review_status": "pending_manual_review",
+          "is_approved_asset": false
+        },
+        {
+          "x": 245,
+          "y": 119,
+          "width": 5,
+          "height": 2,
+          "alpha_pixel_count": 5,
+          "id": "free_pixel_16_woods_component_038",
+          "exported_file": "public/assets/nabta/world/sprites/candidates/free_pixel_16_woods/free_pixel_16_woods_component_038.png",
+          "review_status": "pending_manual_review",
+          "is_approved_asset": false
+        },
+        {
+          "x": 265,
+          "y": 120,
+          "width": 5,
+          "height": 2,
+          "alpha_pixel_count": 5,
+          "id": "free_pixel_16_woods_component_039",
+          "exported_file": "public/assets/nabta/world/sprites/candidates/free_pixel_16_woods/free_pixel_16_woods_component_039.png",
+          "review_status": "pending_manual_review",
+          "is_approved_asset": false
+        },
+        {
+          "x": 259,
+          "y": 123,
+          "width": 5,
+          "height": 2,
+          "alpha_pixel_count": 5,
+          "id": "free_pixel_16_woods_component_040",
+          "exported_file": "public/assets/nabta/world/sprites/candidates/free_pixel_16_woods/free_pixel_16_woods_component_040.png",
+          "review_status": "pending_manual_review",
+          "is_approved_asset": false
+        },
+        {
+          "x": 226,
+          "y": 132,
+          "width": 13,
+          "height": 12,
+          "alpha_pixel_count": 86,
+          "id": "free_pixel_16_woods_component_041",
+          "exported_file": "public/assets/nabta/world/sprites/candidates/free_pixel_16_woods/free_pixel_16_woods_component_041.png",
+          "review_status": "pending_manual_review",
+          "is_approved_asset": false
+        },
+        {
+          "x": 240,
+          "y": 132,
+          "width": 16,
+          "height": 12,
+          "alpha_pixel_count": 109,
+          "id": "free_pixel_16_woods_component_042",
+          "exported_file": "public/assets/nabta/world/sprites/candidates/free_pixel_16_woods/free_pixel_16_woods_component_042.png",
+          "review_status": "pending_manual_review",
+          "is_approved_asset": false
+        },
+        {
+          "x": 258,
+          "y": 132,
+          "width": 13,
+          "height": 12,
+          "alpha_pixel_count": 82,
+          "id": "free_pixel_16_woods_component_043",
+          "exported_file": "public/assets/nabta/world/sprites/candidates/free_pixel_16_woods/free_pixel_16_woods_component_043.png",
+          "review_status": "pending_manual_review",
+          "is_approved_asset": false
+        }
+      ],
+      "preview_file": "public/assets/nabta/world/previews/free_pixel_16_woods-components.png",
+      "review_note": "8-connected alpha regions are candidate crops only. Check the numbered preview for touching sprites, grouped props, or detached shadows before approval."
+    },
+    {
+      "id": "forest_demo_objects",
+      "source_file": "forest_demo_objects.png",
+      "source_path": "public/assets/nabta/world/source/forest_demo_objects.png",
+      "source_sha256": "41ce3627654bfa0d875b9f8216127e45a41c10f3f442da6c9494c476acb04b22",
+      "category": "objects",
+      "dimensions": {
+        "width": 256,
+        "height": 256
+      },
+      "mode": "RGBA",
+      "alpha": {
+        "minimum": 0,
+        "maximum": 255,
+        "transparent_pixel_count": 54203,
+        "opaque_pixel_count": 10405,
+        "partial_alpha_pixel_count": 928,
+        "partial_alpha_values": [
+          91,
+          140,
+          150,
+          227
+        ]
+      },
+      "component_count": 28,
+      "components": [
+        {
+          "x": 3,
+          "y": 0,
+          "width": 57,
+          "height": 80,
+          "alpha_pixel_count": 3088,
+          "id": "forest_demo_objects_component_001",
+          "exported_file": "public/assets/nabta/world/sprites/candidates/forest_demo_objects/forest_demo_objects_component_001.png",
+          "review_status": "pending_manual_review",
+          "is_approved_asset": false
+        },
+        {
+          "x": 64,
+          "y": 0,
+          "width": 77,
+          "height": 32,
+          "alpha_pixel_count": 1112,
+          "id": "forest_demo_objects_component_002",
+          "exported_file": "public/assets/nabta/world/sprites/candidates/forest_demo_objects/forest_demo_objects_component_002.png",
+          "review_status": "pending_manual_review",
+          "is_approved_asset": false
+        },
+        {
+          "x": 177,
+          "y": 0,
+          "width": 31,
+          "height": 48,
+          "alpha_pixel_count": 1041,
+          "id": "forest_demo_objects_component_003",
+          "exported_file": "public/assets/nabta/world/sprites/candidates/forest_demo_objects/forest_demo_objects_component_003.png",
+          "review_status": "pending_manual_review",
+          "is_approved_asset": false
+        },
+        {
+          "x": 212,
+          "y": 1,
+          "width": 41,
+          "height": 14,
+          "alpha_pixel_count": 552,
+          "id": "forest_demo_objects_component_004",
+          "exported_file": "public/assets/nabta/world/sprites/candidates/forest_demo_objects/forest_demo_objects_component_004.png",
+          "review_status": "pending_manual_review",
+          "is_approved_asset": false
+        },
+        {
+          "x": 96,
+          "y": 3,
+          "width": 14,
+          "height": 12,
+          "alpha_pixel_count": 103,
+          "id": "forest_demo_objects_component_005",
+          "exported_file": "public/assets/nabta/world/sprites/candidates/forest_demo_objects/forest_demo_objects_component_005.png",
+          "review_status": "pending_manual_review",
+          "is_approved_asset": false
+        },
+        {
+          "x": 144,
+          "y": 3,
+          "width": 32,
+          "height": 61,
+          "alpha_pixel_count": 1077,
+          "id": "forest_demo_objects_component_006",
+          "exported_file": "public/assets/nabta/world/sprites/candidates/forest_demo_objects/forest_demo_objects_component_006.png",
+          "review_status": "pending_manual_review",
+          "is_approved_asset": false
+        },
+        {
+          "x": 113,
+          "y": 4,
+          "width": 14,
+          "height": 10,
+          "alpha_pixel_count": 99,
+          "id": "forest_demo_objects_component_007",
+          "exported_file": "public/assets/nabta/world/sprites/candidates/forest_demo_objects/forest_demo_objects_component_007.png",
+          "review_status": "pending_manual_review",
+          "is_approved_asset": false
+        },
+        {
+          "x": 128,
+          "y": 5,
+          "width": 16,
+          "height": 8,
+          "alpha_pixel_count": 113,
+          "id": "forest_demo_objects_component_008",
+          "exported_file": "public/assets/nabta/world/sprites/candidates/forest_demo_objects/forest_demo_objects_component_008.png",
+          "review_status": "pending_manual_review",
+          "is_approved_asset": false
+        },
+        {
+          "x": 226,
+          "y": 17,
+          "width": 12,
+          "height": 14,
+          "alpha_pixel_count": 93,
+          "id": "forest_demo_objects_component_009",
+          "exported_file": "public/assets/nabta/world/sprites/candidates/forest_demo_objects/forest_demo_objects_component_009.png",
+          "review_status": "pending_manual_review",
+          "is_approved_asset": false
+        },
+        {
+          "x": 242,
+          "y": 19,
+          "width": 11,
+          "height": 12,
+          "alpha_pixel_count": 89,
+          "id": "forest_demo_objects_component_010",
+          "exported_file": "public/assets/nabta/world/sprites/candidates/forest_demo_objects/forest_demo_objects_component_010.png",
+          "review_status": "pending_manual_review",
+          "is_approved_asset": false
+        },
+        {
+          "x": 209,
+          "y": 20,
+          "width": 14,
+          "height": 41,
+          "alpha_pixel_count": 552,
+          "id": "forest_demo_objects_component_011",
+          "exported_file": "public/assets/nabta/world/sprites/candidates/forest_demo_objects/forest_demo_objects_component_011.png",
+          "review_status": "pending_manual_review",
+          "is_approved_asset": false
+        },
+        {
+          "x": 112,
+          "y": 32,
+          "width": 8,
+          "height": 14,
+          "alpha_pixel_count": 67,
+          "id": "forest_demo_objects_component_012",
+          "exported_file": "public/assets/nabta/world/sprites/candidates/forest_demo_objects/forest_demo_objects_component_012.png",
+          "review_status": "pending_manual_review",
+          "is_approved_asset": false
+        },
+        {
+          "x": 120,
+          "y": 32,
+          "width": 7,
+          "height": 11,
+          "alpha_pixel_count": 47,
+          "id": "forest_demo_objects_component_013",
+          "exported_file": "public/assets/nabta/world/sprites/candidates/forest_demo_objects/forest_demo_objects_component_013.png",
+          "review_status": "pending_manual_review",
+          "is_approved_asset": false
+        },
+        {
+          "x": 225,
+          "y": 32,
+          "width": 14,
+          "height": 16,
+          "alpha_pixel_count": 138,
+          "id": "forest_demo_objects_component_014",
+          "exported_file": "public/assets/nabta/world/sprites/candidates/forest_demo_objects/forest_demo_objects_component_014.png",
+          "review_status": "pending_manual_review",
+          "is_approved_asset": false
+        },
+        {
+          "x": 241,
+          "y": 32,
+          "width": 14,
+          "height": 32,
+          "alpha_pixel_count": 276,
+          "id": "forest_demo_objects_component_015",
+          "exported_file": "public/assets/nabta/world/sprites/candidates/forest_demo_objects/forest_demo_objects_component_015.png",
+          "review_status": "pending_manual_review",
+          "is_approved_asset": false
+        },
+        {
+          "x": 65,
+          "y": 33,
+          "width": 15,
+          "height": 15,
+          "alpha_pixel_count": 127,
+          "id": "forest_demo_objects_component_016",
+          "exported_file": "public/assets/nabta/world/sprites/candidates/forest_demo_objects/forest_demo_objects_component_016.png",
+          "review_status": "pending_manual_review",
+          "is_approved_asset": false
+        },
+        {
+          "x": 97,
+          "y": 33,
+          "width": 14,
+          "height": 15,
+          "alpha_pixel_count": 139,
+          "id": "forest_demo_objects_component_017",
+          "exported_file": "public/assets/nabta/world/sprites/candidates/forest_demo_objects/forest_demo_objects_component_017.png",
+          "review_status": "pending_manual_review",
+          "is_approved_asset": false
+        },
+        {
+          "x": 129,
+          "y": 35,
+          "width": 15,
+          "height": 10,
+          "alpha_pixel_count": 76,
+          "id": "forest_demo_objects_component_018",
+          "exported_file": "public/assets/nabta/world/sprites/candidates/forest_demo_objects/forest_demo_objects_component_018.png",
+          "review_status": "pending_manual_review",
+          "is_approved_asset": false
+        },
+        {
+          "x": 84,
+          "y": 38,
+          "width": 9,
+          "height": 5,
+          "alpha_pixel_count": 40,
+          "id": "forest_demo_objects_component_019",
+          "exported_file": "public/assets/nabta/world/sprites/candidates/forest_demo_objects/forest_demo_objects_component_019.png",
+          "review_status": "pending_manual_review",
+          "is_approved_asset": false
+        },
+        {
+          "x": 68,
+          "y": 49,
+          "width": 39,
+          "height": 47,
+          "alpha_pixel_count": 1218,
+          "id": "forest_demo_objects_component_020",
+          "exported_file": "public/assets/nabta/world/sprites/candidates/forest_demo_objects/forest_demo_objects_component_020.png",
+          "review_status": "pending_manual_review",
+          "is_approved_asset": false
+        },
+        {
+          "x": 116,
+          "y": 49,
+          "width": 7,
+          "height": 47,
+          "alpha_pixel_count": 270,
+          "id": "forest_demo_objects_component_021",
+          "exported_file": "public/assets/nabta/world/sprites/candidates/forest_demo_objects/forest_demo_objects_component_021.png",
+          "review_status": "pending_manual_review",
+          "is_approved_asset": false
+        },
+        {
+          "x": 162,
+          "y": 49,
+          "width": 13,
+          "height": 15,
+          "alpha_pixel_count": 138,
+          "id": "forest_demo_objects_component_022",
+          "exported_file": "public/assets/nabta/world/sprites/candidates/forest_demo_objects/forest_demo_objects_component_022.png",
+          "review_status": "pending_manual_review",
+          "is_approved_asset": false
+        },
+        {
+          "x": 130,
+          "y": 51,
+          "width": 11,
+          "height": 11,
+          "alpha_pixel_count": 86,
+          "id": "forest_demo_objects_component_023",
+          "exported_file": "public/assets/nabta/world/sprites/candidates/forest_demo_objects/forest_demo_objects_component_023.png",
+          "review_status": "pending_manual_review",
+          "is_approved_asset": false
+        },
+        {
+          "x": 177,
+          "y": 51,
+          "width": 15,
+          "height": 12,
+          "alpha_pixel_count": 126,
+          "id": "forest_demo_objects_component_024",
+          "exported_file": "public/assets/nabta/world/sprites/candidates/forest_demo_objects/forest_demo_objects_component_024.png",
+          "review_status": "pending_manual_review",
+          "is_approved_asset": false
+        },
+        {
+          "x": 194,
+          "y": 51,
+          "width": 12,
+          "height": 10,
+          "alpha_pixel_count": 90,
+          "id": "forest_demo_objects_component_025",
+          "exported_file": "public/assets/nabta/world/sprites/candidates/forest_demo_objects/forest_demo_objects_component_025.png",
+          "review_status": "pending_manual_review",
+          "is_approved_asset": false
+        },
+        {
+          "x": 225,
+          "y": 51,
+          "width": 15,
+          "height": 10,
+          "alpha_pixel_count": 96,
+          "id": "forest_demo_objects_component_026",
+          "exported_file": "public/assets/nabta/world/sprites/candidates/forest_demo_objects/forest_demo_objects_component_026.png",
+          "review_status": "pending_manual_review",
+          "is_approved_asset": false
+        },
+        {
+          "x": 132,
+          "y": 65,
+          "width": 39,
+          "height": 15,
+          "alpha_pixel_count": 394,
+          "id": "forest_demo_objects_component_027",
+          "exported_file": "public/assets/nabta/world/sprites/candidates/forest_demo_objects/forest_demo_objects_component_027.png",
+          "review_status": "pending_manual_review",
+          "is_approved_asset": false
+        },
+        {
+          "x": 180,
+          "y": 65,
+          "width": 7,
+          "height": 15,
+          "alpha_pixel_count": 86,
+          "id": "forest_demo_objects_component_028",
+          "exported_file": "public/assets/nabta/world/sprites/candidates/forest_demo_objects/forest_demo_objects_component_028.png",
+          "review_status": "pending_manual_review",
+          "is_approved_asset": false
+        }
+      ],
+      "preview_file": "public/assets/nabta/world/previews/forest_demo_objects-components.png",
+      "review_note": "8-connected alpha regions are candidate crops only. Check the numbered preview for touching sprites, grouped props, or detached shadows before approval."
+    },
+    {
+      "id": "forest_demo_terrain",
+      "source_file": "forest_demo_terrain.png",
+      "source_path": "public/assets/nabta/world/source/forest_demo_terrain.png",
+      "source_sha256": "62eee479bc8dad0a5975da539ae024209c9877bbcf5e1edbc62aa45e9e7ff282",
+      "category": "terrain",
+      "dimensions": {
+        "width": 256,
+        "height": 256
+      },
+      "mode": "RGBA",
+      "alpha": {
+        "minimum": 0,
+        "maximum": 255,
+        "transparent_pixel_count": 51067,
+        "opaque_pixel_count": 14469,
+        "partial_alpha_pixel_count": 0,
+        "partial_alpha_values": []
+      },
+      "tile_grid_candidates": [
+        {
+          "tile_size_candidate": 8,
+          "columns": 32,
+          "rows": 32,
+          "preview_file": "public/assets/nabta/world/previews/forest_demo_terrain-grid-8.png",
+          "review_status": "candidate_not_confirmed"
+        },
+        {
+          "tile_size_candidate": 16,
+          "columns": 16,
+          "rows": 16,
+          "preview_file": "public/assets/nabta/world/previews/forest_demo_terrain-grid-16.png",
+          "review_status": "candidate_not_confirmed"
+        },
+        {
+          "tile_size_candidate": 32,
+          "columns": 8,
+          "rows": 8,
+          "preview_file": "public/assets/nabta/world/previews/forest_demo_terrain-grid-32.png",
+          "review_status": "candidate_not_confirmed"
+        },
+        {
+          "tile_size_candidate": 64,
+          "columns": 4,
+          "rows": 4,
+          "preview_file": "public/assets/nabta/world/previews/forest_demo_terrain-grid-64.png",
+          "review_status": "candidate_not_confirmed"
+        }
+      ],
+      "component_extraction": "not_performed_for_terrain",
+      "review_note": "Confirm the actual terrain grid visually before slicing any tiles."
+    }
+  ]
+}

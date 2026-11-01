@@ -2,7 +2,7 @@
 
 ## Product Scope
 
-NABTA is a student-first learning platform: **Learn. Play. Grow.** The current repository work establishes Stage 1 foundations only; classroom lessons, assessments, AI workflows, and the interactive world are not implemented yet.
+NABTA is a student-first learning platform: **Learn. Play. Grow.** The repository has Stage 1 authentication foundations and a Stage 2 Pixel Art analysis pipeline. Classroom lessons, assessments, AI workflows, and the data-connected interactive world are not implemented yet.
 
 ## Local Setup
 
@@ -45,6 +45,10 @@ The build and dev scripts use webpack because the installed Next.js native Turbo
 - Supabase Auth sessions use `@supabase/ssr`; `proxy.ts` refreshes cookies, and server layouts independently verify the signed-in user and database role.
 - `profiles` stores the trusted `student` or `teacher` role. RLS restricts profile reads/updates to the owner, and column grants prevent users from changing their role.
 - New accounts default to student. Teacher role assignment is an administrator action; public sign-up is not exposed.
-- Pixel Art sources remain in `Pixel Art/` and are not yet integrated into the product.
+- Original Pixel Art sources remain unchanged in `Pixel Art/`; canonical copies and review-only crop candidates are under `public/assets/nabta/world/`. They are not integrated into the student UI.
+
+## Pixel Art Analysis
+
+The source analysis workflow, generated previews, candidate crop review rules, and validation commands are documented in [scripts/pixel-art/README.md](scripts/pixel-art/README.md). Candidate crops remain unapproved and terrain tiles are not sliced until their boundaries are reviewed.
 
 See [DEVELOPMENT_LOG.md](DEVELOPMENT_LOG.md) for verified progress and remaining Stage 1 checks.
