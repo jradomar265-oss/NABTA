@@ -1,6 +1,7 @@
 import { createHttpChallengeGenerator } from "./challenge-http";
 import { mockChallengeGenerator } from "./challenge-mock";
 import type { ChallengeGenerator } from "./challenge";
+import { createGeminiAnalyzer, createGeminiChallengeGenerator, GEMINI_API_BASE } from "./gemini";
 import { createHttpAnalyzer } from "./http-analyzer";
 import { mockLessonAnalyzer } from "./mock-analyzer";
 import type { AiSetup, LessonAnalyzer } from "./types";
@@ -10,36 +11,71 @@ export type { AiSetup, AnalyzerRun, LessonAnalysis, LessonAnalysisInput, LessonA
 export { parseAnalysis } from "./schema";
 export { parseChallenge } from "./challenge";
 export type { ChallengeGenerator, ChallengeInput, ChallengeObjective, ChallengeRun, GeneratedQuestion } from "./challenge";
+export { geminiSurfaceInUse, GEMINI_API_BASE } from "./gemini";
 
 type Resolved = { analyzer: LessonAnalyzer; setup: AiSetup };
 type ResolvedChallenge = { generator: ChallengeGenerator; setup: AiSetup };
 
 type AiConfig =
-  | { live: true; baseUrl: string; apiKey: string; model: string }
+  | {
+    live: true;
+    kind: "gemini" | "openai-compatible";
+    baseUrl: string;
+    apiKey: string;
+    model: string;
+    providerId: string;
+    providerLabel: string;
+  }
   | { live: false; missing: string[] };
 
 /**
  * Reads the provider configuration once, so analysis and generation can never
  * disagree about whether AI is live or mocked.
+ *
+ * `AI_PROVIDER=gemini` calls the Gemini API directly (native `x-goog-api-key`
+ * authentication) and only needs AI_API_KEY or GEMINI_API_KEY plus AI_MODEL.
  */
 function readConfig(env: Record<string, string | undefined>): AiConfig {
   const requested = (env.AI_PROVIDER ?? "").trim().toLowerCase();
-  const baseUrl = (env.AI_BASE_URL ?? "").trim();
-  const apiKey = (env.AI_API_KEY ?? "").trim();
   const model = (env.AI_MODEL ?? "").trim();
+  const apiKeyOverride = (env.AI_API_KEY ?? "").trim();
+  const baseUrlOverride = (env.AI_BASE_URL ?? "").trim();
+
+  if (requested === "gemini" || requested === "google") {
+    const apiKey = apiKeyOverride || (env.GEMINI_API_KEY ?? "").trim();
+    const missing = [!apiKey ? "GEMINI_API_KEY (or AI_API_KEY)" : "", !model ? "AI_MODEL" : ""].filter(Boolean);
+    if (missing.length > 0) return { live: false, missing };
+    return {
+      live: true,
+      kind: "gemini",
+      baseUrl: baseUrlOverride || GEMINI_API_BASE,
+      apiKey,
+      model,
+      providerId: "gemini",
+      providerLabel: `Gemini (${model})`,
+    };
+  }
 
   if (requested !== "openai-compatible" && requested !== "openai") {
     return { live: false, missing: [] };
   }
 
   const missing = [
-    !baseUrl ? "AI_BASE_URL" : "",
-    !apiKey ? "AI_API_KEY" : "",
+    !baseUrlOverride ? "AI_BASE_URL" : "",
+    !apiKeyOverride ? "AI_API_KEY" : "",
     !model ? "AI_MODEL" : "",
   ].filter(Boolean);
 
   if (missing.length > 0) return { live: false, missing };
-  return { live: true, baseUrl, apiKey, model };
+  return {
+    live: true,
+    kind: "openai-compatible",
+    baseUrl: baseUrlOverride,
+    apiKey: apiKeyOverride,
+    model,
+    providerId: "openai-compatible",
+    providerLabel: `OpenAI-compatible endpoint (${model})`,
+  };
 }
 
 /**
@@ -60,14 +96,16 @@ export function resolveLessonAnalyzer(env: Record<string, string | undefined> = 
   const config = readConfig(env);
 
   if (config.live) {
-    const analyzer = createHttpAnalyzer({ baseUrl: config.baseUrl, apiKey: config.apiKey, model: config.model });
+    const analyzer = config.kind === "gemini"
+      ? createGeminiAnalyzer({ baseUrl: config.baseUrl, apiKey: config.apiKey, model: config.model, providerId: config.providerId, label: `Live analyser — ${config.providerLabel}` })
+      : createHttpAnalyzer({ baseUrl: config.baseUrl, apiKey: config.apiKey, model: config.model, providerId: config.providerId, label: `Live analyser — ${config.providerLabel}` });
     return {
       analyzer,
       setup: {
         isMock: false,
         provider: analyzer.id,
         label: analyzer.label,
-        note: "Live AI analysis. Output is still validated against the required structure before it is saved.",
+        note: `${config.providerLabel} is configured. Output is still validated against the required structure before it is saved.`,
       },
     };
   }
@@ -88,14 +126,16 @@ export function resolveChallengeGenerator(env: Record<string, string | undefined
   const config = readConfig(env);
 
   if (config.live) {
-    const generator = createHttpChallengeGenerator({ baseUrl: config.baseUrl, apiKey: config.apiKey, model: config.model });
+    const generator = config.kind === "gemini"
+      ? createGeminiChallengeGenerator({ baseUrl: config.baseUrl, apiKey: config.apiKey, model: config.model, providerId: config.providerId, label: `Live generator — ${config.providerLabel}` })
+      : createHttpChallengeGenerator({ baseUrl: config.baseUrl, apiKey: config.apiKey, model: config.model, providerId: config.providerId, label: `Live generator — ${config.providerLabel}` });
     return {
       generator,
       setup: {
         isMock: false,
         provider: generator.id,
         label: generator.label,
-        note: "Live AI generation. Every question is validated, and its answer key stays on the server.",
+        note: `${config.providerLabel} is configured. Every question is validated, and its answer key stays on the server.`,
       },
     };
   }

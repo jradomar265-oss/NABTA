@@ -88,6 +88,19 @@ const LESSON =
   check(live.setup.isMock === false, "a fully configured provider must resolve to live");
   check(live.setup.provider === "openai-compatible", "live provider id must be reported");
 
+  // Gemini preset: only a key + model are needed, the compatible base URL is filled in.
+  const geminiIncomplete = resolveLessonAnalyzer({ AI_PROVIDER: "gemini" });
+  check(geminiIncomplete.setup.isMock, "the gemini preset with no key must fall back to mock");
+  check(/AI_API_KEY/.test(geminiIncomplete.setup.note) && /AI_MODEL/.test(geminiIncomplete.setup.note), `the gemini fallback must name both missing values: ${geminiIncomplete.setup.note}`);
+
+  const geminiViaAlias = resolveLessonAnalyzer({ AI_PROVIDER: "gemini", GEMINI_API_KEY: "test-key", AI_MODEL: "test-model" });
+  check(geminiViaAlias.setup.isMock === false, "the gemini preset must go live with GEMINI_API_KEY and AI_MODEL only");
+  check(geminiViaAlias.setup.provider === "gemini", "the gemini preset must report provider 'gemini'");
+  check(/Gemini/i.test(geminiViaAlias.setup.label), `the gemini label should name the provider: ${geminiViaAlias.setup.label}`);
+
+  const geminiKeyed = resolveLessonAnalyzer({ AI_PROVIDER: "gemini", AI_API_KEY: "test-key", AI_MODEL: "test-model" });
+  check(geminiKeyed.setup.isMock === false, "AI_API_KEY must work for the gemini preset too");
+
   if (failures.length) {
     console.log("FAILED");
     for (const failure of failures) console.log(" -", failure);

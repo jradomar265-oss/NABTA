@@ -37,7 +37,7 @@ function userPrompt(input: LessonAnalysisInput, repairReason?: string): string {
   return parts.join("\n\n");
 }
 
-type Config = { baseUrl: string; apiKey: string; model: string };
+type Config = { baseUrl: string; apiKey: string; model: string; providerId?: string; label?: string };
 
 export function createHttpAnalyzer(config: Config): LessonAnalyzer {
   if (typeof window !== "undefined") {
@@ -50,22 +50,24 @@ export function createHttpAnalyzer(config: Config): LessonAnalyzer {
       { role: "user", content: userPrompt(input, repairReason) },
     ]);
 
+  const providerId = config.providerId ?? "openai-compatible";
+
   return {
-    id: "openai-compatible",
-    label: `Live analyser (${config.model})`,
+    id: providerId,
+    label: config.label ?? `Live analyser (${config.model})`,
     isMock: false,
 
     async analyze(input: LessonAnalysisInput): Promise<AnalyzerRun> {
       const started = Date.now();
       const first = parseAnalysis(await ask(input));
       if (first.ok) {
-        return { analysis: first.value, provider: "openai-compatible", model: config.model, durationMs: Date.now() - started, repaired: false };
+        return { analysis: first.value, provider: providerId, model: config.model, durationMs: Date.now() - started, repaired: false };
       }
 
       // One bounded repair attempt, then fail honestly rather than storing junk.
       const second = parseAnalysis(await ask(input, first.reason));
       if (second.ok) {
-        return { analysis: second.value, provider: "openai-compatible", model: config.model, durationMs: Date.now() - started, repaired: true };
+        return { analysis: second.value, provider: providerId, model: config.model, durationMs: Date.now() - started, repaired: true };
       }
 
       throw new AiAnalysisError(

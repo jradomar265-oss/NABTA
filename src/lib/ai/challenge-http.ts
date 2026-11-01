@@ -30,7 +30,13 @@ function userPrompt(input: ChallengeInput, repairReason?: string): string {
   return parts.join("\n\n");
 }
 
-export function createHttpChallengeGenerator(config: { baseUrl: string; apiKey: string; model: string }): ChallengeGenerator {
+export function createHttpChallengeGenerator(config: {
+  baseUrl: string;
+  apiKey: string;
+  model: string;
+  providerId?: string;
+  label?: string;
+}): ChallengeGenerator {
   if (typeof window !== "undefined") {
     throw new Error("The HTTP challenge generator must run on the server only.");
   }
@@ -41,9 +47,11 @@ export function createHttpChallengeGenerator(config: { baseUrl: string; apiKey: 
       { role: "user", content: userPrompt(input, repairReason) },
     ]);
 
+  const providerId = config.providerId ?? "openai-compatible";
+
   return {
-    id: "openai-compatible",
-    label: `Live generator (${config.model})`,
+    id: providerId,
+    label: config.label ?? `Live generator (${config.model})`,
     isMock: false,
 
     async generate(input: ChallengeInput): Promise<ChallengeRun> {
@@ -52,12 +60,12 @@ export function createHttpChallengeGenerator(config: { baseUrl: string; apiKey: 
 
       const first = parseChallenge(await ask(input), allowed);
       if (first.ok) {
-        return { challenge: first.value, provider: "openai-compatible", model: config.model, durationMs: Date.now() - started, repaired: false };
+        return { challenge: first.value, provider: providerId, model: config.model, durationMs: Date.now() - started, repaired: false };
       }
 
       const second = parseChallenge(await ask(input, first.reason), allowed);
       if (second.ok) {
-        return { challenge: second.value, provider: "openai-compatible", model: config.model, durationMs: Date.now() - started, repaired: true };
+        return { challenge: second.value, provider: providerId, model: config.model, durationMs: Date.now() - started, repaired: true };
       }
 
       throw new AiAnalysisError(
