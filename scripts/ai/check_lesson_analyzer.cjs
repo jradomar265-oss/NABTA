@@ -74,11 +74,15 @@ const LESSON =
 
   const mockByDefault = resolveLessonAnalyzer({});
   check(mockByDefault.setup.isMock, "no configuration must resolve to the mock analyser");
-  check(/mock/i.test(mockByDefault.setup.note), "the default setup note must say it is mock");
+  check(mockByDefault.setup.note.length > 20, "the default setup note must explain the mode");
+  // The UI already renders a "Mock mode" / "Live AI" badge, so the note must not repeat the label.
+  check(!/^mock\b/i.test(mockByDefault.setup.note), `the note must not repeat the badge label: "${mockByDefault.setup.note}"`);
+  check(!/mock mode:/i.test(mockByDefault.setup.note), "the note must not contain a second 'Mock mode:' prefix");
 
   const halfConfigured = resolveLessonAnalyzer({ AI_PROVIDER: "openai-compatible", AI_BASE_URL: "https://example.invalid/v1" });
   check(halfConfigured.setup.isMock, "a half-configured provider must fall back to mock");
   check(/AI_API_KEY/.test(halfConfigured.setup.note), "the fallback note must name the missing variable");
+  check(!/^mock\b/i.test(halfConfigured.setup.note), "the fallback note must not repeat the badge label");
 
   const live = resolveLessonAnalyzer({ AI_PROVIDER: "openai-compatible", AI_BASE_URL: "https://example.invalid/v1", AI_API_KEY: "test", AI_MODEL: "test-model" });
   check(live.setup.isMock === false, "a fully configured provider must resolve to live");

@@ -42,11 +42,17 @@ function readConfig(env: Record<string, string | undefined>): AiConfig {
   return { live: true, baseUrl, apiKey, model };
 }
 
-function mockNote(missing: string[]): string {
-  if (missing.length > 0) {
-    return `A live provider was requested but ${missing.join(", ")} ${missing.length === 1 ? "is" : "are"} missing, so this runs in mock mode.`;
-  }
-  return "Mock mode: no AI provider is configured. Output comes from fixed rules over the lesson text, not from a model.";
+/**
+ * Body text for a mock setup note.
+ *
+ * The UI already renders its own "Mock mode" / "Live AI" badge, so these strings
+ * must not repeat that label — they only explain *why* it is mocked.
+ */
+function mockNote(missing: string[], extra?: string): string {
+  const base = missing.length > 0
+    ? `A live provider was requested but ${missing.join(", ")} ${missing.length === 1 ? "is" : "are"} missing, so this runs in mock mode.`
+    : "No AI provider is configured, so results come from fixed rules over the lesson text rather than from a model.";
+  return extra ? `${base} ${extra}` : base;
 }
 
 /** Chooses the lesson analyser. Defaults to mock; a half-configured live provider says so. */
@@ -72,7 +78,7 @@ export function resolveLessonAnalyzer(env: Record<string, string | undefined> = 
       isMock: true,
       provider: mockLessonAnalyzer.id,
       label: mockLessonAnalyzer.label,
-      note: `Mock analysis: ${mockNote(config.missing)}`,
+      note: mockNote(config.missing),
     },
   };
 }
@@ -100,7 +106,7 @@ export function resolveChallengeGenerator(env: Record<string, string | undefined
       isMock: true,
       provider: mockChallengeGenerator.id,
       label: mockChallengeGenerator.label,
-      note: `Mock generation: ${mockNote(config.missing)} Only fraction lessons are supported.`,
+      note: mockNote(config.missing, "Only fraction lessons are supported."),
     },
   };
 }

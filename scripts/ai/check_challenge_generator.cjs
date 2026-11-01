@@ -119,6 +119,7 @@ const objectives = [
 
   const mockByDefault = resolveChallengeGenerator({});
   check(mockByDefault.setup.isMock, "no configuration must resolve to the mock generator");
+  check(!/^mock\b/i.test(mockByDefault.setup.note), `the challenge note must not repeat the badge label: "${mockByDefault.setup.note}"`);
 
   const live = resolveChallengeGenerator({ AI_PROVIDER: "openai-compatible", AI_BASE_URL: "https://example.invalid/v1", AI_API_KEY: "k", AI_MODEL: "m" });
   check(live.setup.isMock === false, "a fully configured provider must resolve to live generation");
