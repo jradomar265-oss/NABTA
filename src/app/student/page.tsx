@@ -1,6 +1,7 @@
 import { joinClassroom, saveStudentOnboarding } from "@/app/actions/learning";
 import { requireRole } from "@/lib/auth/require-role";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { xpForQuestions } from "@/lib/learning/xp";
 import { StudentWorld } from "@/features/student-world/components/StudentWorld";
 import type { QuestStatus, WorldQuest } from "@/features/student-world/types";
 
@@ -55,6 +56,12 @@ export default async function StudentHomePage({ searchParams }: { searchParams: 
   const { data: questionRows } = user && supabase
     ? await supabase.from("questions").select("assessment_id")
     : { data: [] };
+  const { data: submissionRows } = user && supabase
+    ? await supabase.from("submissions").select("assessment_id, score, total").eq("student_id", user.id)
+    : { data: [] };
+  const { data: achievementRows } = user && supabase
+    ? await supabase.from("achievements").select("code, earned_at").eq("student_id", user.id).order("earned_at", { ascending: true })
+    : { data: [] };
 
   const challengeCountByLesson = new Map<string, number>();
   {
@@ -64,6 +71,15 @@ export default async function StudentHomePage({ searchParams }: { searchParams: 
     }
     for (const row of (assessmentRows ?? []) as { id: string; lesson_id: string }[]) {
       challengeCountByLesson.set(row.lesson_id, questionsPerAssessment.get(row.id) ?? 0);
+    }
+  }
+
+  // A lesson is completed once the student has a graded submission for its challenge.
+  const completedLessonIds = new Set<string>();
+  {
+    const submittedAssessments = new Set(((submissionRows ?? []) as { assessment_id: string }[]).map((row) => row.assessment_id));
+    for (const row of (assessmentRows ?? []) as { id: string; lesson_id: string }[]) {
+      if (submittedAssessments.has(row.id)) completedLessonIds.add(row.lesson_id);
     }
   }
 
@@ -95,11 +111,15 @@ export default async function StudentHomePage({ searchParams }: { searchParams: 
   }
 
   const quests: WorldQuest[] = assignments.map((assignment, index) => {
-    const status: QuestStatus = studied.has(assignment.id)
-      ? "studied"
-      : nextAvailable.has(assignment.id)
-        ? "available"
-        : "locked";
+    const isCompleted = completedLessonIds.has(assignment.lessonId);
+    const status: QuestStatus = isCompleted
+      ? "completed"
+      : studied.has(assignment.id)
+        ? "studied"
+        : nextAvailable.has(assignment.id)
+          ? "available"
+          : "locked";
+    const questionCount = challengeCountByLesson.get(assignment.lessonId) ?? 0;
     return {
       id: assignment.id,
       slot: index,
@@ -107,8 +127,9 @@ export default async function StudentHomePage({ searchParams }: { searchParams: 
       objective: assignment.objective || assignment.lesson?.learning_objective || "",
       classroomName: assignment.classroom?.name ?? "Class lesson",
       status,
-      rewardXp: 0,
-      challengeQuestions: challengeCountByLesson.get(assignment.lessonId) ?? 0,
+      rewardXp: questionCount > 0 ? xpForQuestions(questionCount, questionCount) : 0,
+      challengeQuestions: questionCount,
+      challengeMaxXp: questionCount > 0 ? xpForQuestions(questionCount, questionCount) : 0,
     };
   });
 
@@ -146,7 +167,15 @@ export default async function StudentHomePage({ searchParams }: { searchParams: 
         <button className="mt-6 min-h-11 rounded-lg bg-[#1f674a] px-5 text-sm font-bold text-white hover:bg-[#174f39]" type="submit">Enter my learning space</button>
       </form>
       : <>
-        <StudentWorld displayName={student?.display_name ?? profile.display_name} level={level} quests={placeable} xp={xp} xpToNext={100 * level} />
+        <StudentWorld displayName={student?.display_name ?? profile.display_name} level={level} quests={placeable} xp={xp} />
+        <ProgressSummary
+          achievements={(achievementRows ?? []) as { code: string; earned_at: string }[]}
+          completed={quests.filter((quest) => quest.status === "completed").length}
+          level={level}
+          studied={quests.filter((quest) => quest.status === "studied" || quest.status === "completed").length}
+          total={quests.length}
+          xp={xp}
+        />
         {unplaced > 0 && <p className="mt-4 rounded-xl border border-dashed border-[#cfdacd] px-4 py-3 text-sm text-[#62776d]">{unplaced} more assigned lesson{unplaced === 1 ? "" : "s"} {unplaced === 1 ? "does" : "do"} not fit the current region’s {QUEST_SLOTS} quest landmarks yet; {unplaced === 1 ? "it stays" : "they stay"} reachable from the quest list under the map.</p>}
       </>}
     <div className="mt-10 grid gap-8 lg:grid-cols-[0.7fr_1.3fr]">
@@ -184,4 +213,73 @@ export default async function StudentHomePage({ searchParams }: { searchParams: 
       </div>
     </div>
   </section>;
+}
+
+const ACHIEVEMENTS: Record<string, { title: string; description: string }> = {
+  first_quest: { title: "First Quest", description: "Submitted your first challenge." },
+  perfect_score: { title: "Perfect Score", description: "Every answer correct on a challenge." },
+  steady_learner: { title: "Steady Learner", description: "Completed three different challenges." },
+};
+
+/** Student Home summary: real counts and server-recorded achievements only. */
+function ProgressSummary({
+  level,
+  xp,
+  studied,
+  completed,
+  total,
+  achievements,
+}: {
+  level: number;
+  xp: number;
+  studied: number;
+  completed: number;
+  total: number;
+  achievements: { code: string; earned_at: string }[];
+}) {
+  const intoLevel = Math.max(0, xp) % 100;
+  return <div className="mt-4 grid gap-4 lg:grid-cols-2">
+    <section className="rounded-2xl border border-[#dce4d8] bg-white p-5">
+      <h2 className="text-sm font-bold uppercase tracking-wide text-[#b65e35]">Your progress</h2>
+      <div className="mt-3 grid grid-cols-3 gap-3 text-center">
+        <div className="rounded-lg bg-[#f3f6ef] px-2 py-3">
+          <p className="text-xl font-bold text-[#29483c]">{level}</p>
+          <p className="text-[11px] font-semibold text-[#6a7d72]">Level</p>
+        </div>
+        <div className="rounded-lg bg-[#f3f6ef] px-2 py-3">
+          <p className="text-xl font-bold text-[#29483c]">{xp}</p>
+          <p className="text-[11px] font-semibold text-[#6a7d72]">Total XP</p>
+        </div>
+        <div className="rounded-lg bg-[#f3f6ef] px-2 py-3">
+          <p className="text-xl font-bold text-[#29483c]">{completed}</p>
+          <p className="text-[11px] font-semibold text-[#6a7d72]">Challenges done</p>
+        </div>
+      </div>
+      <div className="mt-3">
+        <div className="flex items-center justify-between text-[11px] font-semibold text-[#6a7d72]">
+          <span>{intoLevel} / 100 XP to level {level + 1}</span>
+          <span>{studied} of {total} lessons started</span>
+        </div>
+        <span className="mt-1 block h-2 w-full overflow-hidden rounded-full bg-[#e8eee3]">
+          <span className="block h-full rounded-full bg-[#7cbf5a]" style={{ width: `${intoLevel}%` }} />
+        </span>
+      </div>
+      <p className="mt-3 text-xs leading-5 text-[#62776d]">XP is awarded once per challenge and is calculated on the server. Understanding earns more than speed.</p>
+    </section>
+
+    <section className="rounded-2xl border border-[#dce4d8] bg-white p-5">
+      <h2 className="text-sm font-bold uppercase tracking-wide text-[#b65e35]">Achievements</h2>
+      {achievements.length === 0
+        ? <p className="mt-3 text-sm text-[#62776d]">Nothing yet. Complete a challenge to earn your first badge.</p>
+        : <ul className="mt-3 space-y-2">
+          {achievements.map((achievement) => {
+            const meta = ACHIEVEMENTS[achievement.code] ?? { title: achievement.code, description: "" };
+            return <li className="rounded-lg border border-[#e3eadf] px-3 py-2" key={achievement.code}>
+              <p className="text-sm font-bold text-[#29483c]">{meta.title}</p>
+              <p className="text-xs text-[#6a7d72]">{meta.description}</p>
+            </li>;
+          })}
+        </ul>}
+    </section>
+  </div>;
 }

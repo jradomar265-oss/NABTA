@@ -1,5 +1,39 @@
 # Development Log
 
+## Stage 6 — Student Study Quest Experience
+
+**Execution date:** 2026-11-01  
+**Status:** Implemented; grading and RLS untested against a live database
+
+### Implemented
+
+- Migration `202611010006_stage6_study_quests.sql`: `submissions`, `student_answers`, `xp_transactions`, `achievements`, the pure helpers `xp_for_questions` / `level_for_xp`, and the `submit_challenge` RPC that grades and awards XP.
+- Grading is server-only by construction: the client submits option indices, the RPC re-validates role, classroom membership, publication status and every index, compares against `answer_keys`, and writes the rows. Students have select-only grants on all four new tables, so no score, answer correctness or XP value can be produced or edited from a browser session.
+- XP rewards understanding, never speed: 6 per correct answer, +10 for a full set; awarded once per assessment (unique constraint), so retakes cannot farm it. Levels are `1 + floor(xp/100)`.
+- Explanations and the correct option are copied into `student_answers` at grading time, so a student can review feedback without ever reading `answer_keys`.
+- New quest detail page `/student/quest/[assignmentId]`: approved objectives, lesson text, study button, challenge form, and a results view with per-question correctness, correct answer, explanation, score and XP.
+- World integration: a graded submission turns the quest node into a new gold "mastered" medallion (5th state added to `generate_decor.py`), the HUD shows real level/XP progress and completed counts, and the quest panel links straight to the challenge.
+- Student Home now has a real progress summary (level, total XP, challenges completed, lessons started) and a server-recorded achievements list.
+- `supabase/tests/stage6_grading_check.sql`: founder-runnable assertions for the XP/level formulas and for the answer-key and grading privileges.
+
+### Verification
+
+- `npm run typecheck` — PASS (exit 0).
+- `npm run lint` — PASS (exit 0, no warnings).
+- `npm run build` — PASS (exit 0; `.next/server/app/student/quest` produced).
+- `npm run check:world` — PASS, and now also asserts the TS XP/level display mirror against the same expected values used by the SQL assertions, plus the studied/completed medallion mapping.
+- `npm run check:ai` — PASS (unchanged).
+- Medallion sheet regenerated and inspected: 5 states at 32x36.
+- `GET /` 200; `/student/quest/[id]` redirects to login without a session.
+- **NOT TESTED:** the `submit_challenge` RPC, the new RLS policies, XP persistence and achievements against a live Supabase project — migration 0006 is not applied and no sessions were available. **NOT RUN:** `supabase/tests/stage6_grading_check.sql` (it needs the applied schema).
+
+### Required Setup and Remaining Work
+
+- Apply `202611010006_stage6_study_quests.sql`, then run `supabase/tests/stage6_grading_check.sql`.
+- Run the student flow end to end: open a quest, submit answers, confirm score/XP/achievement persist, refresh, confirm the world shows the mastered medallion, and confirm a second submission does not award XP again.
+- As a student session, confirm `select * from answer_keys` returns nothing and that `insert into xp_transactions` is denied.
+- Known limitations: one XP award per assessment forever (no re-award for later mastery), no mastery confidence model, no objective-level breakdown yet (Stage 7), and `student_answers` keeps the correct option after submission by design.
+
 ## Stage 5 — AI Challenge Generation and Publishing
 
 **Execution date:** 2026-11-01  

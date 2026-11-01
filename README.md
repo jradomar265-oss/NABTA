@@ -62,6 +62,16 @@ The teacher studio can analyse a saved lesson and turn it into learning objectiv
 - Students see a published challenge as a quest badge ("N challenge questions published"). Answering, grading and XP are Stage 6 — the student surface does not pretend otherwise.
 - Generation attempts are recorded in `agent_runs` with `kind = 'challenge_generation'`.
 
+### Study quests, grading and XP
+
+- `/student/quest/[assignmentId]` is the quest detail page: approved objectives, the lesson text, the published challenge, and the student's result with explanations.
+- **Grading exists only in the database.** `submit_challenge(assessment, answers)` is a `SECURITY DEFINER` function that re-checks the student role, classroom membership, publication status and every option index, compares against `answer_keys`, writes the submission and answers, and returns the per-question result. The client sends option indices and nothing else — no score, no correctness, no XP.
+- Students have **no INSERT/UPDATE grant** on `submissions`, `student_answers`, `xp_transactions` or `achievements`; those tables are select-only, and rows appear only through the function.
+- XP: `xp_for_questions(correct, total)` = 6 per correct answer, +10 for a full set, 0 for none — understanding, not speed. Awarded **once per assessment** (unique `student_id, source_type, source_id`), so retakes cannot farm it. Levels are `1 + floor(xp / 100)`.
+- Feedback explanations and the correct option are copied into `student_answers` at grading time, so a student can review their own result without ever being able to read `answer_keys`.
+- Submitting also records the lesson as studied, so the world advances; a graded submission turns the quest node into the gold "mastered" medallion.
+- Achievements: `first_quest`, `perfect_score`, `steady_learner` (three different challenges). No streaks, no rankings, no speed bonuses.
+
 ## Stage 1 Architecture
 
 - Next.js App Router and TypeScript provide the application and server-rendered route foundation.
@@ -85,6 +95,8 @@ The source analysis, palette harmonization, world composition, and validation co
 
 ## Migrations
 
-Apply in order from `supabase/migrations/`: `..._profiles.sql`, `..._stage3_learning_core.sql`, `..._lesson_study_progress.sql`, `..._stage4_ai_lesson_understanding.sql`, `..._stage5_challenges.sql`.
+Apply in order from `supabase/migrations/`: `..._profiles.sql`, `..._stage3_learning_core.sql`, `..._lesson_study_progress.sql`, `..._stage4_ai_lesson_understanding.sql`, `..._stage5_challenges.sql`, `..._stage6_study_quests.sql`.
+
+After applying migrations, run `supabase/tests/stage6_grading_check.sql` in the SQL editor. It writes nothing and verifies the XP/level formulas plus the answer-key and grading privileges.
 
 See [DEVELOPMENT_LOG.md](DEVELOPMENT_LOG.md) for verified progress and known limitations.

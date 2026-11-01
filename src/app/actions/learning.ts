@@ -91,3 +91,11 @@ export async function markLessonStudied(assignmentId: string) {
   if (error) studentError("We could not save your study progress. Please try again.");
   revalidatePath("/student");
 }
+
+/** Form-friendly wrapper so a plain <form action> can mark study from the quest page. */
+export async function markLessonStudiedFromForm(formData: FormData) {
+  const parsed = z.string().uuid().safeParse(formData.get("assignmentId"));
+  if (!parsed.success) studentError("That quest could not be found.");
+  await markLessonStudied(parsed.data);
+  revalidatePath("/student");
+}

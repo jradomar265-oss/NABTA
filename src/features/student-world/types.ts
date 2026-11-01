@@ -39,10 +39,10 @@ export type WorldLayout = {
 
 /**
  * `locked` and `available` are derived from classroom sequence order, `studied`
- * comes from a persisted `lesson_study_progress` row. Mastery completion is not
- * represented yet because no graded evidence exists in this stage.
+ * comes from a persisted `lesson_study_progress` row, and `completed` means the
+ * student has submitted the published challenge for that lesson.
  */
-export type QuestStatus = "locked" | "available" | "studied";
+export type QuestStatus = "locked" | "available" | "studied" | "completed";
 
 export type WorldQuest = {
   id: string;
@@ -52,8 +52,10 @@ export type WorldQuest = {
   classroomName: string;
   status: QuestStatus;
   rewardXp: number;
-  /** Published challenge questions for this lesson. Answering arrives in Stage 6. */
+  /** Published challenge questions for this lesson. */
   challengeQuestions: number;
+  /** Reward the student would earn for a full set, from the server-side formula. */
+  challengeMaxXp: number;
 };
 
 export const SPRITE_BASE = "/assets/nabta/world/sprites/approved/forest_demo_objects";

@@ -1,8 +1,10 @@
 "use client";
 
+import Link from "next/link";
 import { useCallback, useEffect, useMemo, useRef, useState, useTransition } from "react";
 
 import { markLessonStudied } from "@/app/actions/learning";
+import { xpIntoLevel } from "@/lib/learning/xp";
 import { clampCamera, fitCamera, screenToWorld, zoomAtPoint, type Camera } from "../systems/camera";
 import { createPathSampler } from "../systems/path";
 import { drawFrame, type PlayerState } from "../systems/renderer";
@@ -13,13 +15,11 @@ const WALK_SPEED = 0.00022; // path fraction per millisecond
 export function StudentWorld({
   level,
   xp,
-  xpToNext,
   quests,
   displayName,
 }: {
   level: number;
   xp: number;
-  xpToNext: number;
   quests: WorldQuest[];
   displayName: string;
 }) {
@@ -357,7 +357,9 @@ export function StudentWorld({
     });
   };
 
-  const studied = quests.filter((quest) => quest.status === "studied").length;
+  const studied = quests.filter((quest) => quest.status === "studied" || quest.status === "completed").length;
+  const completed = quests.filter((quest) => quest.status === "completed").length;
+  const levelProgress = xpIntoLevel(xp);
   const selected = quests.find((quest) => quest.slot === selectedSlot) ?? null;
 
   return (
@@ -382,15 +384,16 @@ export function StudentWorld({
                 {displayName} · Lv. {level}
               </p>
               <span className="mt-1 block h-2 w-28 overflow-hidden rounded-full bg-black/45">
-                <span className="block h-full rounded-full bg-[#91d956]" style={{ width: `${Math.round(Math.min(1, xp / xpToNext) * 100)}%` }} />
+                <span className="block h-full rounded-full bg-[#91d956]" style={{ width: `${Math.round((levelProgress.current / levelProgress.needed) * 100)}%` }} />
               </span>
+              <p className="mt-0.5 text-[10px] text-[#b9d3bd]">{xp} XP</p>
             </div>
           </div>
         </div>
 
         <div className="absolute right-3 top-3 flex items-center gap-2 sm:right-4 sm:top-4">
           <span className="rounded-xl border-2 border-[#6d8578] bg-[#22343a]/95 px-3 py-2 text-xs font-bold text-white">
-            {studied}/{quests.length} studied
+            {completed}/{quests.length} completed
           </span>
         </div>
 
@@ -435,33 +438,49 @@ export function StudentWorld({
           {selected ? (
             <>
               <p className="text-xs font-bold uppercase tracking-wide text-[#b65e35]">
-                {selected.classroomName} · {selected.status === "studied" ? "Studied" : selected.status === "locked" ? "Locked" : "Ready to study"}
+                {selected.classroomName} ·{" "}
+                {selected.status === "completed"
+                  ? "Challenge completed"
+                  : selected.status === "studied"
+                    ? "Studied"
+                    : selected.status === "locked"
+                      ? "Locked"
+                      : "Ready to study"}
               </p>
               <h2 className="mt-2 text-xl font-bold">{selected.title}</h2>
               {selected.objective && <p className="mt-2 text-sm font-semibold text-[#496451]">Goal: {selected.objective}</p>}
               {selected.challengeQuestions > 0 && (
                 <p className="mt-3 rounded-lg bg-[#f3f6ef] px-3 py-2 text-xs font-semibold text-[#3f6249]">
-                  {selected.challengeQuestions} challenge question{selected.challengeQuestions === 1 ? "" : "s"} published for this lesson.
-                  Answering and grading arrive in the next stage.
+                  {selected.challengeQuestions} challenge question{selected.challengeQuestions === 1 ? "" : "s"} · up to {selected.challengeMaxXp} XP
                 </p>
               )}
               <p className="mt-3 text-sm leading-6 text-[#62776d]">
                 {selected.status === "locked"
                   ? "Finish the lesson before this one to open this quest."
-                  : selected.status === "studied"
-                    ? "You have studied this lesson. Graded mastery checks arrive in the assessment stage."
-                    : "Read the lesson with your teacher, then mark it as studied to open the next quest."}
+                  : selected.status === "completed"
+                    ? "You have submitted this challenge. You can review your answers and explanations any time."
+                    : selected.status === "studied"
+                      ? "Studied. Open the challenge to earn XP for what you understood."
+                      : "Read the lesson with your teacher, then open the challenge when you are ready."}
               </p>
-              {selected.status === "available" && (
-                <button
-                  className="mt-4 min-h-11 rounded-lg bg-[#1f674a] px-5 text-sm font-bold text-white hover:bg-[#174f39] disabled:opacity-60"
-                  disabled={pending}
-                  onClick={() => study(selected)}
-                  type="button"
+              <div className="mt-4 flex flex-wrap gap-2">
+                <Link
+                  className="min-h-11 rounded-lg bg-[#1f674a] px-5 py-3 text-sm font-bold text-white hover:bg-[#174f39]"
+                  href={`/student/quest/${selected.id}`}
                 >
-                  {pending ? "Saving…" : "Mark this lesson studied"}
-                </button>
-              )}
+                  {selected.status === "completed" ? "Review my results" : selected.challengeQuestions > 0 ? "Open the challenge" : "Open this quest"}
+                </Link>
+                {selected.status === "available" && (
+                  <button
+                    className="min-h-11 rounded-lg border border-[#1f674a] px-4 text-sm font-bold text-[#1f674a] hover:bg-[#edf3e9] disabled:opacity-60"
+                    disabled={pending}
+                    onClick={() => study(selected)}
+                    type="button"
+                  >
+                    {pending ? "Saving…" : "Mark studied only"}
+                  </button>
+                )}
+              </div>
             </>
           ) : (
             <p className="text-sm text-[#62776d]">Select a quest medallion on the map, or pick one from the list.</p>
@@ -470,6 +489,7 @@ export function StudentWorld({
 
         <section className="rounded-2xl border border-[#dce4d8] bg-white p-5">
           <h2 className="text-sm font-bold uppercase tracking-wide text-[#b65e35]">Your quest path</h2>
+          <p className="mt-1 text-xs text-[#62776d]">{studied} studied · {completed} completed</p>
           <ol className="mt-3 space-y-2">
             {quests.map((quest) => (
               <li key={quest.id}>
@@ -486,7 +506,13 @@ export function StudentWorld({
                 >
                   <span className="font-semibold text-[#29483c]">{quest.title}</span>
                   <span className="shrink-0 text-xs font-bold text-[#6a7d72]">
-                    {quest.status === "studied" ? "Studied" : quest.status === "locked" ? "Locked" : "Available"}
+                    {quest.status === "completed"
+                      ? "Completed"
+                      : quest.status === "studied"
+                        ? "Studied"
+                        : quest.status === "locked"
+                          ? "Locked"
+                          : "Available"}
                   </span>
                 </button>
               </li>

@@ -30,7 +30,7 @@ const NODE_CELL_W = 32;
 const NODE_CELL_H = 36;
 const PLAYER_W = 16;
 const PLAYER_H = 24;
-const NODE_STATUS_CELL: Record<QuestStatus, number> = { available: 0, studied: 2, locked: 3 };
+const NODE_STATUS_CELL: Record<QuestStatus, number> = { available: 0, studied: 2, completed: 4, locked: 3 };
 
 export function nodeFrame(quest: WorldQuest | undefined, selected: boolean): number {
   if (!quest) return 3;

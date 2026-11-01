@@ -24,24 +24,27 @@ GENERATED = WORLD / "generated" / "structures"
 PREVIEWS = WORLD / "previews"
 
 CELL_W, CELL_H = 32, 36
-STATES = ["available", "active", "completed", "locked"]
+STATES = ["available", "active", "studied", "locked", "mastered"]
 
 RING_LIGHT = {
     "available": (0xE8, 0xDF, 0xB8, 255),
     "active": (0xFF, 0xF4, 0xC4, 255),
-    "completed": (0xDA, 0xE9, 0xD2, 255),
+    "studied": (0xDA, 0xE9, 0xD2, 255),
+    "mastered": (0xFF, 0xEE, 0xB8, 255),
     "locked": (0xB9, 0xBE, 0xB6, 255),
 }
 RING_DARK = {
     "available": (0x93, 0x6B, 0x42, 255),
     "active": (0xD1, 0x8B, 0x33, 255),
-    "completed": (0x3F, 0x7A, 0x4A, 255),
+    "studied": (0x3F, 0x7A, 0x4A, 255),
+    "mastered": (0xB0, 0x7A, 0x1E, 255),
     "locked": (0x4E, 0x56, 0x52, 255),
 }
 FILL = {
     "available": (0x3F, 0x8A, 0x4E, 255),
     "active": (0x4F, 0xA8, 0x57, 255),
-    "completed": (0x2F, 0x6E, 0x48, 255),
+    "studied": (0x2F, 0x6E, 0x48, 255),
+    "mastered": (0x8A, 0x63, 0x18, 255),
     "locked": (0x6A, 0x71, 0x6C, 255),
 }
 GLYPH = (0xF2, 0xFA, 0xE8, 255)
@@ -65,7 +68,7 @@ def node(state: str) -> Image.Image:
         for dx, dy in stem + left + right:
             im.putpixel((cx + dx, cy + dy), GLYPH)
         im.putpixel((cx, cy - 7), GLYPH)
-    elif state == "completed":
+    elif state in ("studied", "mastered"):
         for dx, dy in [(-4, 0), (-3, 1), (-2, 2), (-1, 1), (0, 0), (1, -1),
                        (2, -2), (3, -3), (4, -4), (-4, -1), (5, -5), (5, -4), (4, -3), (0, 1), (1, 0)]:
             im.putpixel((cx + dx, cy + dy), GLYPH)

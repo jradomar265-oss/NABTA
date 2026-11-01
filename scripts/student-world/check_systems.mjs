@@ -14,6 +14,7 @@ import fs from "node:fs";
 import { clampCamera, fitCamera, MAX_ZOOM, MIN_ZOOM, zoomAtPoint } from "../../src/features/student-world/systems/camera.ts";
 import { createPathSampler } from "../../src/features/student-world/systems/path.ts";
 import { nodeFrame } from "../../src/features/student-world/systems/renderer.ts";
+import { levelForXp, xpForQuestions } from "../../src/lib/learning/xp.ts";
 
 const layout = JSON.parse(
   fs.readFileSync(new URL("../../public/assets/nabta/world/regions/forest-clearing/decor.json", import.meta.url), "utf8"),
@@ -54,10 +55,25 @@ if (zoomed.zoom > MAX_ZOOM + 1e-9) failures.push("zoom exceeded the maximum");
 if (zoomed.x < 0 || zoomed.y < 0) failures.push("zoom pushed the camera out of bounds");
 
 if (nodeFrame(quest("locked"), true) !== 3) failures.push("locked node must use the padlock medallion");
-if (nodeFrame(quest("studied"), true) !== 2) failures.push("studied node must use the completed medallion");
+if (nodeFrame(quest("studied"), true) !== 2) failures.push("studied node must use the green check medallion");
+if (nodeFrame(quest("completed"), true) !== 4) failures.push("completed node must use the mastered medallion");
 if (nodeFrame(quest("available"), true) !== 1) failures.push("selected available node must use the active medallion");
 if (nodeFrame(quest("available"), false) !== 0) failures.push("available node must use the sprout medallion");
 if (nodeFrame(undefined, true) !== 3) failures.push("a slot without a quest must look locked");
+
+// These expected values are the same ones asserted against the SQL functions in
+// supabase/tests/stage6_grading_check.sql, so the display mirror cannot drift silently.
+const xpCases = [[0, 5, 0], [5, 5, 40], [4, 5, 24], [1, 1, 16], [0, 0, 0], [9, 5, 40]];
+for (const [correct, total, expected] of xpCases) {
+  const actual = xpForQuestions(correct, total);
+  if (actual !== expected) failures.push(`xpForQuestions(${correct},${total}) should be ${expected}, got ${actual}`);
+}
+
+const levelCases = [[0, 1], [-50, 1], [99, 1], [100, 2], [407, 5]];
+for (const [xp, expected] of levelCases) {
+  const actual = levelForXp(xp);
+  if (actual !== expected) failures.push(`levelForXp(${xp}) should be ${expected}, got ${actual}`);
+}
 
 if (failures.length) {
   console.log("FAILED");
@@ -66,5 +82,5 @@ if (failures.length) {
 }
 
 console.log(
-  `PASSED: ${layout.nodes.length} nodes on path, ${layout.objects.length} objects, sampler/camera/medallion checks ok (fit zoom ${fit.zoom.toFixed(2)})`,
+  `PASSED: ${layout.nodes.length} nodes on path, ${layout.objects.length} objects, sampler/camera/medallion checks ok (fit zoom ${fit.zoom.toFixed(2)}); XP + level mirror matches the SQL expectations`,
 );
