@@ -54,6 +54,14 @@ The teacher studio can analyse a saved lesson and turn it into learning objectiv
 - Every attempt — success or failure — is written to `agent_runs`, so a failed call can never appear as a success.
 - Objectives land in `lesson_objectives` as unapproved drafts tagged `AI draft` or `Teacher edit`. RLS lets students read only `approved = true` objectives for lessons assigned to their class. Approved objectives become the learning goal shown on the student's quest.
 
+### Challenge generation and publishing
+
+- A challenge set is generated from the lesson plus its **approved** objectives; generation is refused when no objective is approved, because every question must be tied to one.
+- `questions.options` is a plain `text[]` with **no correctness column**, so a readable question row cannot reveal its answer. Correct index and explanation live in `answer_keys`, which has teacher-only policies and no student policy at all. Trigger functions keep the index inside the option range, including when options shrink.
+- Teacher approval is enforced in the action, not the UI: `approve` requires at least one question, `publish` requires `status = 'approved'`, and any question edit or regeneration resets the set to `draft` (which hides it from students again).
+- Students see a published challenge as a quest badge ("N challenge questions published"). Answering, grading and XP are Stage 6 — the student surface does not pretend otherwise.
+- Generation attempts are recorded in `agent_runs` with `kind = 'challenge_generation'`.
+
 ## Stage 1 Architecture
 
 - Next.js App Router and TypeScript provide the application and server-rendered route foundation.
@@ -77,6 +85,6 @@ The source analysis, palette harmonization, world composition, and validation co
 
 ## Migrations
 
-Apply in order from `supabase/migrations/`: `..._profiles.sql`, `..._stage3_learning_core.sql`, `..._lesson_study_progress.sql`, `..._stage4_ai_lesson_understanding.sql`.
+Apply in order from `supabase/migrations/`: `..._profiles.sql`, `..._stage3_learning_core.sql`, `..._lesson_study_progress.sql`, `..._stage4_ai_lesson_understanding.sql`, `..._stage5_challenges.sql`.
 
 See [DEVELOPMENT_LOG.md](DEVELOPMENT_LOG.md) for verified progress and known limitations.

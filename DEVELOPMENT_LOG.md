@@ -1,5 +1,35 @@
 # Development Log
 
+## Stage 5 — AI Challenge Generation and Publishing
+
+**Execution date:** 2026-11-01  
+**Status:** Implemented in mock mode; live provider and database flows untested
+
+### Implemented
+
+- Migration `202611010005_stage5_challenges.sql`: `assessments` (one per lesson, `draft → approved → published`), `questions` (options as a plain `text[]` with **no correctness column**), and `answer_keys` (correct index + explanation, teacher-only). Trigger functions reject an answer index outside the option range, including when options are later shrunk. `agent_runs.kind` extended with `challenge_generation`.
+- RLS: teachers manage their own assessments/questions/keys; students may read questions only for a `published` assessment whose lesson is assigned to their class; **students have no policy on `answer_keys` at all**, so answer keys are invisible at the row level rather than hidden by the UI.
+- Generator layer: `parseChallenge()` validates structure (distinct options, correct index in range, exactly two options for true/false) **and grounding** (every question must reference an approved objective id). Deterministic mock generator with hand-checked answers for fractions; refuses unsupported topics and missing objectives instead of inventing questions. OpenAI-compatible generator shares the same `completeJson()` client as the analyser.
+- Server actions: generate/regenerate (replaces questions, records a run on success *and* failure), edit question, delete question, approve, publish, unpublish. Status transitions are enforced server-side; any question change resets to `draft` and unpublishes.
+- Teacher UI: `AssessmentPanel` inside each lesson (status badge, generator mode note, per-question editor with options/format/correct answer/explanation, objective link, approve and publish controls).
+- Student surface: a published challenge appears as "N challenge questions published" on the quest panel. Answering and grading are explicitly Stage 6.
+
+### Verification
+
+- `npm run typecheck` — PASS (exit 0).
+- `npm run lint` — PASS (exit 0, no warnings).
+- `npm run build` — PASS (exit 0, `BUILD_ID` written).
+- `npm run check:ai` — PASS, two suites: lesson analyser (validation, failure, determinism, provider resolution) and challenge generator (5 deterministic questions; hand-checked answers — 2/4 equivalent to 1/2, 6/8 → 3/4, 3/4 > 5/8; rejects out-of-range index, duplicate options, 3-option true/false, ungrounded objective, empty list, non-JSON; refuses unsupported topic; refuses to run with zero approved objectives).
+- `npm run check:world` — PASS (unchanged).
+- `GET /` 200 through the dev server.
+- **NOT TESTED:** RLS behaviour of `answer_keys` and the publish gate against a live Supabase project — migrations 0004/0005 are not applied and no sessions were available. **NOT TESTED:** live provider generation (no credentials).
+
+### Required Setup and Remaining Work
+
+- Apply `202611010004_...` and `202611010005_...`, then run the teacher flow: approve objectives → generate → edit a question → approve → publish → confirm the student quest badge appears and disappears on unpublish.
+- Confirm directly in Supabase (SQL editor, authenticated as a student) that `select * from answer_keys` returns no rows.
+- No answering, submission, grading, feedback display, XP, analytics, or interventions yet (Stages 6–8).
+
 ## Stage 4 — AI Lesson Understanding
 
 **Execution date:** 2026-11-01  

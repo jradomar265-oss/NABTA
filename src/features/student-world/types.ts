@@ -52,6 +52,8 @@ export type WorldQuest = {
   classroomName: string;
   status: QuestStatus;
   rewardXp: number;
+  /** Published challenge questions for this lesson. Answering arrives in Stage 6. */
+  challengeQuestions: number;
 };
 
 export const SPRITE_BASE = "/assets/nabta/world/sprites/approved/forest_demo_objects";

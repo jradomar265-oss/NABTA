@@ -48,6 +48,24 @@ export default async function StudentHomePage({ searchParams }: { searchParams: 
   const { data: objectiveRows } = user && supabase
     ? await supabase.from("lesson_objectives").select("lesson_id, statement").eq("approved", true).order("position", { ascending: true })
     : { data: [] };
+  // Only published assessments are readable, and the answer key is never selectable.
+  const { data: assessmentRows } = user && supabase
+    ? await supabase.from("assessments").select("id, lesson_id").eq("status", "published")
+    : { data: [] };
+  const { data: questionRows } = user && supabase
+    ? await supabase.from("questions").select("assessment_id")
+    : { data: [] };
+
+  const challengeCountByLesson = new Map<string, number>();
+  {
+    const questionsPerAssessment = new Map<string, number>();
+    for (const row of (questionRows ?? []) as { assessment_id: string }[]) {
+      questionsPerAssessment.set(row.assessment_id, (questionsPerAssessment.get(row.assessment_id) ?? 0) + 1);
+    }
+    for (const row of (assessmentRows ?? []) as { id: string; lesson_id: string }[]) {
+      challengeCountByLesson.set(row.lesson_id, questionsPerAssessment.get(row.id) ?? 0);
+    }
+  }
 
   const approvedObjectiveByLesson = new Map<string, string>();
   for (const row of (objectiveRows ?? []) as { lesson_id: string; statement: string }[]) {
@@ -58,6 +76,7 @@ export default async function StudentHomePage({ searchParams }: { searchParams: 
   const assignments = ((assignmentRows ?? []) as AssignmentRow[]).map((assignment) => ({
     id: assignment.id,
     classroomId: assignment.classroom_id,
+    lessonId: assignment.lesson_id,
     lesson: firstRow<LessonRow>(assignment.lessons),
     classroom: firstRow<{ name: string }>(assignment.classrooms),
     objective: approvedObjectiveByLesson.get(assignment.lesson_id) ?? "",
@@ -89,6 +108,7 @@ export default async function StudentHomePage({ searchParams }: { searchParams: 
       classroomName: assignment.classroom?.name ?? "Class lesson",
       status,
       rewardXp: 0,
+      challengeQuestions: challengeCountByLesson.get(assignment.lessonId) ?? 0,
     };
   });
 

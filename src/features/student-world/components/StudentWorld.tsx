@@ -439,6 +439,12 @@ export function StudentWorld({
               </p>
               <h2 className="mt-2 text-xl font-bold">{selected.title}</h2>
               {selected.objective && <p className="mt-2 text-sm font-semibold text-[#496451]">Goal: {selected.objective}</p>}
+              {selected.challengeQuestions > 0 && (
+                <p className="mt-3 rounded-lg bg-[#f3f6ef] px-3 py-2 text-xs font-semibold text-[#3f6249]">
+                  {selected.challengeQuestions} challenge question{selected.challengeQuestions === 1 ? "" : "s"} published for this lesson.
+                  Answering and grading arrive in the next stage.
+                </p>
+              )}
               <p className="mt-3 text-sm leading-6 text-[#62776d]">
                 {selected.status === "locked"
                   ? "Finish the lesson before this one to open this quest."

@@ -1,8 +1,9 @@
 import { assignLesson, createClassroom, createLesson } from "@/app/actions/learning";
 import { requireRole } from "@/lib/auth/require-role";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
-import { resolveLessonAnalyzer } from "@/lib/ai";
+import { resolveChallengeGenerator, resolveLessonAnalyzer } from "@/lib/ai";
 import { LessonObjectivesPanel, type LastRun, type LessonObjective } from "@/features/teacher-studio/components/LessonObjectivesPanel";
+import { AssessmentPanel, type AssessmentView, type QuestionView } from "@/features/teacher-studio/components/AssessmentPanel";
 
 type SearchParams = Promise<{ error?: string; notice?: string; detail?: string }>;
 type Classroom = { id: string; name: string; join_code: string; classroom_memberships: { count: number }[] };
@@ -18,6 +19,12 @@ const NOTICES: Record<string, string> = {
   "objective-removed": "Objective removed.",
   "objective-added": "Your objective was added as a draft.",
   "objectives-approved": "All objectives for this lesson are approved.",
+  "challenges-generated": "Challenges generated as a draft. Review every question and its answer key, then approve.",
+  "question-saved": "Question saved. The challenge set is back in draft, so students cannot see it until you approve and publish again.",
+  "question-removed": "Question removed. The challenge set is back in draft.",
+  "assessment-approved": "Challenge set approved. Publish it when you are ready for students to see it.",
+  "assessment-published": "Challenge set published to the classes this lesson is assigned to.",
+  "assessment-unpublished": "Challenge set unpublished. Students can no longer see it.",
 };
 
 export default async function TeacherHomePage({ searchParams }: { searchParams: SearchParams }) {
@@ -43,12 +50,52 @@ export default async function TeacherHomePage({ searchParams }: { searchParams: 
       .order("created_at", { ascending: false })
       .limit(40)
     : { data: [] };
+  const { data: assessmentRows } = user && supabase
+    ? await supabase.from("assessments").select("id, lesson_id, title, status").eq("teacher_id", user.id)
+    : { data: [] };
+  const { data: questionRows } = user && supabase
+    ? await supabase.from("questions").select("id, assessment_id, position, kind, prompt, options, objective_id").order("position", { ascending: true })
+    : { data: [] };
+  // Teacher-only read: students have no policy on answer_keys.
+  const { data: keyRows } = user && supabase
+    ? await supabase.from("answer_keys").select("question_id, correct_index, explanation")
+    : { data: [] };
 
   const objectivesByLesson = new Map<string, LessonObjective[]>();
+  const objectiveStatements = new Map<string, string>();
   for (const row of (objectiveRows ?? []) as (LessonObjective & { lesson_id: string })[]) {
     const list = objectivesByLesson.get(row.lesson_id) ?? [];
     list.push({ id: row.id, position: row.position, statement: row.statement, skills: row.skills ?? [], evidence: row.evidence ?? "", source: row.source, approved: row.approved });
     objectivesByLesson.set(row.lesson_id, list);
+    objectiveStatements.set(row.id, row.statement.length > 70 ? `${row.statement.slice(0, 67)}...` : row.statement);
+  }
+
+  const keyByQuestion = new Map((keyRows ?? []).map((row) => [row.question_id as string, row]));
+  const questionsByAssessment = new Map<string, QuestionView[]>();
+  for (const row of (questionRows ?? []) as (QuestionView & { assessment_id: string; objective_id: string | null })[]) {
+    const key = keyByQuestion.get(row.id);
+    const list = questionsByAssessment.get(row.assessment_id) ?? [];
+    list.push({
+      id: row.id,
+      position: row.position,
+      kind: row.kind,
+      prompt: row.prompt,
+      options: row.options ?? [],
+      correctIndex: key?.correct_index ?? 0,
+      explanation: key?.explanation ?? "",
+      objectiveId: row.objective_id,
+    });
+    questionsByAssessment.set(row.assessment_id, list);
+  }
+
+  const assessmentByLesson = new Map<string, AssessmentView>();
+  for (const row of (assessmentRows ?? []) as { id: string; lesson_id: string; title: string; status: AssessmentView["status"] }[]) {
+    assessmentByLesson.set(row.lesson_id, {
+      id: row.id,
+      title: row.title,
+      status: row.status,
+      questions: questionsByAssessment.get(row.id) ?? [],
+    });
   }
 
   const lastRunByLesson = new Map<string, LastRun>();
@@ -58,6 +105,7 @@ export default async function TeacherHomePage({ searchParams }: { searchParams: 
   }
 
   const { setup } = resolveLessonAnalyzer();
+  const { setup: challengeSetup } = resolveChallengeGenerator();
   const notice = params.notice ? NOTICES[params.notice] : undefined;
 
   return <section className="max-w-6xl">
@@ -130,6 +178,26 @@ export default async function TeacherHomePage({ searchParams }: { searchParams: 
                   </summary>
                   <div className="px-3 pb-3">
                     <LessonObjectivesPanel lessonId={lesson.id} lastRun={lastRunByLesson.get(lesson.id) ?? null} objectives={objectives} setup={setup} />
+                  </div>
+                </details>
+
+                <details className="mt-3 rounded-xl border border-[#e3eadf] bg-white">
+                  <summary className="cursor-pointer px-4 py-3 text-sm font-bold text-[#29483c]">
+                    Challenges <span className="font-normal text-[#62776d]">
+                      {(() => {
+                        const assessment = assessmentByLesson.get(lesson.id);
+                        return assessment ? `${assessment.questions.length} questions · ${assessment.status}` : "not generated";
+                      })()}
+                    </span>
+                  </summary>
+                  <div className="px-3 pb-3">
+                    <AssessmentPanel
+                      approvedObjectiveCount={approved}
+                      assessment={assessmentByLesson.get(lesson.id) ?? null}
+                      lessonId={lesson.id}
+                      objectiveStatements={objectiveStatements}
+                      setup={challengeSetup}
+                    />
                   </div>
                 </details>
               </article>;
