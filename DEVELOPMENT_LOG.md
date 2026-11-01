@@ -78,5 +78,6 @@ No procedural decorative assets or quest markers were added.
 - Manual segmentation correction: `a8cb494` (`fix(stage-02): support manual sprite regions`).
 - User region import: `40159c2` (`feat(stage-02): import manual sprite regions`).
 - C03 plant/wood split: `37cf9cc` (`fix(stage-02): split plant and wood from C03`).
+- Approved manual sprites and terrain candidates: `9ca7548` (`feat(stage-02): approve sprites and extract terrain candidates`).
 - Editor coordinate correction: `51b2d9b` (`fix(stage-02): align editor overlays with canvas scale`).
 - Push status: BLOCKED; no GitHub remote is configured.
