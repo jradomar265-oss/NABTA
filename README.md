@@ -9,10 +9,15 @@ NABTA is a student-first learning platform: **Learn. Play. Grow.** The current r
 Requirements: Node.js 24 LTS and npm.
 
 1. Install dependencies with `npm ci`.
-2. Copy `.env.example` to `.env.local`.
-3. Create a Supabase project and set `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` in `.env.local`.
-4. Run `supabase/migrations/202611010001_profiles.sql` in the Supabase SQL Editor.
-5. Create accounts through Supabase Auth; new accounts receive the `student` role. Promote a teacher from the SQL Editor using an administrator-controlled query, for example:
+2. Create `.env.local` in the repository root. It is ignored by Git. Add the Supabase project URL and publishable key:
+
+   ```text
+   NEXT_PUBLIC_SUPABASE_URL=your-project-url
+   NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=your-publishable-key
+   ```
+
+3. Run `supabase/migrations/202611010001_profiles.sql` in the Supabase SQL Editor.
+4. Create accounts through Supabase Auth; new accounts receive the `student` role. Promote a teacher from the SQL Editor using an administrator-controlled query, for example:
 
    ```sql
    update public.profiles
@@ -20,7 +25,7 @@ Requirements: Node.js 24 LTS and npm.
    where id = (select id from auth.users where email = 'teacher@example.com');
    ```
 
-6. Start the app with `npm run dev`.
+5. Start the app with `npm run dev`.
 
 Without Supabase configuration, public pages build and run, while login is explicitly disabled and protected pages redirect to setup guidance. Do not put service-role keys in browser-visible environment variables.
 

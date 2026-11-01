@@ -20,12 +20,14 @@
 - `npm run lint` — PASS.
 - `npm run build` (webpack) — PASS; all five application routes compiled.
 - Browser smoke checks — PASS for rendered Tailwind styles, mobile overflow, disabled sign-in without Supabase, and student/teacher redirects without configuration.
-- Supabase connectivity, authentication end-to-end, and RLS behavior — NOT TESTED; project credentials and synthetic accounts are not configured.
+- Supabase Auth endpoint — PASS; settings endpoint returned HTTP 200 using the local publishable key (value not logged).
+- Profiles API/schema — BLOCKED; zero-row probe returned `PGRST205`, so the migration is not applied or the table is not exposed yet.
+- Authentication end-to-end and RLS behavior — NOT TESTED; synthetic accounts are not available and the profile table is missing.
 - Default Turbopack build — FAIL on this Windows environment because its native binding is invalid. Project scripts use webpack and Tailwind's PostCSS plugin instead.
 
 ### Remaining Stage 1 Work
 
-- Configure a Supabase project and apply the migration.
+- Apply the profiles migration in the Supabase SQL Editor.
 - Create synthetic accounts and verify sign-in, role denial, and RLS against the configured project.
 - No GitHub remote is configured, so push cannot be completed until repository access is provided.
 
