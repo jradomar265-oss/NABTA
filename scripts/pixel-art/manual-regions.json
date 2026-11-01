@@ -40,5 +40,17 @@
       { "id": "c03_plant", "x": 177, "y": 0, "width": 31, "height": 33 },
       { "id": "c03_wood", "x": 179, "y": 33, "width": 28, "height": 15 }
     ]
+  },
+  "approved_regions": {
+    "forest_demo_objects.png": [
+      "region_001", "region_002", "region_003", "region_004", "region_005",
+      "region_006", "region_007", "region_008", "region_009", "region_010",
+      "region_011", "region_012", "region_013", "region_014", "region_015",
+      "region_016", "region_017", "region_018", "region_019", "region_020",
+      "region_021", "region_022", "region_023", "region_024", "region_025",
+      "region_026", "region_027", "region_028", "region_029", "region_030",
+      "region_031", "region_032", "region_033", "region_034", "region_035",
+      "c03_plant", "c03_wood"
+    ]
   }
 }

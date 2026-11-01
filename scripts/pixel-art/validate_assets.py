@@ -14,6 +14,9 @@ def main() -> None:
     manifest = json.loads(MANIFEST_PATH.read_text(encoding="utf-8"))
     seen_ids: set[str] = set()
     candidate_count = 0
+    approved_count = 0
+    superseded_count = 0
+    terrain_candidate_count = 0
 
     for sheet in manifest["sheets"]:
         source_path = REPOSITORY_ROOT / sheet["source_path"]
@@ -53,6 +56,9 @@ def main() -> None:
                     known_manual_ids = {region["id"] for region in sheet["manual_regions"]}
                     if not set(component["superseded_by_manual_regions"]).issubset(known_manual_ids):
                         raise ValueError(f"Superseded component references an unknown region: {component_id}")
+                    superseded_count += 1
+                else:
+                    candidate_count += 1
                 crop_path = REPOSITORY_ROOT / component["exported_file"]
                 if not crop_path.is_file():
                     raise FileNotFoundError(crop_path)
@@ -67,7 +73,6 @@ def main() -> None:
                     )
                     if crop.tobytes() != expected.tobytes():
                         raise ValueError(f"Crop pixels differ from source: {crop_path}")
-                candidate_count += 1
             if sheet.get("manual_region_count") != len(sheet.get("manual_regions", [])):
                 raise ValueError(f"Manual region count mismatch: {sheet['source_file']}")
             for region in sheet.get("manual_regions", []):
@@ -75,10 +80,18 @@ def main() -> None:
                 if region_id in seen_ids:
                     raise ValueError(f"Duplicate region id: {region_id}")
                 seen_ids.add(region_id)
-                if region["review_status"] != "manual_bounds_pending_review":
+                if region["review_status"] not in (
+                    "manual_bounds_pending_review",
+                    "founder_approved_manual_crop",
+                ):
                     raise ValueError(f"Unexpected manual review state: {region_id}")
-                if region["is_approved_asset"]:
-                    raise ValueError(f"Unreviewed manual region marked approved: {region_id}")
+                is_approved = region["review_status"] == "founder_approved_manual_crop"
+                if region["is_approved_asset"] != is_approved:
+                    raise ValueError(f"Manual approval flag/status mismatch: {region_id}")
+                if is_approved:
+                    approved_count += 1
+                else:
+                    candidate_count += 1
                 crop_path = REPOSITORY_ROOT / region["exported_file"]
                 if not crop_path.is_file():
                     raise FileNotFoundError(crop_path)
@@ -91,7 +104,6 @@ def main() -> None:
                     expected = source_rgba.crop((x, y, x + region["width"], y + region["height"]))
                     if crop.tobytes() != expected.tobytes():
                         raise ValueError(f"Manual crop pixels differ from source: {crop_path}")
-                candidate_count += 1
         else:
             if "components" in sheet or sheet.get("component_extraction") != "not_performed_for_terrain":
                 raise ValueError("Terrain sheets must not be object-cropped")
@@ -101,8 +113,34 @@ def main() -> None:
                     raise FileNotFoundError(grid_preview)
                 if grid["review_status"] != "candidate_not_confirmed":
                     raise ValueError("Terrain tile grid was marked confirmed without review")
+            if sheet.get("tile_grid_status") != "best_fit_unconfirmed":
+                raise ValueError("Terrain extraction must remain explicitly unconfirmed")
+            if sheet.get("best_fit_tile_size_candidate") != 16:
+                raise ValueError("Unexpected terrain tile-size candidate")
+            if len(sheet.get("tile_candidates", [])) != sheet.get("tile_candidate_count"):
+                raise ValueError("Terrain tile-candidate count mismatch")
+            for tile in sheet.get("tile_candidates", []):
+                if tile["review_status"] != "candidate_not_confirmed" or tile["is_approved_asset"]:
+                    raise ValueError(f"Terrain candidate was prematurely approved: {tile['id']}")
+                tile_path = REPOSITORY_ROOT / tile["exported_file"]
+                if not tile_path.is_file():
+                    raise FileNotFoundError(tile_path)
+                with Image.open(tile_path) as tile_image:
+                    if tile_image.mode != "RGBA":
+                        raise ValueError(f"Terrain candidate lost alpha: {tile_path}")
+                    if list(tile_image.size) != [tile["width"], tile["height"]]:
+                        raise ValueError(f"Terrain candidate dimensions mismatch: {tile_path}")
+                    x, y = tile["x"], tile["y"]
+                    expected = source_rgba.crop((x, y, x + tile["width"], y + tile["height"]))
+                    if tile_image.tobytes() != expected.tobytes():
+                        raise ValueError(f"Terrain candidate pixels differ from source: {tile_path}")
+                terrain_candidate_count += 1
 
-    print(f"Validated {len(manifest['sheets'])} source sheets and {candidate_count} unapproved object crops.")
+    print(
+        f"Validated {len(manifest['sheets'])} source sheets, {approved_count} approved manual crops, "
+        f"{candidate_count} remaining object candidates, {terrain_candidate_count} unconfirmed terrain tiles, "
+        f"and {superseded_count} superseded components."
+    )
 
 
 if __name__ == "__main__":

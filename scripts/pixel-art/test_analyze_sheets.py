@@ -8,6 +8,7 @@ from analyze_sheets import (
     composite_checkerboard,
     find_manual_coverage,
     find_components,
+    find_nonempty_tile_regions,
     inspect_sheet,
     validate_manual_regions,
 )
@@ -80,6 +81,16 @@ class AnalyzeSheetsTests(unittest.TestCase):
         self.assertEqual(regions[0]["overlaps_with"], ["overlap"])
         self.assertEqual(regions[1]["overlaps_with"], ["large_region"])
 
+    def test_terrain_grid_extractor_keeps_only_nonempty_16px_tiles(self) -> None:
+        image = Image.new("RGBA", (32, 16), (0, 0, 0, 0))
+        image.putpixel((16, 0), (40, 120, 180, 255))
+
+        tiles = find_nonempty_tile_regions(image, 16)
+
+        self.assertEqual(len(tiles), 1)
+        self.assertEqual(tiles[0]["id"], "terrain16_r00_c01")
+        self.assertEqual((tiles[0]["x"], tiles[0]["y"], tiles[0]["width"], tiles[0]["height"]), (16, 0, 16, 16))
+
     def test_manual_overrides_export_two_crops_from_one_component(self) -> None:
         with TemporaryDirectory() as temporary_directory:
             root = Path(temporary_directory)
@@ -102,6 +113,7 @@ class AnalyzeSheetsTests(unittest.TestCase):
                 output_dir,
                 root,
                 regions,
+                {"left_object"},
             )
 
             self.assertEqual(sheet["component_count"], 1)
@@ -116,6 +128,12 @@ class AnalyzeSheetsTests(unittest.TestCase):
                 with Image.open(crop_path) as crop:
                     self.assertEqual(crop.size, (2, 2))
                     self.assertEqual(crop.mode, "RGBA")
+            approved = next(region for region in sheet["manual_regions"] if region["id"] == "left_object")
+            pending = next(region for region in sheet["manual_regions"] if region["id"] == "right_object")
+            self.assertEqual(approved["review_status"], "founder_approved_manual_crop")
+            self.assertTrue(approved["exported_file"].startswith("output/sprites/approved/"))
+            self.assertEqual(pending["review_status"], "manual_bounds_pending_review")
+            self.assertTrue(pending["exported_file"].startswith("output/sprites/manual-candidates/"))
 
     def test_manual_regions_must_cover_all_component_pixels_to_supersede(self) -> None:
         image = Image.new("RGBA", (4, 2), (20, 90, 40, 255))

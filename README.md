@@ -45,10 +45,10 @@ The build and dev scripts use webpack because the installed Next.js native Turbo
 - Supabase Auth sessions use `@supabase/ssr`; `proxy.ts` refreshes cookies, and server layouts independently verify the signed-in user and database role.
 - `profiles` stores the trusted `student` or `teacher` role. RLS restricts profile reads/updates to the owner, and column grants prevent users from changing their role.
 - New accounts default to student. Teacher role assignment is an administrator action; public sign-up is not exposed.
-- Original Pixel Art sources remain unchanged in `Pixel Art/`; canonical copies and review-only crop candidates are under `public/assets/nabta/world/`. They are not integrated into the student UI.
+- Original Pixel Art sources remain unchanged in `Pixel Art/`; canonical copies, founder-approved manual sprites, and review-only automatic candidates are under `public/assets/nabta/world/`. They are not integrated into the student UI.
 
 ## Pixel Art Analysis
 
-The source analysis workflow, generated previews, candidate crop review rules, and validation commands are documented in [scripts/pixel-art/README.md](scripts/pixel-art/README.md). Use the [Sprite Region Editor](http://localhost:3001/assets/nabta/world/tools/region-editor.html) to draw separate regions around objects that share one connected frame. Candidate crops remain unapproved and terrain tiles are not sliced until their boundaries are reviewed.
+The source analysis workflow, generated previews, crop approval rules, and validation commands are documented in [scripts/pixel-art/README.md](scripts/pixel-art/README.md). Founder-approved manual sprites are under `public/assets/nabta/world/sprites/approved/`; automatic alpha-component detections remain diagnostic candidates. The terrain sheet has 16px tile candidates, but its grid is unconfirmed. Use the [Sprite Region Editor](http://localhost:3001/assets/nabta/world/tools/region-editor.html) to correct further object boundaries.
 
 See [DEVELOPMENT_LOG.md](DEVELOPMENT_LOG.md) for verified progress and remaining Stage 1 checks.

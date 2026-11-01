@@ -48,25 +48,25 @@ No AI functionality, lesson workflow, assessment workflow, grading, XP, or Pixel
 - Copied all three source sheets to `public/assets/nabta/world/source/`; the originals remain unchanged and SHA-256 checks match.
 - Recorded dimensions, RGBA mode, transparency counts, partial-alpha values, and source hashes.
 - Generated 71 8-connected object-component crops and labeled previews; every crop is marked `pending_manual_review` and is not approved for UI use.
-- Generated 8, 16, 32, and 64 pixel candidate-grid previews for terrain without slicing terrain as sprites.
+- Generated 8, 16, 32, and 64 pixel terrain-grid previews; 16px best fits the occupied bounds and visual seams, so 62 nonempty 16x16 cells are exported as unconfirmed tile candidates.
 - Added asset pipeline unit tests and an output validator that checks source hashes, crop dimensions, alpha mode, pixel equality, and review flags.
 - Added a browser region editor and analyzer overrides so separate manual crops can be defined inside one connected alpha component.
-- Imported 37 user-drawn regions for `forest_demo_objects.png`; original coordinates are preserved and crops are stored separately from automatic candidates.
+- Imported 37 founder-approved user-drawn regions for `forest_demo_objects.png`; original coordinates are preserved and approved crops are under `sprites/approved/`.
 - Split the mixed C03 component into separate `c03_plant` and `c03_wood` regions; the merged automatic component is marked superseded when all source pixels are covered by manual crops.
 
 ### Verification
 
-- `python -m unittest discover -s scripts/pixel-art -p "test_*.py"` — PASS (8 tests, including connected-frame splitting, coverage, and review flags).
-- `python scripts/pixel-art/analyze_sheets.py` — PASS; 3 sheets analyzed, 71 automatic and 37 manual crops generated.
-- `python scripts/pixel-art/validate_assets.py` — PASS; all 108 unapproved crops and previews validated.
-- Manual box review flags — 12 regions overlap another box; 6 are large; region 018 is 61x85. C03 is superseded by its plant/wood boxes. No region is marked approved.
+- `python -m unittest discover -s scripts/pixel-art -p "test_*.py"` — PASS (9 tests, including connected-frame splitting, approval routing, terrain extraction, and review flags).
+- `python scripts/pixel-art/analyze_sheets.py` — PASS; 3 sheets analyzed, 71 automatic and 37 manual object crops plus 62 terrain candidates generated.
+- `python scripts/pixel-art/validate_assets.py` — PASS; 37 approved manual crops, 44 remaining object candidates, 62 terrain candidates, and 27 superseded components validated.
+- Manual box review flags — 12 approved regions overlap another box; 6 are large; region 018 is 61x85. C03 is superseded by its plant/wood boxes.
 - Visual preview inspection — PASS for reviewability; several grouped components remain ambiguous and unapproved.
 - Browser region editor — PASS; loaded a real source sheet and drew two distinct regions within its coordinate frame.
 - Editor coordinate mapping — PASS; at a responsive 650.5px CSS canvas size, a drag at source (200, 20) reports (200, 20) and paints the box at the corresponding 3x backing-pixel location.
 
 ### Remaining Stage 2 Work
 
-- Founder review of object-component boundaries and the terrain grid; no crop is yet approved for app integration.
+- Confirm whether 16px is the actual terrain grid before promoting those tile candidates.
 - The student-world renderer and quest path are not integrated. No real quest data exists yet, and fake quest states would violate the product requirements.
 - Source asset license/attribution information is unavailable; verify before public or commercial distribution.
 

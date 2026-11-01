@@ -17,6 +17,7 @@ SHEETS = {
     "forest_demo_terrain.png": "terrain",
 }
 GRID_CANDIDATES = (8, 16, 32, 64)
+BEST_FIT_TERRAIN_TILE_SIZE = 16
 PREVIEW_SCALE = 3
 
 
@@ -164,6 +165,37 @@ def find_manual_coverage(
     return is_fully_covered, sorted(intersecting_ids)
 
 
+def find_nonempty_tile_regions(image: Image.Image, tile_size: int) -> list[dict[str, int | str]]:
+    alpha = image.getchannel("A")
+    regions: list[dict[str, int | str]] = []
+    rows = (image.height + tile_size - 1) // tile_size
+    columns = (image.width + tile_size - 1) // tile_size
+
+    for row in range(rows):
+        for column in range(columns):
+            x, y = column * tile_size, row * tile_size
+            width = min(tile_size, image.width - x)
+            height = min(tile_size, image.height - y)
+            tile_alpha = alpha.crop((x, y, x + width, y + height)).tobytes()
+            alpha_pixel_count = sum(value > 0 for value in tile_alpha)
+            if alpha_pixel_count == 0:
+                continue
+            regions.append(
+                {
+                    "id": f"terrain16_r{row:02d}_c{column:02d}",
+                    "row": row,
+                    "column": column,
+                    "x": x,
+                    "y": y,
+                    "width": width,
+                    "height": height,
+                    "alpha_pixel_count": alpha_pixel_count,
+                }
+            )
+
+    return regions
+
+
 def composite_checkerboard(image: Image.Image) -> Image.Image:
     width, height = image.size
     background = Image.new("RGBA", image.size, (226, 231, 226, 255))
@@ -223,9 +255,10 @@ def save_component_preview(
         y = region["y"] * PREVIEW_SCALE
         right = (region["x"] + region["width"] - 1) * PREVIEW_SCALE
         bottom = (region["y"] + region["height"] - 1) * PREVIEW_SCALE
-        color = (207, 32, 132)
+        approved = region.get("is_approved_asset", False)
+        color = (37, 127, 79) if approved else (207, 32, 132)
         draw.rectangle((x, y, right, bottom), outline=color, width=3)
-        label = f"M{index:02}"
+        label = f"A{index:02}" if approved else f"M{index:02}"
         text_bounds = draw.textbbox((0, 0), label, font=font)
         text_width = text_bounds[2] - text_bounds[0]
         text_height = text_bounds[3] - text_bounds[1]
@@ -281,6 +314,7 @@ def inspect_sheet(
     output_dir: Path,
     repository_root: Path,
     configured_manual_regions: dict[str, list[dict[str, Any]]],
+    approved_region_ids: set[str] | None = None,
 ) -> dict[str, Any]:
     source_path = source_dir / filename
     if not source_path.is_file():
@@ -320,6 +354,13 @@ def inspect_sheet(
         manual_regions = validate_manual_regions(
             (width, height), configured_manual_regions.get(filename, [])
         )
+        approved_region_ids = approved_region_ids or set()
+        known_region_ids = {region["id"] for region in manual_regions}
+        unknown_approved_ids = approved_region_ids - known_region_ids
+        if unknown_approved_ids:
+            raise ValueError(
+                f"Approved regions are not defined for {filename}: {sorted(unknown_approved_ids)}"
+            )
         component_dir = output_dir / "sprites" / "candidates" / sheet_id
         component_dir.mkdir(parents=True, exist_ok=True)
         for index, component in enumerate(candidates, start=1):
@@ -350,8 +391,10 @@ def inspect_sheet(
                 }
             )
 
-        manual_dir = output_dir / "sprites" / "manual-candidates" / sheet_id
         for region in manual_regions:
+            is_approved = region["id"] in approved_region_ids
+            output_group = "approved" if is_approved else "manual-candidates"
+            manual_dir = output_dir / "sprites" / output_group / sheet_id
             export_path = manual_dir / f"{region['id']}.png"
             export_path.parent.mkdir(parents=True, exist_ok=True)
             x, y = region["x"], region["y"]
@@ -361,8 +404,12 @@ def inspect_sheet(
                 {
                     "exported_file": repository_path(export_path, repository_root),
                     "alpha_pixel_count": sum(1 for value in crop.getchannel("A").tobytes() if value),
-                    "review_status": "manual_bounds_pending_review",
-                    "is_approved_asset": False,
+                    "review_status": (
+                        "founder_approved_manual_crop"
+                        if is_approved
+                        else "manual_bounds_pending_review"
+                    ),
+                    "is_approved_asset": is_approved,
                 }
             )
 
@@ -394,7 +441,30 @@ def inspect_sheet(
             )
         result["tile_grid_candidates"] = grid_candidates
         result["component_extraction"] = "not_performed_for_terrain"
-        result["review_note"] = "Confirm the actual terrain grid visually before slicing any tiles."
+        tile_size = BEST_FIT_TERRAIN_TILE_SIZE
+        tile_regions = find_nonempty_tile_regions(image, tile_size)
+        tile_dir = output_dir / "terrain" / "candidates" / f"grid-{tile_size}"
+        tile_dir.mkdir(parents=True, exist_ok=True)
+        for tile in tile_regions:
+            x, y = tile["x"], tile["y"]
+            crop = image.crop((x, y, x + tile["width"], y + tile["height"]))
+            tile_path = tile_dir / f"{tile['id']}.png"
+            crop.save(tile_path)
+            tile.update(
+                {
+                    "exported_file": repository_path(tile_path, repository_root),
+                    "review_status": "candidate_not_confirmed",
+                    "is_approved_asset": False,
+                }
+            )
+        result["best_fit_tile_size_candidate"] = tile_size
+        result["tile_candidate_count"] = len(tile_regions)
+        result["tile_candidates"] = tile_regions
+        result["tile_grid_status"] = "best_fit_unconfirmed"
+        result["review_note"] = (
+            "16x16 best fits the occupied 176x112 alpha bounds and visible seams, "
+            "but the grid remains unconfirmed. Candidate tiles must be reviewed before integration."
+        )
 
     return result
 
@@ -424,8 +494,19 @@ def main() -> None:
         if manual_data.get("schema_version") != 1 or not isinstance(manual_data.get("sheets"), dict):
             raise ValueError(f"Invalid manual region file: {args.manual_regions}")
         configured_manual_regions = manual_data["sheets"]
+        approval_config = manual_data.get("approved_regions", {})
+        if not isinstance(approval_config, dict):
+            raise ValueError("approved_regions must map source filenames to lists of ids.")
+        approved_regions_by_sheet: dict[str, set[str]] = {}
+        for source_filename, region_ids in approval_config.items():
+            if source_filename not in SHEETS:
+                raise ValueError(f"Approvals reference an unknown source sheet: {source_filename}")
+            if not isinstance(region_ids, list) or not all(isinstance(item, str) for item in region_ids):
+                raise ValueError(f"Approvals for {source_filename} must be a list of region ids.")
+            approved_regions_by_sheet[source_filename] = set(region_ids)
     else:
         configured_manual_regions = {}
+        approved_regions_by_sheet = {}
     unknown_sheets = set(configured_manual_regions) - set(SHEETS)
     if unknown_sheets:
         raise ValueError(f"Manual regions reference unknown sheets: {sorted(unknown_sheets)}")
@@ -441,6 +522,7 @@ def main() -> None:
                 args.output_dir,
                 repository_root,
                 configured_manual_regions,
+                approved_regions_by_sheet.get(filename, set()),
             )
             for filename, category in SHEETS.items()
         ],
