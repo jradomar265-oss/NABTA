@@ -36,7 +36,9 @@
       { "id": "region_032", "x": 241, "y": 18, "width": 14, "height": 14 },
       { "id": "region_033", "x": 225, "y": 16, "width": 14, "height": 16 },
       { "id": "region_034", "x": 225, "y": 32, "width": 15, "height": 17 },
-      { "id": "region_035", "x": 241, "y": 32, "width": 15, "height": 16 }
+      { "id": "region_035", "x": 241, "y": 32, "width": 15, "height": 16 },
+      { "id": "c03_plant", "x": 177, "y": 0, "width": 31, "height": 33 },
+      { "id": "c03_wood", "x": 179, "y": 33, "width": 28, "height": 15 }
     ]
   }
 }

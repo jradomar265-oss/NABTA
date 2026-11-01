@@ -40,10 +40,19 @@ def main() -> None:
                 if component_id in seen_ids:
                     raise ValueError(f"Duplicate component id: {component_id}")
                 seen_ids.add(component_id)
-                if component["review_status"] != "pending_manual_review":
+                if component["review_status"] not in (
+                    "pending_manual_review",
+                    "superseded_by_manual_regions",
+                ):
                     raise ValueError(f"Unexpected review state: {component_id}")
                 if component["is_approved_asset"]:
                     raise ValueError(f"Unreviewed asset marked approved: {component_id}")
+                if component["review_status"] == "superseded_by_manual_regions":
+                    if not component["superseded_by_manual_regions"]:
+                        raise ValueError(f"Superseded component has no manual regions: {component_id}")
+                    known_manual_ids = {region["id"] for region in sheet["manual_regions"]}
+                    if not set(component["superseded_by_manual_regions"]).issubset(known_manual_ids):
+                        raise ValueError(f"Superseded component references an unknown region: {component_id}")
                 crop_path = REPOSITORY_ROOT / component["exported_file"]
                 if not crop_path.is_file():
                     raise FileNotFoundError(crop_path)

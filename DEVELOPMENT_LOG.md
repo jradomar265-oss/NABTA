@@ -51,14 +51,15 @@ No AI functionality, lesson workflow, assessment workflow, grading, XP, or Pixel
 - Generated 8, 16, 32, and 64 pixel candidate-grid previews for terrain without slicing terrain as sprites.
 - Added asset pipeline unit tests and an output validator that checks source hashes, crop dimensions, alpha mode, pixel equality, and review flags.
 - Added a browser region editor and analyzer overrides so separate manual crops can be defined inside one connected alpha component.
-- Imported 35 user-drawn regions for `forest_demo_objects.png`; original coordinates are preserved and crops are stored separately from automatic candidates.
+- Imported 37 user-drawn regions for `forest_demo_objects.png`; original coordinates are preserved and crops are stored separately from automatic candidates.
+- Split the mixed C03 component into separate `c03_plant` and `c03_wood` regions; the merged automatic component is marked superseded when all source pixels are covered by manual crops.
 
 ### Verification
 
-- `python -m unittest discover -s scripts/pixel-art -p "test_*.py"` — PASS (7 tests, including connected-frame manual splitting and review flags).
-- `python scripts/pixel-art/analyze_sheets.py` — PASS; 3 sheets analyzed, 71 automatic and 35 manual crops generated.
-- `python scripts/pixel-art/validate_assets.py` — PASS; all 106 unapproved crops and previews validated.
-- Manual box review flags — 12 regions overlap another box; 6 are large; region 018 is 61x85. No region is marked approved.
+- `python -m unittest discover -s scripts/pixel-art -p "test_*.py"` — PASS (8 tests, including connected-frame splitting, coverage, and review flags).
+- `python scripts/pixel-art/analyze_sheets.py` — PASS; 3 sheets analyzed, 71 automatic and 37 manual crops generated.
+- `python scripts/pixel-art/validate_assets.py` — PASS; all 108 unapproved crops and previews validated.
+- Manual box review flags — 12 regions overlap another box; 6 are large; region 018 is 61x85. C03 is superseded by its plant/wood boxes. No region is marked approved.
 - Visual preview inspection — PASS for reviewability; several grouped components remain ambiguous and unapproved.
 - Browser region editor — PASS; loaded a real source sheet and drew two distinct regions within its coordinate frame.
 - Editor coordinate mapping — PASS; at a responsive 650.5px CSS canvas size, a drag at source (200, 20) reports (200, 20) and paints the box at the corresponding 3x backing-pixel location.

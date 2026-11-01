@@ -131,6 +131,39 @@ def find_components(image: Image.Image) -> list[dict[str, int]]:
     return sorted(components, key=lambda component: (component["y"], component["x"]))
 
 
+def find_manual_coverage(
+    image: Image.Image,
+    component: dict[str, Any],
+    manual_regions: list[dict[str, Any]],
+) -> tuple[bool, list[str]]:
+    alpha = image.getchannel("A").tobytes()
+    image_width = image.width
+    intersecting_ids: set[str] = set()
+    uncovered_pixel_found = False
+    component_x, component_y = component["x"], component["y"]
+
+    for local_y in range(component["height"]):
+        for local_x in range(component["width"]):
+            source_x = component_x + local_x
+            source_y = component_y + local_y
+            if alpha[source_y * image_width + source_x] == 0:
+                continue
+
+            covering_regions = [
+                region
+                for region in manual_regions
+                if region["x"] <= source_x < region["x"] + region["width"]
+                and region["y"] <= source_y < region["y"] + region["height"]
+            ]
+            if not covering_regions:
+                uncovered_pixel_found = True
+            else:
+                intersecting_ids.update(region["id"] for region in covering_regions)
+
+    is_fully_covered = bool(intersecting_ids) and not uncovered_pixel_found
+    return is_fully_covered, sorted(intersecting_ids)
+
+
 def composite_checkerboard(image: Image.Image) -> Image.Image:
     width, height = image.size
     background = Image.new("RGBA", image.size, (226, 231, 226, 255))
@@ -165,6 +198,8 @@ def save_component_preview(
     colors = ((220, 57, 48), (22, 111, 190), (119, 68, 160), (0, 129, 99), (201, 111, 0))
 
     for index, component in enumerate(components, start=1):
+        if component.get("review_status") == "superseded_by_manual_regions":
+            continue
         x = component["x"] * PREVIEW_SCALE
         y = component["y"] * PREVIEW_SCALE
         right = (component["x"] + component["width"] - 1) * PREVIEW_SCALE
@@ -293,12 +328,25 @@ def inspect_sheet(
             x, y = component["x"], component["y"]
             crop = image.crop((x, y, x + component["width"], y + component["height"]))
             crop.save(export_path)
+            is_superseded, covering_region_ids = find_manual_coverage(
+                image, component, manual_regions
+            )
             component.update(
                 {
                     "id": component_id,
                     "exported_file": repository_path(export_path, repository_root),
-                    "review_status": "pending_manual_review",
+                    "review_status": (
+                        "superseded_by_manual_regions"
+                        if is_superseded
+                        else "pending_manual_review"
+                    ),
                     "is_approved_asset": False,
+                    "review_flags": (
+                        ["superseded_by_manual_regions"] if is_superseded else []
+                    ),
+                    "superseded_by_manual_regions": covering_region_ids
+                    if is_superseded
+                    else [],
                 }
             )
 

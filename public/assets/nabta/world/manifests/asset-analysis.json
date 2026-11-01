@@ -38,7 +38,9 @@
           "id": "free_pixel_16_woods_component_001",
           "exported_file": "public/assets/nabta/world/sprites/candidates/free_pixel_16_woods/free_pixel_16_woods_component_001.png",
           "review_status": "pending_manual_review",
-          "is_approved_asset": false
+          "is_approved_asset": false,
+          "review_flags": [],
+          "superseded_by_manual_regions": []
         },
         {
           "x": 151,
@@ -49,7 +51,9 @@
           "id": "free_pixel_16_woods_component_002",
           "exported_file": "public/assets/nabta/world/sprites/candidates/free_pixel_16_woods/free_pixel_16_woods_component_002.png",
           "review_status": "pending_manual_review",
-          "is_approved_asset": false
+          "is_approved_asset": false,
+          "review_flags": [],
+          "superseded_by_manual_regions": []
         },
         {
           "x": 23,
@@ -60,7 +64,9 @@
           "id": "free_pixel_16_woods_component_003",
           "exported_file": "public/assets/nabta/world/sprites/candidates/free_pixel_16_woods/free_pixel_16_woods_component_003.png",
           "review_status": "pending_manual_review",
-          "is_approved_asset": false
+          "is_approved_asset": false,
+          "review_flags": [],
+          "superseded_by_manual_regions": []
         },
         {
           "x": 96,
@@ -71,7 +77,9 @@
           "id": "free_pixel_16_woods_component_004",
           "exported_file": "public/assets/nabta/world/sprites/candidates/free_pixel_16_woods/free_pixel_16_woods_component_004.png",
           "review_status": "pending_manual_review",
-          "is_approved_asset": false
+          "is_approved_asset": false,
+          "review_flags": [],
+          "superseded_by_manual_regions": []
         },
         {
           "x": 121,
@@ -82,7 +90,9 @@
           "id": "free_pixel_16_woods_component_005",
           "exported_file": "public/assets/nabta/world/sprites/candidates/free_pixel_16_woods/free_pixel_16_woods_component_005.png",
           "review_status": "pending_manual_review",
-          "is_approved_asset": false
+          "is_approved_asset": false,
+          "review_flags": [],
+          "superseded_by_manual_regions": []
         },
         {
           "x": 224,
@@ -93,7 +103,9 @@
           "id": "free_pixel_16_woods_component_006",
           "exported_file": "public/assets/nabta/world/sprites/candidates/free_pixel_16_woods/free_pixel_16_woods_component_006.png",
           "review_status": "pending_manual_review",
-          "is_approved_asset": false
+          "is_approved_asset": false,
+          "review_flags": [],
+          "superseded_by_manual_regions": []
         },
         {
           "x": 260,
@@ -104,7 +116,9 @@
           "id": "free_pixel_16_woods_component_007",
           "exported_file": "public/assets/nabta/world/sprites/candidates/free_pixel_16_woods/free_pixel_16_woods_component_007.png",
           "review_status": "pending_manual_review",
-          "is_approved_asset": false
+          "is_approved_asset": false,
+          "review_flags": [],
+          "superseded_by_manual_regions": []
         },
         {
           "x": 104,
@@ -115,7 +129,9 @@
           "id": "free_pixel_16_woods_component_008",
           "exported_file": "public/assets/nabta/world/sprites/candidates/free_pixel_16_woods/free_pixel_16_woods_component_008.png",
           "review_status": "pending_manual_review",
-          "is_approved_asset": false
+          "is_approved_asset": false,
+          "review_flags": [],
+          "superseded_by_manual_regions": []
         },
         {
           "x": 244,
@@ -126,7 +142,9 @@
           "id": "free_pixel_16_woods_component_009",
           "exported_file": "public/assets/nabta/world/sprites/candidates/free_pixel_16_woods/free_pixel_16_woods_component_009.png",
           "review_status": "pending_manual_review",
-          "is_approved_asset": false
+          "is_approved_asset": false,
+          "review_flags": [],
+          "superseded_by_manual_regions": []
         },
         {
           "x": 225,
@@ -137,7 +155,9 @@
           "id": "free_pixel_16_woods_component_010",
           "exported_file": "public/assets/nabta/world/sprites/candidates/free_pixel_16_woods/free_pixel_16_woods_component_010.png",
           "review_status": "pending_manual_review",
-          "is_approved_asset": false
+          "is_approved_asset": false,
+          "review_flags": [],
+          "superseded_by_manual_regions": []
         },
         {
           "x": 249,
@@ -148,7 +168,9 @@
           "id": "free_pixel_16_woods_component_011",
           "exported_file": "public/assets/nabta/world/sprites/candidates/free_pixel_16_woods/free_pixel_16_woods_component_011.png",
           "review_status": "pending_manual_review",
-          "is_approved_asset": false
+          "is_approved_asset": false,
+          "review_flags": [],
+          "superseded_by_manual_regions": []
         },
         {
           "x": 99,
@@ -159,7 +181,9 @@
           "id": "free_pixel_16_woods_component_012",
           "exported_file": "public/assets/nabta/world/sprites/candidates/free_pixel_16_woods/free_pixel_16_woods_component_012.png",
           "review_status": "pending_manual_review",
-          "is_approved_asset": false
+          "is_approved_asset": false,
+          "review_flags": [],
+          "superseded_by_manual_regions": []
         },
         {
           "x": 258,
@@ -170,7 +194,9 @@
           "id": "free_pixel_16_woods_component_013",
           "exported_file": "public/assets/nabta/world/sprites/candidates/free_pixel_16_woods/free_pixel_16_woods_component_013.png",
           "review_status": "pending_manual_review",
-          "is_approved_asset": false
+          "is_approved_asset": false,
+          "review_flags": [],
+          "superseded_by_manual_regions": []
         },
         {
           "x": 241,
@@ -181,7 +207,9 @@
           "id": "free_pixel_16_woods_component_014",
           "exported_file": "public/assets/nabta/world/sprites/candidates/free_pixel_16_woods/free_pixel_16_woods_component_014.png",
           "review_status": "pending_manual_review",
-          "is_approved_asset": false
+          "is_approved_asset": false,
+          "review_flags": [],
+          "superseded_by_manual_regions": []
         },
         {
           "x": 115,
@@ -192,7 +220,9 @@
           "id": "free_pixel_16_woods_component_015",
           "exported_file": "public/assets/nabta/world/sprites/candidates/free_pixel_16_woods/free_pixel_16_woods_component_015.png",
           "review_status": "pending_manual_review",
-          "is_approved_asset": false
+          "is_approved_asset": false,
+          "review_flags": [],
+          "superseded_by_manual_regions": []
         },
         {
           "x": 117,
@@ -203,7 +233,9 @@
           "id": "free_pixel_16_woods_component_016",
           "exported_file": "public/assets/nabta/world/sprites/candidates/free_pixel_16_woods/free_pixel_16_woods_component_016.png",
           "review_status": "pending_manual_review",
-          "is_approved_asset": false
+          "is_approved_asset": false,
+          "review_flags": [],
+          "superseded_by_manual_regions": []
         },
         {
           "x": 103,
@@ -214,7 +246,9 @@
           "id": "free_pixel_16_woods_component_017",
           "exported_file": "public/assets/nabta/world/sprites/candidates/free_pixel_16_woods/free_pixel_16_woods_component_017.png",
           "review_status": "pending_manual_review",
-          "is_approved_asset": false
+          "is_approved_asset": false,
+          "review_flags": [],
+          "superseded_by_manual_regions": []
         },
         {
           "x": 228,
@@ -225,7 +259,9 @@
           "id": "free_pixel_16_woods_component_018",
           "exported_file": "public/assets/nabta/world/sprites/candidates/free_pixel_16_woods/free_pixel_16_woods_component_018.png",
           "review_status": "pending_manual_review",
-          "is_approved_asset": false
+          "is_approved_asset": false,
+          "review_flags": [],
+          "superseded_by_manual_regions": []
         },
         {
           "x": 100,
@@ -236,7 +272,9 @@
           "id": "free_pixel_16_woods_component_019",
           "exported_file": "public/assets/nabta/world/sprites/candidates/free_pixel_16_woods/free_pixel_16_woods_component_019.png",
           "review_status": "pending_manual_review",
-          "is_approved_asset": false
+          "is_approved_asset": false,
+          "review_flags": [],
+          "superseded_by_manual_regions": []
         },
         {
           "x": 105,
@@ -247,7 +285,9 @@
           "id": "free_pixel_16_woods_component_020",
           "exported_file": "public/assets/nabta/world/sprites/candidates/free_pixel_16_woods/free_pixel_16_woods_component_020.png",
           "review_status": "pending_manual_review",
-          "is_approved_asset": false
+          "is_approved_asset": false,
+          "review_flags": [],
+          "superseded_by_manual_regions": []
         },
         {
           "x": 243,
@@ -258,7 +298,9 @@
           "id": "free_pixel_16_woods_component_021",
           "exported_file": "public/assets/nabta/world/sprites/candidates/free_pixel_16_woods/free_pixel_16_woods_component_021.png",
           "review_status": "pending_manual_review",
-          "is_approved_asset": false
+          "is_approved_asset": false,
+          "review_flags": [],
+          "superseded_by_manual_regions": []
         },
         {
           "x": 112,
@@ -269,7 +311,9 @@
           "id": "free_pixel_16_woods_component_022",
           "exported_file": "public/assets/nabta/world/sprites/candidates/free_pixel_16_woods/free_pixel_16_woods_component_022.png",
           "review_status": "pending_manual_review",
-          "is_approved_asset": false
+          "is_approved_asset": false,
+          "review_flags": [],
+          "superseded_by_manual_regions": []
         },
         {
           "x": 136,
@@ -280,7 +324,9 @@
           "id": "free_pixel_16_woods_component_023",
           "exported_file": "public/assets/nabta/world/sprites/candidates/free_pixel_16_woods/free_pixel_16_woods_component_023.png",
           "review_status": "pending_manual_review",
-          "is_approved_asset": false
+          "is_approved_asset": false,
+          "review_flags": [],
+          "superseded_by_manual_regions": []
         },
         {
           "x": 231,
@@ -291,7 +337,9 @@
           "id": "free_pixel_16_woods_component_024",
           "exported_file": "public/assets/nabta/world/sprites/candidates/free_pixel_16_woods/free_pixel_16_woods_component_024.png",
           "review_status": "pending_manual_review",
-          "is_approved_asset": false
+          "is_approved_asset": false,
+          "review_flags": [],
+          "superseded_by_manual_regions": []
         },
         {
           "x": 89,
@@ -302,7 +350,9 @@
           "id": "free_pixel_16_woods_component_025",
           "exported_file": "public/assets/nabta/world/sprites/candidates/free_pixel_16_woods/free_pixel_16_woods_component_025.png",
           "review_status": "pending_manual_review",
-          "is_approved_asset": false
+          "is_approved_asset": false,
+          "review_flags": [],
+          "superseded_by_manual_regions": []
         },
         {
           "x": 105,
@@ -313,7 +363,9 @@
           "id": "free_pixel_16_woods_component_026",
           "exported_file": "public/assets/nabta/world/sprites/candidates/free_pixel_16_woods/free_pixel_16_woods_component_026.png",
           "review_status": "pending_manual_review",
-          "is_approved_asset": false
+          "is_approved_asset": false,
+          "review_flags": [],
+          "superseded_by_manual_regions": []
         },
         {
           "x": 81,
@@ -324,7 +376,9 @@
           "id": "free_pixel_16_woods_component_027",
           "exported_file": "public/assets/nabta/world/sprites/candidates/free_pixel_16_woods/free_pixel_16_woods_component_027.png",
           "review_status": "pending_manual_review",
-          "is_approved_asset": false
+          "is_approved_asset": false,
+          "review_flags": [],
+          "superseded_by_manual_regions": []
         },
         {
           "x": 97,
@@ -335,7 +389,9 @@
           "id": "free_pixel_16_woods_component_028",
           "exported_file": "public/assets/nabta/world/sprites/candidates/free_pixel_16_woods/free_pixel_16_woods_component_028.png",
           "review_status": "pending_manual_review",
-          "is_approved_asset": false
+          "is_approved_asset": false,
+          "review_flags": [],
+          "superseded_by_manual_regions": []
         },
         {
           "x": 121,
@@ -346,7 +402,9 @@
           "id": "free_pixel_16_woods_component_029",
           "exported_file": "public/assets/nabta/world/sprites/candidates/free_pixel_16_woods/free_pixel_16_woods_component_029.png",
           "review_status": "pending_manual_review",
-          "is_approved_asset": false
+          "is_approved_asset": false,
+          "review_flags": [],
+          "superseded_by_manual_regions": []
         },
         {
           "x": 275,
@@ -357,7 +415,9 @@
           "id": "free_pixel_16_woods_component_030",
           "exported_file": "public/assets/nabta/world/sprites/candidates/free_pixel_16_woods/free_pixel_16_woods_component_030.png",
           "review_status": "pending_manual_review",
-          "is_approved_asset": false
+          "is_approved_asset": false,
+          "review_flags": [],
+          "superseded_by_manual_regions": []
         },
         {
           "x": 144,
@@ -368,7 +428,9 @@
           "id": "free_pixel_16_woods_component_031",
           "exported_file": "public/assets/nabta/world/sprites/candidates/free_pixel_16_woods/free_pixel_16_woods_component_031.png",
           "review_status": "pending_manual_review",
-          "is_approved_asset": false
+          "is_approved_asset": false,
+          "review_flags": [],
+          "superseded_by_manual_regions": []
         },
         {
           "x": 308,
@@ -379,7 +441,9 @@
           "id": "free_pixel_16_woods_component_032",
           "exported_file": "public/assets/nabta/world/sprites/candidates/free_pixel_16_woods/free_pixel_16_woods_component_032.png",
           "review_status": "pending_manual_review",
-          "is_approved_asset": false
+          "is_approved_asset": false,
+          "review_flags": [],
+          "superseded_by_manual_regions": []
         },
         {
           "x": 240,
@@ -390,7 +454,9 @@
           "id": "free_pixel_16_woods_component_033",
           "exported_file": "public/assets/nabta/world/sprites/candidates/free_pixel_16_woods/free_pixel_16_woods_component_033.png",
           "review_status": "pending_manual_review",
-          "is_approved_asset": false
+          "is_approved_asset": false,
+          "review_flags": [],
+          "superseded_by_manual_regions": []
         },
         {
           "x": 17,
@@ -401,7 +467,9 @@
           "id": "free_pixel_16_woods_component_034",
           "exported_file": "public/assets/nabta/world/sprites/candidates/free_pixel_16_woods/free_pixel_16_woods_component_034.png",
           "review_status": "pending_manual_review",
-          "is_approved_asset": false
+          "is_approved_asset": false,
+          "review_flags": [],
+          "superseded_by_manual_regions": []
         },
         {
           "x": 80,
@@ -412,7 +480,9 @@
           "id": "free_pixel_16_woods_component_035",
           "exported_file": "public/assets/nabta/world/sprites/candidates/free_pixel_16_woods/free_pixel_16_woods_component_035.png",
           "review_status": "pending_manual_review",
-          "is_approved_asset": false
+          "is_approved_asset": false,
+          "review_flags": [],
+          "superseded_by_manual_regions": []
         },
         {
           "x": 258,
@@ -423,7 +493,9 @@
           "id": "free_pixel_16_woods_component_036",
           "exported_file": "public/assets/nabta/world/sprites/candidates/free_pixel_16_woods/free_pixel_16_woods_component_036.png",
           "review_status": "pending_manual_review",
-          "is_approved_asset": false
+          "is_approved_asset": false,
+          "review_flags": [],
+          "superseded_by_manual_regions": []
         },
         {
           "x": 227,
@@ -434,7 +506,9 @@
           "id": "free_pixel_16_woods_component_037",
           "exported_file": "public/assets/nabta/world/sprites/candidates/free_pixel_16_woods/free_pixel_16_woods_component_037.png",
           "review_status": "pending_manual_review",
-          "is_approved_asset": false
+          "is_approved_asset": false,
+          "review_flags": [],
+          "superseded_by_manual_regions": []
         },
         {
           "x": 245,
@@ -445,7 +519,9 @@
           "id": "free_pixel_16_woods_component_038",
           "exported_file": "public/assets/nabta/world/sprites/candidates/free_pixel_16_woods/free_pixel_16_woods_component_038.png",
           "review_status": "pending_manual_review",
-          "is_approved_asset": false
+          "is_approved_asset": false,
+          "review_flags": [],
+          "superseded_by_manual_regions": []
         },
         {
           "x": 265,
@@ -456,7 +532,9 @@
           "id": "free_pixel_16_woods_component_039",
           "exported_file": "public/assets/nabta/world/sprites/candidates/free_pixel_16_woods/free_pixel_16_woods_component_039.png",
           "review_status": "pending_manual_review",
-          "is_approved_asset": false
+          "is_approved_asset": false,
+          "review_flags": [],
+          "superseded_by_manual_regions": []
         },
         {
           "x": 259,
@@ -467,7 +545,9 @@
           "id": "free_pixel_16_woods_component_040",
           "exported_file": "public/assets/nabta/world/sprites/candidates/free_pixel_16_woods/free_pixel_16_woods_component_040.png",
           "review_status": "pending_manual_review",
-          "is_approved_asset": false
+          "is_approved_asset": false,
+          "review_flags": [],
+          "superseded_by_manual_regions": []
         },
         {
           "x": 226,
@@ -478,7 +558,9 @@
           "id": "free_pixel_16_woods_component_041",
           "exported_file": "public/assets/nabta/world/sprites/candidates/free_pixel_16_woods/free_pixel_16_woods_component_041.png",
           "review_status": "pending_manual_review",
-          "is_approved_asset": false
+          "is_approved_asset": false,
+          "review_flags": [],
+          "superseded_by_manual_regions": []
         },
         {
           "x": 240,
@@ -489,7 +571,9 @@
           "id": "free_pixel_16_woods_component_042",
           "exported_file": "public/assets/nabta/world/sprites/candidates/free_pixel_16_woods/free_pixel_16_woods_component_042.png",
           "review_status": "pending_manual_review",
-          "is_approved_asset": false
+          "is_approved_asset": false,
+          "review_flags": [],
+          "superseded_by_manual_regions": []
         },
         {
           "x": 258,
@@ -500,7 +584,9 @@
           "id": "free_pixel_16_woods_component_043",
           "exported_file": "public/assets/nabta/world/sprites/candidates/free_pixel_16_woods/free_pixel_16_woods_component_043.png",
           "review_status": "pending_manual_review",
-          "is_approved_asset": false
+          "is_approved_asset": false,
+          "review_flags": [],
+          "superseded_by_manual_regions": []
         }
       ],
       "manual_region_count": 0,
@@ -542,8 +628,14 @@
           "alpha_pixel_count": 3088,
           "id": "forest_demo_objects_component_001",
           "exported_file": "public/assets/nabta/world/sprites/candidates/forest_demo_objects/forest_demo_objects_component_001.png",
-          "review_status": "pending_manual_review",
-          "is_approved_asset": false
+          "review_status": "superseded_by_manual_regions",
+          "is_approved_asset": false,
+          "review_flags": [
+            "superseded_by_manual_regions"
+          ],
+          "superseded_by_manual_regions": [
+            "region_018"
+          ]
         },
         {
           "x": 64,
@@ -554,7 +646,9 @@
           "id": "forest_demo_objects_component_002",
           "exported_file": "public/assets/nabta/world/sprites/candidates/forest_demo_objects/forest_demo_objects_component_002.png",
           "review_status": "pending_manual_review",
-          "is_approved_asset": false
+          "is_approved_asset": false,
+          "review_flags": [],
+          "superseded_by_manual_regions": []
         },
         {
           "x": 177,
@@ -564,8 +658,15 @@
           "alpha_pixel_count": 1041,
           "id": "forest_demo_objects_component_003",
           "exported_file": "public/assets/nabta/world/sprites/candidates/forest_demo_objects/forest_demo_objects_component_003.png",
-          "review_status": "pending_manual_review",
-          "is_approved_asset": false
+          "review_status": "superseded_by_manual_regions",
+          "is_approved_asset": false,
+          "review_flags": [
+            "superseded_by_manual_regions"
+          ],
+          "superseded_by_manual_regions": [
+            "c03_plant",
+            "c03_wood"
+          ]
         },
         {
           "x": 212,
@@ -575,8 +676,14 @@
           "alpha_pixel_count": 552,
           "id": "forest_demo_objects_component_004",
           "exported_file": "public/assets/nabta/world/sprites/candidates/forest_demo_objects/forest_demo_objects_component_004.png",
-          "review_status": "pending_manual_review",
-          "is_approved_asset": false
+          "review_status": "superseded_by_manual_regions",
+          "is_approved_asset": false,
+          "review_flags": [
+            "superseded_by_manual_regions"
+          ],
+          "superseded_by_manual_regions": [
+            "region_019"
+          ]
         },
         {
           "x": 96,
@@ -586,8 +693,14 @@
           "alpha_pixel_count": 103,
           "id": "forest_demo_objects_component_005",
           "exported_file": "public/assets/nabta/world/sprites/candidates/forest_demo_objects/forest_demo_objects_component_005.png",
-          "review_status": "pending_manual_review",
-          "is_approved_asset": false
+          "review_status": "superseded_by_manual_regions",
+          "is_approved_asset": false,
+          "review_flags": [
+            "superseded_by_manual_regions"
+          ],
+          "superseded_by_manual_regions": [
+            "region_003"
+          ]
         },
         {
           "x": 144,
@@ -597,8 +710,18 @@
           "alpha_pixel_count": 1077,
           "id": "forest_demo_objects_component_006",
           "exported_file": "public/assets/nabta/world/sprites/candidates/forest_demo_objects/forest_demo_objects_component_006.png",
-          "review_status": "pending_manual_review",
-          "is_approved_asset": false
+          "review_status": "superseded_by_manual_regions",
+          "is_approved_asset": false,
+          "review_flags": [
+            "superseded_by_manual_regions"
+          ],
+          "superseded_by_manual_regions": [
+            "region_006",
+            "region_016",
+            "region_017",
+            "region_023",
+            "region_024"
+          ]
         },
         {
           "x": 113,
@@ -608,8 +731,14 @@
           "alpha_pixel_count": 99,
           "id": "forest_demo_objects_component_007",
           "exported_file": "public/assets/nabta/world/sprites/candidates/forest_demo_objects/forest_demo_objects_component_007.png",
-          "review_status": "pending_manual_review",
-          "is_approved_asset": false
+          "review_status": "superseded_by_manual_regions",
+          "is_approved_asset": false,
+          "review_flags": [
+            "superseded_by_manual_regions"
+          ],
+          "superseded_by_manual_regions": [
+            "region_004"
+          ]
         },
         {
           "x": 128,
@@ -619,8 +748,14 @@
           "alpha_pixel_count": 113,
           "id": "forest_demo_objects_component_008",
           "exported_file": "public/assets/nabta/world/sprites/candidates/forest_demo_objects/forest_demo_objects_component_008.png",
-          "review_status": "pending_manual_review",
-          "is_approved_asset": false
+          "review_status": "superseded_by_manual_regions",
+          "is_approved_asset": false,
+          "review_flags": [
+            "superseded_by_manual_regions"
+          ],
+          "superseded_by_manual_regions": [
+            "region_005"
+          ]
         },
         {
           "x": 226,
@@ -630,8 +765,14 @@
           "alpha_pixel_count": 93,
           "id": "forest_demo_objects_component_009",
           "exported_file": "public/assets/nabta/world/sprites/candidates/forest_demo_objects/forest_demo_objects_component_009.png",
-          "review_status": "pending_manual_review",
-          "is_approved_asset": false
+          "review_status": "superseded_by_manual_regions",
+          "is_approved_asset": false,
+          "review_flags": [
+            "superseded_by_manual_regions"
+          ],
+          "superseded_by_manual_regions": [
+            "region_033"
+          ]
         },
         {
           "x": 242,
@@ -641,8 +782,14 @@
           "alpha_pixel_count": 89,
           "id": "forest_demo_objects_component_010",
           "exported_file": "public/assets/nabta/world/sprites/candidates/forest_demo_objects/forest_demo_objects_component_010.png",
-          "review_status": "pending_manual_review",
-          "is_approved_asset": false
+          "review_status": "superseded_by_manual_regions",
+          "is_approved_asset": false,
+          "review_flags": [
+            "superseded_by_manual_regions"
+          ],
+          "superseded_by_manual_regions": [
+            "region_032"
+          ]
         },
         {
           "x": 209,
@@ -652,8 +799,14 @@
           "alpha_pixel_count": 552,
           "id": "forest_demo_objects_component_011",
           "exported_file": "public/assets/nabta/world/sprites/candidates/forest_demo_objects/forest_demo_objects_component_011.png",
-          "review_status": "pending_manual_review",
-          "is_approved_asset": false
+          "review_status": "superseded_by_manual_regions",
+          "is_approved_asset": false,
+          "review_flags": [
+            "superseded_by_manual_regions"
+          ],
+          "superseded_by_manual_regions": [
+            "region_020"
+          ]
         },
         {
           "x": 112,
@@ -663,8 +816,14 @@
           "alpha_pixel_count": 67,
           "id": "forest_demo_objects_component_012",
           "exported_file": "public/assets/nabta/world/sprites/candidates/forest_demo_objects/forest_demo_objects_component_012.png",
-          "review_status": "pending_manual_review",
-          "is_approved_asset": false
+          "review_status": "superseded_by_manual_regions",
+          "is_approved_asset": false,
+          "review_flags": [
+            "superseded_by_manual_regions"
+          ],
+          "superseded_by_manual_regions": [
+            "region_015"
+          ]
         },
         {
           "x": 120,
@@ -674,8 +833,14 @@
           "alpha_pixel_count": 47,
           "id": "forest_demo_objects_component_013",
           "exported_file": "public/assets/nabta/world/sprites/candidates/forest_demo_objects/forest_demo_objects_component_013.png",
-          "review_status": "pending_manual_review",
-          "is_approved_asset": false
+          "review_status": "superseded_by_manual_regions",
+          "is_approved_asset": false,
+          "review_flags": [
+            "superseded_by_manual_regions"
+          ],
+          "superseded_by_manual_regions": [
+            "region_015"
+          ]
         },
         {
           "x": 225,
@@ -685,8 +850,14 @@
           "alpha_pixel_count": 138,
           "id": "forest_demo_objects_component_014",
           "exported_file": "public/assets/nabta/world/sprites/candidates/forest_demo_objects/forest_demo_objects_component_014.png",
-          "review_status": "pending_manual_review",
-          "is_approved_asset": false
+          "review_status": "superseded_by_manual_regions",
+          "is_approved_asset": false,
+          "review_flags": [
+            "superseded_by_manual_regions"
+          ],
+          "superseded_by_manual_regions": [
+            "region_034"
+          ]
         },
         {
           "x": 241,
@@ -696,8 +867,15 @@
           "alpha_pixel_count": 276,
           "id": "forest_demo_objects_component_015",
           "exported_file": "public/assets/nabta/world/sprites/candidates/forest_demo_objects/forest_demo_objects_component_015.png",
-          "review_status": "pending_manual_review",
-          "is_approved_asset": false
+          "review_status": "superseded_by_manual_regions",
+          "is_approved_asset": false,
+          "review_flags": [
+            "superseded_by_manual_regions"
+          ],
+          "superseded_by_manual_regions": [
+            "region_030",
+            "region_035"
+          ]
         },
         {
           "x": 65,
@@ -707,8 +885,14 @@
           "alpha_pixel_count": 127,
           "id": "forest_demo_objects_component_016",
           "exported_file": "public/assets/nabta/world/sprites/candidates/forest_demo_objects/forest_demo_objects_component_016.png",
-          "review_status": "pending_manual_review",
-          "is_approved_asset": false
+          "review_status": "superseded_by_manual_regions",
+          "is_approved_asset": false,
+          "review_flags": [
+            "superseded_by_manual_regions"
+          ],
+          "superseded_by_manual_regions": [
+            "region_012"
+          ]
         },
         {
           "x": 97,
@@ -718,8 +902,14 @@
           "alpha_pixel_count": 139,
           "id": "forest_demo_objects_component_017",
           "exported_file": "public/assets/nabta/world/sprites/candidates/forest_demo_objects/forest_demo_objects_component_017.png",
-          "review_status": "pending_manual_review",
-          "is_approved_asset": false
+          "review_status": "superseded_by_manual_regions",
+          "is_approved_asset": false,
+          "review_flags": [
+            "superseded_by_manual_regions"
+          ],
+          "superseded_by_manual_regions": [
+            "region_014"
+          ]
         },
         {
           "x": 129,
@@ -729,8 +919,14 @@
           "alpha_pixel_count": 76,
           "id": "forest_demo_objects_component_018",
           "exported_file": "public/assets/nabta/world/sprites/candidates/forest_demo_objects/forest_demo_objects_component_018.png",
-          "review_status": "pending_manual_review",
-          "is_approved_asset": false
+          "review_status": "superseded_by_manual_regions",
+          "is_approved_asset": false,
+          "review_flags": [
+            "superseded_by_manual_regions"
+          ],
+          "superseded_by_manual_regions": [
+            "region_016"
+          ]
         },
         {
           "x": 84,
@@ -740,8 +936,14 @@
           "alpha_pixel_count": 40,
           "id": "forest_demo_objects_component_019",
           "exported_file": "public/assets/nabta/world/sprites/candidates/forest_demo_objects/forest_demo_objects_component_019.png",
-          "review_status": "pending_manual_review",
-          "is_approved_asset": false
+          "review_status": "superseded_by_manual_regions",
+          "is_approved_asset": false,
+          "review_flags": [
+            "superseded_by_manual_regions"
+          ],
+          "superseded_by_manual_regions": [
+            "region_013"
+          ]
         },
         {
           "x": 68,
@@ -751,8 +953,14 @@
           "alpha_pixel_count": 1218,
           "id": "forest_demo_objects_component_020",
           "exported_file": "public/assets/nabta/world/sprites/candidates/forest_demo_objects/forest_demo_objects_component_020.png",
-          "review_status": "pending_manual_review",
-          "is_approved_asset": false
+          "review_status": "superseded_by_manual_regions",
+          "is_approved_asset": false,
+          "review_flags": [
+            "superseded_by_manual_regions"
+          ],
+          "superseded_by_manual_regions": [
+            "region_026"
+          ]
         },
         {
           "x": 116,
@@ -762,8 +970,14 @@
           "alpha_pixel_count": 270,
           "id": "forest_demo_objects_component_021",
           "exported_file": "public/assets/nabta/world/sprites/candidates/forest_demo_objects/forest_demo_objects_component_021.png",
-          "review_status": "pending_manual_review",
-          "is_approved_asset": false
+          "review_status": "superseded_by_manual_regions",
+          "is_approved_asset": false,
+          "review_flags": [
+            "superseded_by_manual_regions"
+          ],
+          "superseded_by_manual_regions": [
+            "region_027"
+          ]
         },
         {
           "x": 162,
@@ -773,8 +987,14 @@
           "alpha_pixel_count": 138,
           "id": "forest_demo_objects_component_022",
           "exported_file": "public/assets/nabta/world/sprites/candidates/forest_demo_objects/forest_demo_objects_component_022.png",
-          "review_status": "pending_manual_review",
-          "is_approved_asset": false
+          "review_status": "superseded_by_manual_regions",
+          "is_approved_asset": false,
+          "review_flags": [
+            "superseded_by_manual_regions"
+          ],
+          "superseded_by_manual_regions": [
+            "region_023"
+          ]
         },
         {
           "x": 130,
@@ -784,8 +1004,14 @@
           "alpha_pixel_count": 86,
           "id": "forest_demo_objects_component_023",
           "exported_file": "public/assets/nabta/world/sprites/candidates/forest_demo_objects/forest_demo_objects_component_023.png",
-          "review_status": "pending_manual_review",
-          "is_approved_asset": false
+          "review_status": "superseded_by_manual_regions",
+          "is_approved_asset": false,
+          "review_flags": [
+            "superseded_by_manual_regions"
+          ],
+          "superseded_by_manual_regions": [
+            "region_025"
+          ]
         },
         {
           "x": 177,
@@ -795,8 +1021,14 @@
           "alpha_pixel_count": 126,
           "id": "forest_demo_objects_component_024",
           "exported_file": "public/assets/nabta/world/sprites/candidates/forest_demo_objects/forest_demo_objects_component_024.png",
-          "review_status": "pending_manual_review",
-          "is_approved_asset": false
+          "review_status": "superseded_by_manual_regions",
+          "is_approved_asset": false,
+          "review_flags": [
+            "superseded_by_manual_regions"
+          ],
+          "superseded_by_manual_regions": [
+            "region_022"
+          ]
         },
         {
           "x": 194,
@@ -806,8 +1038,14 @@
           "alpha_pixel_count": 90,
           "id": "forest_demo_objects_component_025",
           "exported_file": "public/assets/nabta/world/sprites/candidates/forest_demo_objects/forest_demo_objects_component_025.png",
-          "review_status": "pending_manual_review",
-          "is_approved_asset": false
+          "review_status": "superseded_by_manual_regions",
+          "is_approved_asset": false,
+          "review_flags": [
+            "superseded_by_manual_regions"
+          ],
+          "superseded_by_manual_regions": [
+            "region_021"
+          ]
         },
         {
           "x": 225,
@@ -817,8 +1055,14 @@
           "alpha_pixel_count": 96,
           "id": "forest_demo_objects_component_026",
           "exported_file": "public/assets/nabta/world/sprites/candidates/forest_demo_objects/forest_demo_objects_component_026.png",
-          "review_status": "pending_manual_review",
-          "is_approved_asset": false
+          "review_status": "superseded_by_manual_regions",
+          "is_approved_asset": false,
+          "review_flags": [
+            "superseded_by_manual_regions"
+          ],
+          "superseded_by_manual_regions": [
+            "region_031"
+          ]
         },
         {
           "x": 132,
@@ -828,8 +1072,14 @@
           "alpha_pixel_count": 394,
           "id": "forest_demo_objects_component_027",
           "exported_file": "public/assets/nabta/world/sprites/candidates/forest_demo_objects/forest_demo_objects_component_027.png",
-          "review_status": "pending_manual_review",
-          "is_approved_asset": false
+          "review_status": "superseded_by_manual_regions",
+          "is_approved_asset": false,
+          "review_flags": [
+            "superseded_by_manual_regions"
+          ],
+          "superseded_by_manual_regions": [
+            "region_028"
+          ]
         },
         {
           "x": 180,
@@ -839,11 +1089,17 @@
           "alpha_pixel_count": 86,
           "id": "forest_demo_objects_component_028",
           "exported_file": "public/assets/nabta/world/sprites/candidates/forest_demo_objects/forest_demo_objects_component_028.png",
-          "review_status": "pending_manual_review",
-          "is_approved_asset": false
+          "review_status": "superseded_by_manual_regions",
+          "is_approved_asset": false,
+          "review_flags": [
+            "superseded_by_manual_regions"
+          ],
+          "superseded_by_manual_regions": [
+            "region_029"
+          ]
         }
       ],
-      "manual_region_count": 35,
+      "manual_region_count": 37,
       "manual_regions": [
         {
           "id": "region_001",
@@ -1360,6 +1616,32 @@
           "review_flags": [],
           "exported_file": "public/assets/nabta/world/sprites/manual-candidates/forest_demo_objects/region_035.png",
           "alpha_pixel_count": 139,
+          "review_status": "manual_bounds_pending_review",
+          "is_approved_asset": false
+        },
+        {
+          "id": "c03_plant",
+          "x": 177,
+          "y": 0,
+          "width": 31,
+          "height": 33,
+          "overlaps_with": [],
+          "review_flags": [],
+          "exported_file": "public/assets/nabta/world/sprites/manual-candidates/forest_demo_objects/c03_plant.png",
+          "alpha_pixel_count": 719,
+          "review_status": "manual_bounds_pending_review",
+          "is_approved_asset": false
+        },
+        {
+          "id": "c03_wood",
+          "x": 179,
+          "y": 33,
+          "width": 28,
+          "height": 15,
+          "overlaps_with": [],
+          "review_flags": [],
+          "exported_file": "public/assets/nabta/world/sprites/manual-candidates/forest_demo_objects/c03_wood.png",
+          "alpha_pixel_count": 322,
           "review_status": "manual_bounds_pending_review",
           "is_approved_asset": false
         }
