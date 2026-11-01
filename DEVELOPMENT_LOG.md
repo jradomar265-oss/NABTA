@@ -29,4 +29,9 @@
 - Create synthetic accounts and verify sign-in, role denial, and RLS against the configured project.
 - No GitHub remote is configured, so push cannot be completed until repository access is provided.
 
+### Git
+
+- Implementation commit: `5667fba` (`feat(stage-01): establish NABTA foundations`).
+- Push status: BLOCKED; no GitHub remote is configured.
+
 No AI functionality, lesson workflow, assessment workflow, grading, XP, or Pixel Art world was implemented in this stage.
