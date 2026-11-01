@@ -71,4 +71,5 @@ No procedural decorative assets or quest markers were added.
 ### Git
 
 - Stage 2 commit: `c22169a` (`feat(stage-02): add pixel art asset analysis pipeline`).
+- Manual segmentation correction: `a8cb494` (`fix(stage-02): support manual sprite regions`).
 - Push status: BLOCKED; no GitHub remote is configured.
