@@ -50,13 +50,15 @@ No AI functionality, lesson workflow, assessment workflow, grading, XP, or Pixel
 - Generated 71 8-connected object-component crops and labeled previews; every crop is marked `pending_manual_review` and is not approved for UI use.
 - Generated 8, 16, 32, and 64 pixel candidate-grid previews for terrain without slicing terrain as sprites.
 - Added asset pipeline unit tests and an output validator that checks source hashes, crop dimensions, alpha mode, pixel equality, and review flags.
+- Added a browser region editor and analyzer overrides so separate manual crops can be defined inside one connected alpha component.
 
 ### Verification
 
-- `python -m unittest discover -s scripts/pixel-art -p "test_*.py"` — PASS (2 tests).
+- `python -m unittest discover -s scripts/pixel-art -p "test_*.py"` — PASS (6 tests, including connected-frame manual splitting).
 - `python scripts/pixel-art/analyze_sheets.py` — PASS; 3 sheets analyzed, 71 candidate crops generated.
 - `python scripts/pixel-art/validate_assets.py` — PASS; all generated assets validated.
 - Visual preview inspection — PASS for reviewability; several grouped components remain ambiguous and unapproved.
+- Browser region editor — PASS; loaded a real source sheet and drew two distinct regions within its coordinate frame.
 
 ### Remaining Stage 2 Work
 

@@ -14,7 +14,9 @@ python scripts/pixel-art/validate_assets.py
 
 The analyzer writes source dimensions and alpha statistics to `public/assets/nabta/world/manifests/asset-analysis.json`, numbered component previews to `previews/`, and RGBA candidate crops to `sprites/candidates/`.
 
-Object crops are 8-connected alpha regions, not approved sprites. All are marked `pending_manual_review`; touching sprites and grouped props can be one connected region, so review the numbered previews before promoting any crop into the app. Terrain is not connected-component cropped. The analyzer generates 8, 16, 32, and 64 pixel grid overlays as unconfirmed candidates; confirm the actual grid manually before extracting tiles.
+Object crops are 8-connected alpha regions, not approved sprites. A connected region may contain several visible objects. Open `http://localhost:3001/assets/nabta/world/tools/region-editor.html`, choose the source PNG, and draw a separate box around each desired object, including objects that touch or share a connected frame. Name each region, download `manual-regions.json`, and replace `scripts/pixel-art/manual-regions.json` with the downloaded file. Re-run the analyzer to export these as magenta `M`-labeled crops under `sprites/manual-candidates/`; they remain unapproved until reviewed. The analyzer also retains connected-component results as diagnostic candidates.
+
+Terrain is not connected-component cropped. The analyzer generates 8, 16, 32, and 64 pixel grid overlays as unconfirmed candidates; confirm the actual grid manually before extracting tiles.
 
 Preview images use nearest-neighbor enlargement and a checkerboard background. Component PNGs retain source pixel dimensions, colors, and alpha. The JSON manifest records source SHA-256 values to make provenance checks repeatable.
 

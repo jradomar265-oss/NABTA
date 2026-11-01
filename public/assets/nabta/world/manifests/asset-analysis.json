@@ -503,8 +503,10 @@
           "is_approved_asset": false
         }
       ],
+      "manual_region_count": 0,
+      "manual_regions": [],
       "preview_file": "public/assets/nabta/world/previews/free_pixel_16_woods-components.png",
-      "review_note": "8-connected alpha regions are candidate crops only. Check the numbered preview for touching sprites, grouped props, or detached shadows before approval."
+      "review_note": "8-connected alpha regions are candidate crops only. Check the numbered preview for touching sprites, grouped props, or detached shadows. Magenta M-label boxes come from manual-regions.json and are separate crop candidates. Nothing is approved."
     },
     {
       "id": "forest_demo_objects",
@@ -841,8 +843,10 @@
           "is_approved_asset": false
         }
       ],
+      "manual_region_count": 0,
+      "manual_regions": [],
       "preview_file": "public/assets/nabta/world/previews/forest_demo_objects-components.png",
-      "review_note": "8-connected alpha regions are candidate crops only. Check the numbered preview for touching sprites, grouped props, or detached shadows before approval."
+      "review_note": "8-connected alpha regions are candidate crops only. Check the numbered preview for touching sprites, grouped props, or detached shadows. Magenta M-label boxes come from manual-regions.json and are separate crop candidates. Nothing is approved."
     },
     {
       "id": "forest_demo_terrain",

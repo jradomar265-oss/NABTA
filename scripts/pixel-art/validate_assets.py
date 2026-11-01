@@ -59,6 +59,30 @@ def main() -> None:
                     if crop.tobytes() != expected.tobytes():
                         raise ValueError(f"Crop pixels differ from source: {crop_path}")
                 candidate_count += 1
+            if sheet.get("manual_region_count") != len(sheet.get("manual_regions", [])):
+                raise ValueError(f"Manual region count mismatch: {sheet['source_file']}")
+            for region in sheet.get("manual_regions", []):
+                region_id = region["id"]
+                if region_id in seen_ids:
+                    raise ValueError(f"Duplicate region id: {region_id}")
+                seen_ids.add(region_id)
+                if region["review_status"] != "manual_bounds_pending_review":
+                    raise ValueError(f"Unexpected manual review state: {region_id}")
+                if region["is_approved_asset"]:
+                    raise ValueError(f"Unreviewed manual region marked approved: {region_id}")
+                crop_path = REPOSITORY_ROOT / region["exported_file"]
+                if not crop_path.is_file():
+                    raise FileNotFoundError(crop_path)
+                with Image.open(crop_path) as crop:
+                    if crop.mode != "RGBA":
+                        raise ValueError(f"Manual crop lost alpha channel: {crop_path}")
+                    if list(crop.size) != [region["width"], region["height"]]:
+                        raise ValueError(f"Manual crop dimensions mismatch: {crop_path}")
+                    x, y = region["x"], region["y"]
+                    expected = source_rgba.crop((x, y, x + region["width"], y + region["height"]))
+                    if crop.tobytes() != expected.tobytes():
+                        raise ValueError(f"Manual crop pixels differ from source: {crop_path}")
+                candidate_count += 1
         else:
             if "components" in sheet or sheet.get("component_extraction") != "not_performed_for_terrain":
                 raise ValueError("Terrain sheets must not be object-cropped")

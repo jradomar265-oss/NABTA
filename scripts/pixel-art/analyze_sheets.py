@@ -3,6 +3,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import re
 from collections import Counter
 from pathlib import Path
 from typing import Any
@@ -21,6 +22,47 @@ PREVIEW_SCALE = 3
 
 def repository_path(path: Path, repository_root: Path) -> str:
     return path.resolve().relative_to(repository_root.resolve()).as_posix()
+
+
+def validate_manual_regions(
+    image_size: tuple[int, int], regions: list[dict[str, Any]]
+) -> list[dict[str, Any]]:
+    image_width, image_height = image_size
+    validated: list[dict[str, Any]] = []
+    seen_ids: set[str] = set()
+
+    if not isinstance(regions, list):
+        raise ValueError("Manual regions for each sheet must be a list.")
+
+    for region in regions:
+        if not isinstance(region, dict):
+            raise ValueError("Each manual region must be a JSON object.")
+        region_id = region.get("id")
+        if not isinstance(region_id, str) or not region_id.strip():
+            raise ValueError("Each manual region must have a non-empty id.")
+        if not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_-]*", region_id):
+            raise ValueError(f"Manual region id is not a safe filename: {region_id}")
+        if region_id in seen_ids:
+            raise ValueError(f"Duplicate manual region id: {region_id}")
+        seen_ids.add(region_id)
+
+        coordinates: dict[str, int] = {}
+        for field in ("x", "y", "width", "height"):
+            value = region.get(field)
+            if isinstance(value, bool) or not isinstance(value, int):
+                raise ValueError(f"Manual region {region_id} has invalid {field}.")
+            coordinates[field] = value
+
+        x, y = coordinates["x"], coordinates["y"]
+        width, height = coordinates["width"], coordinates["height"]
+        if x < 0 or y < 0 or width <= 0 or height <= 0:
+            raise ValueError(f"Manual region {region_id} has non-positive bounds.")
+        if x + width > image_width or y + height > image_height:
+            raise ValueError(f"Manual region {region_id} extends beyond the source sheet.")
+
+        validated.append({"id": region_id, **coordinates})
+
+    return validated
 
 
 def find_components(image: Image.Image) -> list[dict[str, int]]:
@@ -92,6 +134,7 @@ def composite_checkerboard(image: Image.Image) -> Image.Image:
 def save_component_preview(
     image: Image.Image,
     components: list[dict[str, Any]],
+    manual_regions: list[dict[str, Any]],
     output_path: Path,
 ) -> None:
     width, height = image.size
@@ -116,6 +159,25 @@ def save_component_preview(
         text_height = text_bounds[3] - text_bounds[1]
         label_x = min(x, max(0, preview.width - text_width - 4))
         label_y = max(0, y - text_height - 4)
+        draw.rectangle(
+            (label_x, label_y, label_x + text_width + 4, label_y + text_height + 3),
+            fill=color,
+        )
+        draw.text((label_x + 2, label_y + 1), label, fill="white", font=font)
+
+    for index, region in enumerate(manual_regions, start=1):
+        x = region["x"] * PREVIEW_SCALE
+        y = region["y"] * PREVIEW_SCALE
+        right = (region["x"] + region["width"] - 1) * PREVIEW_SCALE
+        bottom = (region["y"] + region["height"] - 1) * PREVIEW_SCALE
+        color = (207, 32, 132)
+        draw.rectangle((x, y, right, bottom), outline=color, width=3)
+        label = f"M{index:02}"
+        text_bounds = draw.textbbox((0, 0), label, font=font)
+        text_width = text_bounds[2] - text_bounds[0]
+        text_height = text_bounds[3] - text_bounds[1]
+        label_x = min(x, max(0, preview.width - text_width - 4))
+        label_y = min(preview.height - text_height - 3, y + 2)
         draw.rectangle(
             (label_x, label_y, label_x + text_width + 4, label_y + text_height + 3),
             fill=color,
@@ -165,6 +227,7 @@ def inspect_sheet(
     source_dir: Path,
     output_dir: Path,
     repository_root: Path,
+    configured_manual_regions: dict[str, list[dict[str, Any]]],
 ) -> dict[str, Any]:
     source_path = source_dir / filename
     if not source_path.is_file():
@@ -201,6 +264,9 @@ def inspect_sheet(
     preview_dir = output_dir / "previews"
     if category == "objects":
         candidates = find_components(image)
+        manual_regions = validate_manual_regions(
+            (width, height), configured_manual_regions.get(filename, [])
+        )
         component_dir = output_dir / "sprites" / "candidates" / sheet_id
         component_dir.mkdir(parents=True, exist_ok=True)
         for index, component in enumerate(candidates, start=1):
@@ -218,14 +284,33 @@ def inspect_sheet(
                 }
             )
 
+        manual_dir = output_dir / "sprites" / "manual-candidates" / sheet_id
+        for region in manual_regions:
+            export_path = manual_dir / f"{region['id']}.png"
+            export_path.parent.mkdir(parents=True, exist_ok=True)
+            x, y = region["x"], region["y"]
+            crop = image.crop((x, y, x + region["width"], y + region["height"]))
+            crop.save(export_path)
+            region.update(
+                {
+                    "exported_file": repository_path(export_path, repository_root),
+                    "alpha_pixel_count": sum(1 for value in crop.getchannel("A").tobytes() if value),
+                    "review_status": "manual_bounds_pending_review",
+                    "is_approved_asset": False,
+                }
+            )
+
         preview_path = preview_dir / f"{sheet_id}-components.png"
-        save_component_preview(image, candidates, preview_path)
+        save_component_preview(image, candidates, manual_regions, preview_path)
         result["component_count"] = len(candidates)
         result["components"] = candidates
+        result["manual_region_count"] = len(manual_regions)
+        result["manual_regions"] = manual_regions
         result["preview_file"] = repository_path(preview_path, repository_root)
         result["review_note"] = (
             "8-connected alpha regions are candidate crops only. Check the numbered preview "
-            "for touching sprites, grouped props, or detached shadows before approval."
+            "for touching sprites, grouped props, or detached shadows. Magenta M-label boxes "
+            "come from manual-regions.json and are separate crop candidates. Nothing is approved."
         )
     else:
         grid_candidates = []
@@ -261,7 +346,23 @@ def main() -> None:
         type=Path,
         default=repository_root / "public/assets/nabta/world",
     )
+    parser.add_argument(
+        "--manual-regions",
+        type=Path,
+        default=repository_root / "scripts/pixel-art/manual-regions.json",
+    )
     args = parser.parse_args()
+
+    if args.manual_regions.is_file():
+        manual_data = json.loads(args.manual_regions.read_text(encoding="utf-8"))
+        if manual_data.get("schema_version") != 1 or not isinstance(manual_data.get("sheets"), dict):
+            raise ValueError(f"Invalid manual region file: {args.manual_regions}")
+        configured_manual_regions = manual_data["sheets"]
+    else:
+        configured_manual_regions = {}
+    unknown_sheets = set(configured_manual_regions) - set(SHEETS)
+    if unknown_sheets:
+        raise ValueError(f"Manual regions reference unknown sheets: {sorted(unknown_sheets)}")
 
     manifest = {
         "schema_version": 1,
@@ -273,6 +374,7 @@ def main() -> None:
                 args.source_dir,
                 args.output_dir,
                 repository_root,
+                configured_manual_regions,
             )
             for filename, category in SHEETS.items()
         ],
@@ -285,6 +387,8 @@ def main() -> None:
         summary = f"{sheet['source_file']}: {sheet['dimensions']['width']}x{sheet['dimensions']['height']}"
         if sheet["category"] == "objects":
             summary += f", {sheet['component_count']} candidate components"
+            if sheet["manual_region_count"]:
+                summary += f", {sheet['manual_region_count']} manual regions"
         else:
             summary += f", {len(sheet['tile_grid_candidates'])} unconfirmed grid previews"
         print(summary)

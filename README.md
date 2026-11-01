@@ -49,6 +49,6 @@ The build and dev scripts use webpack because the installed Next.js native Turbo
 
 ## Pixel Art Analysis
 
-The source analysis workflow, generated previews, candidate crop review rules, and validation commands are documented in [scripts/pixel-art/README.md](scripts/pixel-art/README.md). Candidate crops remain unapproved and terrain tiles are not sliced until their boundaries are reviewed.
+The source analysis workflow, generated previews, candidate crop review rules, and validation commands are documented in [scripts/pixel-art/README.md](scripts/pixel-art/README.md). Use the [Sprite Region Editor](http://localhost:3001/assets/nabta/world/tools/region-editor.html) to draw separate regions around objects that share one connected frame. Candidate crops remain unapproved and terrain tiles are not sliced until their boundaries are reviewed.
 
 See [DEVELOPMENT_LOG.md](DEVELOPMENT_LOG.md) for verified progress and remaining Stage 1 checks.
