@@ -10,6 +10,47 @@ export type ChatConfig = { baseUrl: string; apiKey: string; model: string };
 
 const DEFAULT_TIMEOUT_MS = 25_000;
 
+/** Turns a provider error body into something a teacher (or the founder) can act on. */
+export function describeFailure(status: number, rawBody: string): AiAnalysisError {
+  let code = "";
+  let message = "";
+  try {
+    const parsed = JSON.parse(rawBody) as { error?: { code?: string; type?: string; message?: string } };
+    code = parsed.error?.code ?? parsed.error?.type ?? "";
+    message = parsed.error?.message ?? "";
+  } catch {
+    message = rawBody.slice(0, 240);
+  }
+
+  const detail = `http-${status}${code ? ` ${code}` : ""}${message ? `: ${message.slice(0, 240)}` : ""}`;
+
+  if (status === 401 || status === 403) {
+    return new AiAnalysisError("The AI provider rejected the credentials. Check the configured API key.", detail);
+  }
+  if (status === 402 || status === 429) {
+    // Quota/credit exhaustion and rate limiting share status codes but need very
+    // different fixes, so read the provider's own wording.
+    const looksBilling = /quota|credit|billing|balance|payment/i.test(code) || /quota|credit|billing|balance|payment/i.test(message);
+    if (looksBilling) {
+      return new AiAnalysisError(
+        "The AI account has no remaining credit, so nothing was generated. Add credit to the provider account, or switch provider — the app falls back to clearly-labelled mock mode if you remove the AI variables.",
+        detail,
+      );
+    }
+    return new AiAnalysisError("The AI provider is rate limiting requests. Wait a moment and try again.", detail);
+  }
+  if (status === 404) {
+    return new AiAnalysisError("The provider could not find that model or endpoint. Check AI_MODEL and AI_BASE_URL.", detail);
+  }
+  if (status === 400) {
+    return new AiAnalysisError("The provider rejected the request. The detail below usually names the bad parameter.", detail);
+  }
+  if (status >= 500) {
+    return new AiAnalysisError("The AI provider had a server error. Try again in a moment.", detail);
+  }
+  return new AiAnalysisError("The AI provider could not complete the request.", detail);
+}
+
 export async function completeJson(
   config: ChatConfig,
   messages: { role: "system" | "user"; content: string }[],
@@ -39,12 +80,7 @@ export async function completeJson(
     });
 
     if (!response.ok) {
-      throw new AiAnalysisError(
-        response.status === 401 || response.status === 403
-          ? "The AI provider rejected the credentials. Check the configured API key."
-          : "The AI provider could not complete the request. Try again in a moment.",
-        `http-${response.status}`,
-      );
+      throw describeFailure(response.status, await response.text().catch(() => ""));
     }
 
     const body = (await response.json()) as { choices?: { message?: { content?: string } }[] };
