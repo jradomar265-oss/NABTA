@@ -65,3 +65,8 @@ No AI functionality, lesson workflow, assessment workflow, grading, XP, or Pixel
 - Source asset license/attribution information is unavailable; verify before public or commercial distribution.
 
 No procedural decorative assets or quest markers were added.
+
+### Git
+
+- Stage 2 commit: `c22169a` (`feat(stage-02): add pixel art asset analysis pipeline`).
+- Push status: BLOCKED; no GitHub remote is configured.
