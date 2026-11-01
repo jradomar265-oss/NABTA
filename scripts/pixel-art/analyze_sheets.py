@@ -62,6 +62,24 @@ def validate_manual_regions(
 
         validated.append({"id": region_id, **coordinates})
 
+    for index, region in enumerate(validated):
+        overlaps = []
+        for other_index, other in enumerate(validated):
+            if index == other_index:
+                continue
+            x_overlap = region["x"] < other["x"] + other["width"] and other["x"] < region["x"] + region["width"]
+            y_overlap = region["y"] < other["y"] + other["height"] and other["y"] < region["y"] + region["height"]
+            if x_overlap and y_overlap:
+                overlaps.append(other["id"])
+
+        review_flags = []
+        if overlaps:
+            review_flags.append("overlaps_other_manual_region")
+        if region["width"] >= 40 or region["height"] >= 40:
+            review_flags.append("large_manual_region")
+        region["overlaps_with"] = overlaps
+        region["review_flags"] = review_flags
+
     return validated
 
 

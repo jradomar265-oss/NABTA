@@ -65,6 +65,20 @@ class AnalyzeSheetsTests(unittest.TestCase):
                 [{"id": "../tree", "x": 0, "y": 0, "width": 1, "height": 1}],
             )
 
+    def test_overlapping_and_large_regions_are_flagged_for_review(self) -> None:
+        regions = validate_manual_regions(
+            (100, 100),
+            [
+                {"id": "large_region", "x": 0, "y": 0, "width": 61, "height": 85},
+                {"id": "overlap", "x": 10, "y": 10, "width": 20, "height": 20},
+            ],
+        )
+
+        self.assertIn("large_manual_region", regions[0]["review_flags"])
+        self.assertIn("overlaps_other_manual_region", regions[0]["review_flags"])
+        self.assertEqual(regions[0]["overlaps_with"], ["overlap"])
+        self.assertEqual(regions[1]["overlaps_with"], ["large_region"])
+
     def test_manual_overrides_export_two_crops_from_one_component(self) -> None:
         with TemporaryDirectory() as temporary_directory:
             root = Path(temporary_directory)

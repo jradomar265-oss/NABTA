@@ -843,8 +843,527 @@
           "is_approved_asset": false
         }
       ],
-      "manual_region_count": 0,
-      "manual_regions": [],
+      "manual_region_count": 35,
+      "manual_regions": [
+        {
+          "id": "region_001",
+          "x": 64,
+          "y": 0,
+          "width": 16,
+          "height": 16,
+          "overlaps_with": [],
+          "review_flags": [],
+          "exported_file": "public/assets/nabta/world/sprites/manual-candidates/forest_demo_objects/region_001.png",
+          "alpha_pixel_count": 202,
+          "review_status": "manual_bounds_pending_review",
+          "is_approved_asset": false
+        },
+        {
+          "id": "region_002",
+          "x": 80,
+          "y": 0,
+          "width": 16,
+          "height": 16,
+          "overlaps_with": [],
+          "review_flags": [],
+          "exported_file": "public/assets/nabta/world/sprites/manual-candidates/forest_demo_objects/region_002.png",
+          "alpha_pixel_count": 170,
+          "review_status": "manual_bounds_pending_review",
+          "is_approved_asset": false
+        },
+        {
+          "id": "region_003",
+          "x": 96,
+          "y": 0,
+          "width": 16,
+          "height": 16,
+          "overlaps_with": [],
+          "review_flags": [],
+          "exported_file": "public/assets/nabta/world/sprites/manual-candidates/forest_demo_objects/region_003.png",
+          "alpha_pixel_count": 103,
+          "review_status": "manual_bounds_pending_review",
+          "is_approved_asset": false
+        },
+        {
+          "id": "region_004",
+          "x": 112,
+          "y": 1,
+          "width": 15,
+          "height": 14,
+          "overlaps_with": [],
+          "review_flags": [],
+          "exported_file": "public/assets/nabta/world/sprites/manual-candidates/forest_demo_objects/region_004.png",
+          "alpha_pixel_count": 99,
+          "review_status": "manual_bounds_pending_review",
+          "is_approved_asset": false
+        },
+        {
+          "id": "region_005",
+          "x": 127,
+          "y": 4,
+          "width": 19,
+          "height": 10,
+          "overlaps_with": [
+            "region_006"
+          ],
+          "review_flags": [
+            "overlaps_other_manual_region"
+          ],
+          "exported_file": "public/assets/nabta/world/sprites/manual-candidates/forest_demo_objects/region_005.png",
+          "alpha_pixel_count": 113,
+          "review_status": "manual_bounds_pending_review",
+          "is_approved_asset": false
+        },
+        {
+          "id": "region_006",
+          "x": 145,
+          "y": 2,
+          "width": 31,
+          "height": 30,
+          "overlaps_with": [
+            "region_005",
+            "region_017"
+          ],
+          "review_flags": [
+            "overlaps_other_manual_region"
+          ],
+          "exported_file": "public/assets/nabta/world/sprites/manual-candidates/forest_demo_objects/region_006.png",
+          "alpha_pixel_count": 612,
+          "review_status": "manual_bounds_pending_review",
+          "is_approved_asset": false
+        },
+        {
+          "id": "region_007",
+          "x": 127,
+          "y": 22,
+          "width": 16,
+          "height": 6,
+          "overlaps_with": [
+            "region_008"
+          ],
+          "review_flags": [
+            "overlaps_other_manual_region"
+          ],
+          "exported_file": "public/assets/nabta/world/sprites/manual-candidates/forest_demo_objects/region_007.png",
+          "alpha_pixel_count": 74,
+          "review_status": "manual_bounds_pending_review",
+          "is_approved_asset": false
+        },
+        {
+          "id": "region_008",
+          "x": 111,
+          "y": 17,
+          "width": 17,
+          "height": 14,
+          "overlaps_with": [
+            "region_007",
+            "region_011"
+          ],
+          "review_flags": [
+            "overlaps_other_manual_region"
+          ],
+          "exported_file": "public/assets/nabta/world/sprites/manual-candidates/forest_demo_objects/region_008.png",
+          "alpha_pixel_count": 120,
+          "review_status": "manual_bounds_pending_review",
+          "is_approved_asset": false
+        },
+        {
+          "id": "region_009",
+          "x": 64,
+          "y": 16,
+          "width": 16,
+          "height": 17,
+          "overlaps_with": [
+            "region_012"
+          ],
+          "review_flags": [
+            "overlaps_other_manual_region"
+          ],
+          "exported_file": "public/assets/nabta/world/sprites/manual-candidates/forest_demo_objects/region_009.png",
+          "alpha_pixel_count": 184,
+          "review_status": "manual_bounds_pending_review",
+          "is_approved_asset": false
+        },
+        {
+          "id": "region_010",
+          "x": 80,
+          "y": 16,
+          "width": 17,
+          "height": 16,
+          "overlaps_with": [],
+          "review_flags": [],
+          "exported_file": "public/assets/nabta/world/sprites/manual-candidates/forest_demo_objects/region_010.png",
+          "alpha_pixel_count": 188,
+          "review_status": "manual_bounds_pending_review",
+          "is_approved_asset": false
+        },
+        {
+          "id": "region_011",
+          "x": 97,
+          "y": 16,
+          "width": 15,
+          "height": 17,
+          "overlaps_with": [
+            "region_008",
+            "region_014"
+          ],
+          "review_flags": [
+            "overlaps_other_manual_region"
+          ],
+          "exported_file": "public/assets/nabta/world/sprites/manual-candidates/forest_demo_objects/region_011.png",
+          "alpha_pixel_count": 180,
+          "review_status": "manual_bounds_pending_review",
+          "is_approved_asset": false
+        },
+        {
+          "id": "region_012",
+          "x": 65,
+          "y": 32,
+          "width": 15,
+          "height": 16,
+          "overlaps_with": [
+            "region_009"
+          ],
+          "review_flags": [
+            "overlaps_other_manual_region"
+          ],
+          "exported_file": "public/assets/nabta/world/sprites/manual-candidates/forest_demo_objects/region_012.png",
+          "alpha_pixel_count": 127,
+          "review_status": "manual_bounds_pending_review",
+          "is_approved_asset": false
+        },
+        {
+          "id": "region_013",
+          "x": 83,
+          "y": 36,
+          "width": 11,
+          "height": 9,
+          "overlaps_with": [],
+          "review_flags": [],
+          "exported_file": "public/assets/nabta/world/sprites/manual-candidates/forest_demo_objects/region_013.png",
+          "alpha_pixel_count": 40,
+          "review_status": "manual_bounds_pending_review",
+          "is_approved_asset": false
+        },
+        {
+          "id": "region_014",
+          "x": 96,
+          "y": 32,
+          "width": 16,
+          "height": 17,
+          "overlaps_with": [
+            "region_011"
+          ],
+          "review_flags": [
+            "overlaps_other_manual_region"
+          ],
+          "exported_file": "public/assets/nabta/world/sprites/manual-candidates/forest_demo_objects/region_014.png",
+          "alpha_pixel_count": 139,
+          "review_status": "manual_bounds_pending_review",
+          "is_approved_asset": false
+        },
+        {
+          "id": "region_015",
+          "x": 112,
+          "y": 31,
+          "width": 15,
+          "height": 16,
+          "overlaps_with": [],
+          "review_flags": [],
+          "exported_file": "public/assets/nabta/world/sprites/manual-candidates/forest_demo_objects/region_015.png",
+          "alpha_pixel_count": 114,
+          "review_status": "manual_bounds_pending_review",
+          "is_approved_asset": false
+        },
+        {
+          "id": "region_016",
+          "x": 128,
+          "y": 34,
+          "width": 17,
+          "height": 12,
+          "overlaps_with": [
+            "region_017"
+          ],
+          "review_flags": [
+            "overlaps_other_manual_region"
+          ],
+          "exported_file": "public/assets/nabta/world/sprites/manual-candidates/forest_demo_objects/region_016.png",
+          "alpha_pixel_count": 78,
+          "review_status": "manual_bounds_pending_review",
+          "is_approved_asset": false
+        },
+        {
+          "id": "region_017",
+          "x": 144,
+          "y": 31,
+          "width": 33,
+          "height": 17,
+          "overlaps_with": [
+            "region_006",
+            "region_016"
+          ],
+          "review_flags": [
+            "overlaps_other_manual_region"
+          ],
+          "exported_file": "public/assets/nabta/world/sprites/manual-candidates/forest_demo_objects/region_017.png",
+          "alpha_pixel_count": 365,
+          "review_status": "manual_bounds_pending_review",
+          "is_approved_asset": false
+        },
+        {
+          "id": "region_018",
+          "x": 1,
+          "y": 0,
+          "width": 61,
+          "height": 85,
+          "overlaps_with": [],
+          "review_flags": [
+            "large_manual_region"
+          ],
+          "exported_file": "public/assets/nabta/world/sprites/manual-candidates/forest_demo_objects/region_018.png",
+          "alpha_pixel_count": 3088,
+          "review_status": "manual_bounds_pending_review",
+          "is_approved_asset": false
+        },
+        {
+          "id": "region_019",
+          "x": 210,
+          "y": 0,
+          "width": 45,
+          "height": 17,
+          "overlaps_with": [
+            "region_033"
+          ],
+          "review_flags": [
+            "overlaps_other_manual_region",
+            "large_manual_region"
+          ],
+          "exported_file": "public/assets/nabta/world/sprites/manual-candidates/forest_demo_objects/region_019.png",
+          "alpha_pixel_count": 552,
+          "review_status": "manual_bounds_pending_review",
+          "is_approved_asset": false
+        },
+        {
+          "id": "region_020",
+          "x": 208,
+          "y": 19,
+          "width": 17,
+          "height": 43,
+          "overlaps_with": [],
+          "review_flags": [
+            "large_manual_region"
+          ],
+          "exported_file": "public/assets/nabta/world/sprites/manual-candidates/forest_demo_objects/region_020.png",
+          "alpha_pixel_count": 552,
+          "review_status": "manual_bounds_pending_review",
+          "is_approved_asset": false
+        },
+        {
+          "id": "region_021",
+          "x": 193,
+          "y": 49,
+          "width": 14,
+          "height": 13,
+          "overlaps_with": [],
+          "review_flags": [],
+          "exported_file": "public/assets/nabta/world/sprites/manual-candidates/forest_demo_objects/region_021.png",
+          "alpha_pixel_count": 90,
+          "review_status": "manual_bounds_pending_review",
+          "is_approved_asset": false
+        },
+        {
+          "id": "region_022",
+          "x": 176,
+          "y": 50,
+          "width": 17,
+          "height": 14,
+          "overlaps_with": [],
+          "review_flags": [],
+          "exported_file": "public/assets/nabta/world/sprites/manual-candidates/forest_demo_objects/region_022.png",
+          "alpha_pixel_count": 126,
+          "review_status": "manual_bounds_pending_review",
+          "is_approved_asset": false
+        },
+        {
+          "id": "region_023",
+          "x": 161,
+          "y": 48,
+          "width": 15,
+          "height": 17,
+          "overlaps_with": [],
+          "review_flags": [],
+          "exported_file": "public/assets/nabta/world/sprites/manual-candidates/forest_demo_objects/region_023.png",
+          "alpha_pixel_count": 138,
+          "review_status": "manual_bounds_pending_review",
+          "is_approved_asset": false
+        },
+        {
+          "id": "region_024",
+          "x": 145,
+          "y": 48,
+          "width": 15,
+          "height": 16,
+          "overlaps_with": [],
+          "review_flags": [],
+          "exported_file": "public/assets/nabta/world/sprites/manual-candidates/forest_demo_objects/region_024.png",
+          "alpha_pixel_count": 103,
+          "review_status": "manual_bounds_pending_review",
+          "is_approved_asset": false
+        },
+        {
+          "id": "region_025",
+          "x": 129,
+          "y": 49,
+          "width": 15,
+          "height": 15,
+          "overlaps_with": [],
+          "review_flags": [],
+          "exported_file": "public/assets/nabta/world/sprites/manual-candidates/forest_demo_objects/region_025.png",
+          "alpha_pixel_count": 86,
+          "review_status": "manual_bounds_pending_review",
+          "is_approved_asset": false
+        },
+        {
+          "id": "region_026",
+          "x": 67,
+          "y": 49,
+          "width": 42,
+          "height": 50,
+          "overlaps_with": [],
+          "review_flags": [
+            "large_manual_region"
+          ],
+          "exported_file": "public/assets/nabta/world/sprites/manual-candidates/forest_demo_objects/region_026.png",
+          "alpha_pixel_count": 1218,
+          "review_status": "manual_bounds_pending_review",
+          "is_approved_asset": false
+        },
+        {
+          "id": "region_027",
+          "x": 113,
+          "y": 48,
+          "width": 13,
+          "height": 51,
+          "overlaps_with": [],
+          "review_flags": [
+            "large_manual_region"
+          ],
+          "exported_file": "public/assets/nabta/world/sprites/manual-candidates/forest_demo_objects/region_027.png",
+          "alpha_pixel_count": 270,
+          "review_status": "manual_bounds_pending_review",
+          "is_approved_asset": false
+        },
+        {
+          "id": "region_028",
+          "x": 132,
+          "y": 65,
+          "width": 41,
+          "height": 18,
+          "overlaps_with": [],
+          "review_flags": [
+            "large_manual_region"
+          ],
+          "exported_file": "public/assets/nabta/world/sprites/manual-candidates/forest_demo_objects/region_028.png",
+          "alpha_pixel_count": 394,
+          "review_status": "manual_bounds_pending_review",
+          "is_approved_asset": false
+        },
+        {
+          "id": "region_029",
+          "x": 179,
+          "y": 65,
+          "width": 10,
+          "height": 16,
+          "overlaps_with": [],
+          "review_flags": [],
+          "exported_file": "public/assets/nabta/world/sprites/manual-candidates/forest_demo_objects/region_029.png",
+          "alpha_pixel_count": 86,
+          "review_status": "manual_bounds_pending_review",
+          "is_approved_asset": false
+        },
+        {
+          "id": "region_030",
+          "x": 241,
+          "y": 48,
+          "width": 14,
+          "height": 17,
+          "overlaps_with": [],
+          "review_flags": [],
+          "exported_file": "public/assets/nabta/world/sprites/manual-candidates/forest_demo_objects/region_030.png",
+          "alpha_pixel_count": 137,
+          "review_status": "manual_bounds_pending_review",
+          "is_approved_asset": false
+        },
+        {
+          "id": "region_031",
+          "x": 225,
+          "y": 49,
+          "width": 15,
+          "height": 14,
+          "overlaps_with": [],
+          "review_flags": [],
+          "exported_file": "public/assets/nabta/world/sprites/manual-candidates/forest_demo_objects/region_031.png",
+          "alpha_pixel_count": 96,
+          "review_status": "manual_bounds_pending_review",
+          "is_approved_asset": false
+        },
+        {
+          "id": "region_032",
+          "x": 241,
+          "y": 18,
+          "width": 14,
+          "height": 14,
+          "overlaps_with": [],
+          "review_flags": [],
+          "exported_file": "public/assets/nabta/world/sprites/manual-candidates/forest_demo_objects/region_032.png",
+          "alpha_pixel_count": 89,
+          "review_status": "manual_bounds_pending_review",
+          "is_approved_asset": false
+        },
+        {
+          "id": "region_033",
+          "x": 225,
+          "y": 16,
+          "width": 14,
+          "height": 16,
+          "overlaps_with": [
+            "region_019"
+          ],
+          "review_flags": [
+            "overlaps_other_manual_region"
+          ],
+          "exported_file": "public/assets/nabta/world/sprites/manual-candidates/forest_demo_objects/region_033.png",
+          "alpha_pixel_count": 93,
+          "review_status": "manual_bounds_pending_review",
+          "is_approved_asset": false
+        },
+        {
+          "id": "region_034",
+          "x": 225,
+          "y": 32,
+          "width": 15,
+          "height": 17,
+          "overlaps_with": [],
+          "review_flags": [],
+          "exported_file": "public/assets/nabta/world/sprites/manual-candidates/forest_demo_objects/region_034.png",
+          "alpha_pixel_count": 138,
+          "review_status": "manual_bounds_pending_review",
+          "is_approved_asset": false
+        },
+        {
+          "id": "region_035",
+          "x": 241,
+          "y": 32,
+          "width": 15,
+          "height": 16,
+          "overlaps_with": [],
+          "review_flags": [],
+          "exported_file": "public/assets/nabta/world/sprites/manual-candidates/forest_demo_objects/region_035.png",
+          "alpha_pixel_count": 139,
+          "review_status": "manual_bounds_pending_review",
+          "is_approved_asset": false
+        }
+      ],
       "preview_file": "public/assets/nabta/world/previews/forest_demo_objects-components.png",
       "review_note": "8-connected alpha regions are candidate crops only. Check the numbered preview for touching sprites, grouped props, or detached shadows. Magenta M-label boxes come from manual-regions.json and are separate crop candidates. Nothing is approved."
     },
