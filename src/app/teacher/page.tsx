@@ -1,15 +1,22 @@
-export default function TeacherHomePage() {
-  return (
-    <section className="max-w-3xl">
-      <p className="text-sm font-bold uppercase text-[#b65e35]">Classroom overview</p>
-      <h1 className="mt-3 text-4xl font-bold">Welcome to your workspace.</h1>
-      <p className="mt-4 max-w-2xl text-base leading-7 text-[#62776d]">
-        Your teacher space is ready. Class and lesson tools will become available as their workflows are implemented.
-      </p>
-      <div className="mt-9 border-t border-[#dce4d8] pt-6">
-        <p className="text-sm font-semibold">No classes have been added.</p>
-        <p className="mt-2 text-sm text-[#62776d]">Class management is not available in this foundation stage.</p>
-      </div>
-    </section>
-  );
+import { assignLesson, createClassroom, createLesson } from "@/app/actions/learning";
+import { requireRole } from "@/lib/auth/require-role";
+import { createSupabaseServerClient } from "@/lib/supabase/server";
+
+type SearchParams = Promise<{ error?: string; notice?: string }>;
+type Classroom = { id: string; name: string; join_code: string; classroom_memberships: { count: number }[] };
+type Lesson = { id: string; title: string; learning_objective: string; content: string };
+
+export default async function TeacherHomePage({ searchParams }: { searchParams: SearchParams }) {
+  await requireRole("teacher");
+  const params = await searchParams;
+  const supabase = await createSupabaseServerClient();
+  const { data: { user } } = supabase ? await supabase.auth.getUser() : { data: { user: null } };
+  const { data: classrooms } = user && supabase ? await supabase.from("classrooms").select("id, name, join_code, classroom_memberships(count)").eq("teacher_id", user.id).order("created_at", { ascending: false }) : { data: [] };
+  const { data: lessons } = user && supabase ? await supabase.from("lessons").select("id, title, learning_objective, content").eq("teacher_id", user.id).order("created_at", { ascending: false }) : { data: [] };
+  return <section className="max-w-6xl">
+    <p className="text-sm font-bold uppercase tracking-wide text-[#b65e35]">Teacher studio</p><h1 className="mt-3 text-4xl font-bold">Plan learning with clarity.</h1><p className="mt-4 max-w-2xl text-base leading-7 text-[#62776d]">Create classes, save lesson material, then assign it to the learners who need it. AI generation and assessment publishing are later stages.</p>
+    {params.error && <p role="alert" className="mt-6 rounded-lg bg-[#fff1e9] px-4 py-3 text-sm text-[#9a4324]">{params.error}</p>}{params.notice && <p role="status" className="mt-6 rounded-lg bg-[#edf3e9] px-4 py-3 text-sm text-[#496451]">{params.notice === "class-created" ? "Class created." : params.notice === "lesson-saved" ? "Lesson saved as a teacher draft." : "Lesson assigned to the selected class."}</p>}
+    <div className="mt-8 grid gap-6 lg:grid-cols-2"><form action={createClassroom} className="rounded-2xl border border-[#dce4d8] bg-white p-6"><h2 className="text-xl font-bold">Create a class</h2><p className="mt-2 text-sm leading-6 text-[#62776d]">Students join with the generated code. You will see their membership once they enrol.</p><label className="mt-5 block text-sm font-semibold">Class name<input className="mt-2 min-h-11 w-full rounded-lg border border-[#d5dfd4] px-3 font-normal" maxLength={80} name="name" placeholder="Grade 6 Science" required /></label><button className="mt-5 min-h-11 rounded-lg bg-[#1f674a] px-5 text-sm font-bold text-white hover:bg-[#174f39]" type="submit">Create class</button></form><form action={createLesson} className="rounded-2xl border border-[#dce4d8] bg-white p-6"><h2 className="text-xl font-bold">Create a lesson</h2><label className="mt-4 block text-sm font-semibold">Lesson title<input className="mt-2 min-h-11 w-full rounded-lg border border-[#d5dfd4] px-3 font-normal" maxLength={160} name="title" required /></label><label className="mt-4 block text-sm font-semibold">Learning objective <span className="font-normal text-[#62776d]">(optional)</span><input className="mt-2 min-h-11 w-full rounded-lg border border-[#d5dfd4] px-3 font-normal" maxLength={500} name="learningObjective" /></label><label className="mt-4 block text-sm font-semibold">Lesson content<textarea className="mt-2 min-h-32 w-full rounded-lg border border-[#d5dfd4] px-3 py-2 font-normal" maxLength={20000} name="content" placeholder="Paste the lesson material here…" required /></label><button className="mt-5 min-h-11 rounded-lg bg-[#1f674a] px-5 text-sm font-bold text-white hover:bg-[#174f39]" type="submit">Save lesson</button></form></div>
+    <div className="mt-10 grid gap-8 lg:grid-cols-[0.9fr_1.1fr]"><div><h2 className="text-2xl font-bold">Classes</h2>{classrooms && classrooms.length > 0 ? <div className="mt-4 space-y-3">{(classrooms as Classroom[]).map((classroom) => <article className="rounded-xl border border-[#dce4d8] bg-white p-5" key={classroom.id}><h3 className="font-bold">{classroom.name}</h3><p className="mt-2 text-sm text-[#62776d]">Join code: <code className="rounded bg-[#edf3e9] px-2 py-1 font-bold text-[#29483c]">{classroom.join_code}</code></p><p className="mt-3 text-sm text-[#62776d]">{classroom.classroom_memberships?.[0]?.count ?? 0} students joined</p></article>)}</div> : <p className="mt-4 rounded-xl border border-dashed border-[#cfdacd] p-5 text-sm text-[#62776d]">Create your first class to generate a student join code.</p>}</div><div><h2 className="text-2xl font-bold">Lesson library</h2>{lessons && lessons.length > 0 ? <div className="mt-4 space-y-4">{(lessons as Lesson[]).map((lesson) => <article className="rounded-xl border border-[#dce4d8] bg-white p-5" key={lesson.id}><h3 className="font-bold">{lesson.title}</h3>{lesson.learning_objective && <p className="mt-1 text-sm text-[#496451]">Goal: {lesson.learning_objective}</p>}<p className="mt-3 line-clamp-3 whitespace-pre-wrap text-sm leading-6 text-[#62776d]">{lesson.content}</p>{classrooms && classrooms.length > 0 && <form action={assignLesson} className="mt-4 flex flex-wrap items-center gap-3"><input name="lessonId" type="hidden" value={lesson.id} /><label className="sr-only" htmlFor={`class-${lesson.id}`}>Assign to class</label><select className="min-h-10 rounded-lg border border-[#d5dfd4] bg-white px-3 text-sm" defaultValue="" id={`class-${lesson.id}`} name="classroomId" required><option disabled value="">Select a class</option>{(classrooms as Classroom[]).map((classroom) => <option key={classroom.id} value={classroom.id}>{classroom.name}</option>)}</select><button className="min-h-10 rounded-lg border border-[#1f674a] px-4 text-sm font-bold text-[#1f674a] hover:bg-[#edf3e9]" type="submit">Assign</button></form>}</article>)}</div> : <p className="mt-4 rounded-xl border border-dashed border-[#cfdacd] p-5 text-sm text-[#62776d]">Saved lessons will appear here, ready to assign.</p>}</div></div>
+  </section>;
 }

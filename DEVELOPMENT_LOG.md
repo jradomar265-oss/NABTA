@@ -1,5 +1,48 @@
 # Development Log
 
+## Stage 3 — Student Experience and Teacher Studio Foundations
+
+**Execution date:** 2026-11-01  
+**Status:** In progress — student world rebuilt on the approved tileset
+
+### Implemented
+
+- Added a Stage 3 migration for persisted learner onboarding, classroom membership, teacher-authored lessons, and lesson-to-class assignments.
+- Added `202611010003_lesson_study_progress.sql`: RLS-scoped study progress with a `mark_lesson_studied` RPC. The table is select-only for clients; there is no client path to write completion or XP.
+- Added RLS policies and server-validated actions for teacher class/lesson creation and assignment, student class-code enrolment, and student profile setup.
+- Replaced both placeholder workspaces with data-backed teacher and student interfaces.
+- Imported the founder-supplied `nabta_plains_16x16_individual_tiles` pack as `source/plains-tileset.png` (byte-for-byte copy) with its supplier manifest, and produced a palette-harmonized atlas that maps its greens onto the approved forest ramp and its soil onto the approved brown ramp. Every mapping is recorded in `manifests/plains.json`.
+- Composed a real pixel-art region: `regions/forest-clearing/terrain.png` (960x640) — flat grass tile plus authored grass tufts lifted from the atlas, a terrace band, a river with foam banks, a bridge deck, and a dithered dirt path — plus `decor.json` with the path, six quest node slots and 208 depth-sorted objects.
+- Generated a student character sheet (16x24, 18 frames: idle/walk x down/side/up) as an explicit candidate, and quest-node medallions (available/active/completed/locked).
+- Replaced the SVG placeholder world with a canvas renderer: camera pan/zoom/pinch/boundaries/recentre, Y-sorted sprites and character, path-following movement, real quest states, `prefers-reduced-motion`, and a keyboard-accessible quest list.
+- Restored the accidentally deleted `.env.example`.
+
+### Verification
+
+- `npm.cmd run typecheck` — PASS (exit 0).
+- `npm.cmd run lint` — PASS (exit 0).
+- `npm.cmd run build` — PASS (exit 0, `BUILD_ID` written; the known Windows SWC warnings remain).
+- `python scripts/pixel-art/import_plains_tileset.py` — PASS (151 tiles, harmonized atlas + manifest written).
+- `python scripts/pixel-art/build_world.py` — PASS (208 objects, 6 nodes).
+- `python scripts/pixel-art/validate_world.py` — PASS (nodes on path, objects clear of path, sprite files resolve).
+- `node --experimental-strip-types scripts/student-world/check_systems.mjs` — PASS (path sampling, camera clamp/zoom, medallion mapping).
+- Asset delivery from the dev server — PASS (layout JSON, terrain, character sheet, node sheet and approved sprites all return 200).
+- `GET /` and `/student` compile and serve through the dev server. **Authenticated in-browser verification of the world is NOT TESTED** — no session was available to this agent.
+
+### Required Setup and Remaining Work
+
+- Apply `supabase/migrations/202611010002_stage3_learning_core.sql` and `202611010003_lesson_study_progress.sql` after the profiles migration.
+- Verify the class, join, assignment, study-progress, and wrong-role flows against the configured Supabase project.
+- The generated character and quest medallions are **candidates pending founder approval**; previews are in `public/assets/nabta/world/previews/`.
+- Generated trees were attempted and rejected for quality; the world currently uses a single approved tree silhouette (mirrored), so tree repetition is the main remaining art gap.
+- XP is still never awarded, so the HUD level/XP bar always shows Level 1 with an empty bar. Mastery completion awaits the assessment stage.
+
+### Art decisions taken in this stage
+
+- Palette direction: harmonize the plains pack toward the approved forest sprites rather than mixing two palettes.
+- Terrain role: plains pack supplies ground, cliffs and water; props stay the founder-approved forest sprites.
+- Character: generated as a candidate, not silently shipped as final art.
+
 ## Stage 1 — Foundation and Project Architecture
 
 **Execution date:** 2026-11-01

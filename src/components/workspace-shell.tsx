@@ -12,6 +12,9 @@ export function WorkspaceShell({
   children: React.ReactNode;
 }) {
   const title = role === "teacher" ? "Teacher workspace" : "My learning world";
+  const navigation = role === "teacher"
+    ? [{ href: "/teacher", label: "Dashboard" }]
+    : [{ href: "/student", label: "My world" }];
 
   return (
     <div className="min-h-screen bg-[#f7f8f2] text-[#18372e]">
@@ -26,11 +29,20 @@ export function WorkspaceShell({
               <p className="truncate text-xs text-[#6a7d72]">{displayName}</p>
             </div>
           </div>
-          <form action={signOut}>
-            <button className="min-h-10 rounded-lg border border-[#d5dfd4] px-4 text-sm font-semibold text-[#29483c] transition-colors hover:bg-[#f3f6ef]" type="submit">
-              Sign out
-            </button>
-          </form>
+          <div className="flex items-center gap-3">
+            <nav aria-label="Workspace" className="hidden sm:flex">
+              {navigation.map((item) => (
+                <Link className="rounded-md px-3 py-2 text-sm font-semibold text-[#496451] hover:bg-[#f3f6ef]" href={item.href} key={item.href}>
+                  {item.label}
+                </Link>
+              ))}
+            </nav>
+            <form action={signOut}>
+              <button className="min-h-10 rounded-lg border border-[#d5dfd4] px-4 text-sm font-semibold text-[#29483c] transition-colors hover:bg-[#f3f6ef]" type="submit">
+                Sign out
+              </button>
+            </form>
+          </div>
         </div>
       </header>
       <main className="mx-auto max-w-6xl px-5 py-10 sm:px-8">{children}</main>

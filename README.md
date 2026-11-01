@@ -45,10 +45,23 @@ The build and dev scripts use webpack because the installed Next.js native Turbo
 - Supabase Auth sessions use `@supabase/ssr`; `proxy.ts` refreshes cookies, and server layouts independently verify the signed-in user and database role.
 - `profiles` stores the trusted `student` or `teacher` role. RLS restricts profile reads/updates to the owner, and column grants prevent users from changing their role.
 - New accounts default to student. Teacher role assignment is an administrator action; public sign-up is not exposed.
-- Original Pixel Art sources remain unchanged in `Pixel Art/`; canonical copies, founder-approved manual sprites, and review-only automatic candidates are under `public/assets/nabta/world/`. They are not integrated into the student UI.
+- Original Pixel Art sources remain unchanged in `Pixel Art/`; canonical copies, founder-approved manual sprites, and review-only automatic candidates are under `public/assets/nabta/world/`.
+
+## Student World
+
+The student home renders a real, data-driven pixel-art region instead of a mock map:
+
+- `public/assets/nabta/world/regions/forest-clearing/` holds the composed ground layer (`terrain.png`) and the layout data (`decor.json`: path waypoints, six quest node slots, 208 depth-sorted objects).
+- `src/features/student-world/` holds a canvas renderer with a camera (drag, wheel, pinch, zoom buttons, recentre), Y-sorted sprites, a path-following student character with idle/walk animation, and quest medallions that reflect persisted state.
+- Quest state is derived server-side: the first unstudied lesson in a class is *available*, later lessons stay *locked*, and a persisted `lesson_study_progress` row marks a lesson *studied*. Studying is recorded through the `mark_lesson_studied` RPC; the table is select-only for clients and there is no client path to write completion or XP.
+- `prefers-reduced-motion` is honoured (no pulse or walk frames). The quest list under the map is keyboard accessible and mirrors the map nodes.
 
 ## Pixel Art Analysis
 
-The source analysis workflow, generated previews, crop approval rules, and validation commands are documented in [scripts/pixel-art/README.md](scripts/pixel-art/README.md). Founder-approved manual sprites are under `public/assets/nabta/world/sprites/approved/`; automatic alpha-component detections remain diagnostic candidates. The terrain sheet has 16px tile candidates, but its grid is unconfirmed. Use the [Sprite Region Editor](http://localhost:3001/assets/nabta/world/tools/region-editor.html) to correct further object boundaries.
+The source analysis, palette harmonization, world composition, and validation commands are documented in [scripts/pixel-art/README.md](scripts/pixel-art/README.md). Founder-approved manual sprites are under `public/assets/nabta/world/sprites/approved/`; automatic alpha-component detections remain diagnostic candidates. Use the [Sprite Region Editor](http://localhost:3001/assets/nabta/world/tools/region-editor.html) to correct further object boundaries.
 
-See [DEVELOPMENT_LOG.md](DEVELOPMENT_LOG.md) for verified progress and remaining Stage 1 checks.
+## Migrations
+
+Apply in order from `supabase/migrations/`: `..._profiles.sql`, `..._stage3_learning_core.sql`, `..._lesson_study_progress.sql`.
+
+See [DEVELOPMENT_LOG.md](DEVELOPMENT_LOG.md) for verified progress and known limitations.
