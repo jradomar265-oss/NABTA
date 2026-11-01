@@ -12,6 +12,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Local CommonJS build used only by scripts/ai/check_lesson_analyzer.cjs.
+    ".check-build/**",
   ]),
 ]);
 

@@ -1,5 +1,37 @@
 # Development Log
 
+## Stage 4 — AI Lesson Understanding
+
+**Execution date:** 2026-11-01  
+**Status:** Implemented in mock mode; live provider untested
+
+### Implemented
+
+- `src/lib/ai/` provider-independent layer: `LessonAnalyzer` interface, zod-validated output contract, deterministic mock analyser, OpenAI-compatible HTTP adapter, and `resolveLessonAnalyzer()` which chooses from server-only env vars and reports *why* it chose mock.
+- Migration `202611010004_stage4_ai_lesson_understanding.sql`: `agent_runs` (every attempt, success **and** failure, with provider/model/duration/input size/repair flag) and `lesson_objectives` (statement, skills, evidence quote, `ai`/`teacher` source, approval flag). RLS: teachers own their rows; students can read only approved objectives for lessons assigned to their class.
+- Server actions: analyse (replaces previous AI drafts, keeps teacher-authored ones), edit+approve, delete, add teacher objective, approve all. Every action re-checks the teacher role server-side.
+- Teacher studio UI: per-lesson objectives panel with mock/live badge, last-run status (including failures), AI-draft/teacher-edit tags, editable statements and skills, per-objective approval, and an "approve all" shortcut.
+- Student integration: approved objectives become the learning goal shown on the quest panel, falling back to the teacher's own note when nothing is approved yet.
+- Checks: `npm run check:world` and `npm run check:ai` (schema rejection cases, determinism, short-lesson failure, provider resolution incl. half-configured fallback).
+
+### Verification
+
+- `npm run typecheck` — PASS (exit 0).
+- `npm run lint` — PASS (exit 0).
+- `npm run build` — PASS (exit 0, `BUILD_ID` written).
+- `npm run check:ai` — PASS (4 mock objectives from the sample fractions lesson; invalid JSON, empty objective list, missing skills, too-short statement all rejected; mock deterministic across runs; short lesson raises a teacher-readable error; half-configured provider falls back to mock and names the missing variable).
+- `npm run check:world` — PASS (unchanged from Stage 3).
+- `GET /` 200 and `/teacher` 307 (redirect to login without a session) through the dev server.
+- **NOT TESTED:** analyse → review → approve → student view against a live Supabase project (the migration is not applied yet, and no sessions were available). **NOT TESTED:** any live AI provider call — no credentials were configured, and none were purchased.
+
+### Required Setup and Remaining Work
+
+- Apply `202611010004_stage4_ai_lesson_understanding.sql` after the earlier migrations.
+- Run the teacher flow end to end: analyse a lesson, edit an objective, approve it, confirm the student quest shows it and a draft does not.
+- The AI layer writes `agent_runs` on every attempt, but the UI only surfaces the latest run per lesson; a run history view is not built.
+- Evidence quotes come from the analyser, not from a verified retrieval step; grounding is only as good as the prompt.
+- No assessment generation, grading, XP, analytics, or interventions yet (Stages 5–8).
+
 ## Stage 3 — Student Experience and Teacher Studio Foundations
 
 **Execution date:** 2026-11-01  

@@ -10,6 +10,7 @@ type LessonRow = { title: string; learning_objective: string; content: string } 
 type AssignmentRow = {
   id: string;
   classroom_id: string;
+  lesson_id: string;
   lessons: LessonRow | LessonRow[] | null;
   classrooms: { name: string } | null | { name: string }[];
 };
@@ -37,12 +38,21 @@ export default async function StudentHomePage({ searchParams }: { searchParams: 
   const { data: assignmentRows } = user && supabase
     ? await supabase
       .from("lesson_assignments")
-      .select("id, classroom_id, assigned_at, lessons(title, learning_objective, content), classrooms(name)")
+      .select("id, classroom_id, lesson_id, assigned_at, lessons(title, learning_objective, content), classrooms(name)")
       .order("assigned_at", { ascending: true })
     : { data: [] };
   const { data: studyRows } = user && supabase
     ? await supabase.from("lesson_study_progress").select("assignment_id").eq("student_id", user.id)
     : { data: [] };
+  // Only teacher-approved objectives are visible here; RLS enforces the same rule.
+  const { data: objectiveRows } = user && supabase
+    ? await supabase.from("lesson_objectives").select("lesson_id, statement").eq("approved", true).order("position", { ascending: true })
+    : { data: [] };
+
+  const approvedObjectiveByLesson = new Map<string, string>();
+  for (const row of (objectiveRows ?? []) as { lesson_id: string; statement: string }[]) {
+    if (!approvedObjectiveByLesson.has(row.lesson_id)) approvedObjectiveByLesson.set(row.lesson_id, row.statement);
+  }
 
   const studied = new Set((studyRows ?? []).map((row) => row.assignment_id as string));
   const assignments = ((assignmentRows ?? []) as AssignmentRow[]).map((assignment) => ({
@@ -50,6 +60,7 @@ export default async function StudentHomePage({ searchParams }: { searchParams: 
     classroomId: assignment.classroom_id,
     lesson: firstRow<LessonRow>(assignment.lessons),
     classroom: firstRow<{ name: string }>(assignment.classrooms),
+    objective: approvedObjectiveByLesson.get(assignment.lesson_id) ?? "",
   }));
 
   // Quest states are derived server-side: the first unstudied lesson in a class is
@@ -74,7 +85,7 @@ export default async function StudentHomePage({ searchParams }: { searchParams: 
       id: assignment.id,
       slot: index,
       title: assignment.lesson?.title ?? "Lesson",
-      objective: assignment.lesson?.learning_objective ?? "",
+      objective: assignment.objective || assignment.lesson?.learning_objective || "",
       classroomName: assignment.classroom?.name ?? "Class lesson",
       status,
       rewardXp: 0,

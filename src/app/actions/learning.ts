@@ -3,21 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { z } from "zod";
-import { createSupabaseServerClient } from "@/lib/supabase/server";
-import type { AppRole } from "@/lib/auth/require-role";
-
-async function requireActionRole(role: AppRole) {
-  const supabase = await createSupabaseServerClient();
-  if (!supabase) redirect("/login?setup=required");
-
-  const { data: { user } } = await supabase.auth.getUser();
-  if (!user) redirect("/login");
-
-  const { data: profile } = await supabase.from("profiles").select("role").eq("id", user.id).maybeSingle();
-  if (!profile || profile.role !== role) redirect(role === "teacher" ? "/student" : "/teacher");
-
-  return { supabase, user };
-}
+import { requireActionRole } from "@/lib/auth/action-role";
 
 function teacherError(message: string): never {
   redirect(`/teacher?error=${encodeURIComponent(message)}`);

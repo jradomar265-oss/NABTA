@@ -35,9 +35,24 @@ Without Supabase configuration, public pages build and run, while login is expli
 npm run typecheck
 npm run lint
 npm run build
+npm run check:world
+npm run check:ai
 ```
 
+`check:world` verifies quest nodes sit on the authored path, camera bounds and node-state mapping. `check:ai` compiles the AI layer and verifies structured-output validation, honest failure, deterministic mock output and provider resolution.
+
 The build and dev scripts use webpack because the installed Next.js native Turbopack binding is incompatible with this Windows environment.
+
+## AI Lesson Understanding
+
+The teacher studio can analyse a saved lesson and turn it into learning objectives the teacher reviews before students see anything.
+
+- `src/lib/ai/` is provider-independent: `LessonAnalyzer` is the only surface the app calls, and `resolveLessonAnalyzer()` picks the implementation from server-only environment variables.
+- **Mock mode is the default.** With no AI variables set, analysis runs on fixed, deterministic rules over the lesson text. Every surface that shows the result labels it as mock. It exists so the workflow is testable with no spend, and it is never presented as real AI.
+- A live provider is used only when `AI_PROVIDER=openai-compatible`, `AI_BASE_URL`, `AI_API_KEY` and `AI_MODEL` are all set. A half-configured provider falls back to mock **and says which variable is missing**.
+- All output passes a zod schema before anything is stored. A live model gets one bounded repair attempt; if the second response is also unusable the call fails and nothing is saved.
+- Every attempt — success or failure — is written to `agent_runs`, so a failed call can never appear as a success.
+- Objectives land in `lesson_objectives` as unapproved drafts tagged `AI draft` or `Teacher edit`. RLS lets students read only `approved = true` objectives for lessons assigned to their class. Approved objectives become the learning goal shown on the student's quest.
 
 ## Stage 1 Architecture
 
@@ -62,6 +77,6 @@ The source analysis, palette harmonization, world composition, and validation co
 
 ## Migrations
 
-Apply in order from `supabase/migrations/`: `..._profiles.sql`, `..._stage3_learning_core.sql`, `..._lesson_study_progress.sql`.
+Apply in order from `supabase/migrations/`: `..._profiles.sql`, `..._stage3_learning_core.sql`, `..._lesson_study_progress.sql`, `..._stage4_ai_lesson_understanding.sql`.
 
 See [DEVELOPMENT_LOG.md](DEVELOPMENT_LOG.md) for verified progress and known limitations.
