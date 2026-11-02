@@ -1,5 +1,36 @@
 # Development Log
 
+## Stage 7 — AI Learning Analysis and Teacher Analytics
+
+**Execution date:** 2026-11-01  
+**Status:** Implemented; nothing verified against a live database
+
+### Implemented
+
+- Migration `202611010007_stage7_learning_analysis.sql`: `learning_analyses` stores `evidence_snapshot` (the computed numbers, frozen at run time) and `observations` (validated model output) as separate columns, so an interpretation can never be mistaken for a measurement. `agent_runs.kind` extended with `learning_analysis`. Teacher-scoped RLS with `teaches_classroom`; **no student policy** — interpretation is teacher-facing.
+- `src/lib/learning/analysis.ts`: pure fact-building from stored answers — per-objective attempts/correct/accuracy/students, the most-chosen wrong option, per-student totals, and an `evidenceState` derived from explicit thresholds (3 answers before any hypothesis, 2 students before class-level claims, 4 answers plus 80% before calling something a strength). Pure functions, so the maths is unit-tested without a database.
+- Learning analyst behind the same provider interface as the other stages: schema + `parseObservations`, a deterministic mock, and a live adapter shared by the Gemini and OpenAI-shaped transports.
+- `parseObservations` enforces two honesty rules beyond the schema: an observation cannot reference an objective outside the fact sheet, and when the facts are not `usable`, `insufficientEvidence` must be true — a model cannot sound certain about thin data.
+- `/teacher/classrooms/[id]`: measured performance table (per objective and per student, labelled as computed in the app), explicit evidence limits, and a clearly separated interpretation panel with provider badge, confidence per observation, cited numbers, and a "what this analysis cannot tell you" list. Classes link to it from the studio.
+- Student Home: "What your answers show" — per-objective correct counts from the student's own submitted answers, with the caveat that a few answers describe practice, not ability.
+
+### Verification
+
+- `npm run typecheck` — PASS (exit 0).
+- `npm run lint` — PASS (exit 0, no warnings).
+- `npm run build` — PASS (exit 0; `.next/server/app/teacher/classrooms` produced).
+- `npm run check:ai` — PASS, three suites. New: facts arithmetic (2/3 = 0.667, wrong-option tracking, unanswered objective is `null` accuracy not zero), evidence thresholds (2 answers insufficient, 3 at 100% not yet a strength, 4 at 100% is, 40% over 5 is a gap), an empty class reports insufficient evidence, and overclaim rejection (stray objective, missing evidence, sufficient-claim on thin facts all refused).
+- `npm run check:world` — PASS (unchanged).
+- `GET /` 200 through the dev server.
+- **NOT TESTED:** anything against the live database — migration `0007` is not applied, and no class has submissions yet, so the analytics page has never rendered real facts.
+
+### Required Setup and Remaining Work
+
+- Apply `202611010007_stage7_learning_analysis.sql`.
+- The analytics page needs at least one graded submission to show real numbers; until then it correctly reports "no answers recorded".
+- Not built: interventions, follow-up assessments, progress comparison (Stage 8), and any class-wide recommendation workflow.
+- The `evidence_snapshot` is stored but no UI yet shows a past analysis against a later one; comparing two snapshots is Stage 8 work.
+
 ## Open founder actions (carry forward until done)
 
 1. **OpenAI credit.** Checked 2026-11-01: the key authenticates but the account returns `http-429 credit_balance_exhausted`. `AI_PROVIDER` is therefore commented out in `.env.local` and the app runs mock mode. To go live: add credit, uncomment `AI_PROVIDER`, restart the dev server, run `npm run check:live`. If a 404 appears then, the model name (`gpt-6.1-sol`) is not available to the account.

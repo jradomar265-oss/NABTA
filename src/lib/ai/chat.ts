@@ -10,6 +10,15 @@ export type ChatConfig = { baseUrl: string; apiKey: string; model: string };
 
 const DEFAULT_TIMEOUT_MS = 25_000;
 
+/** Adapts the OpenAI-shaped endpoint to the generic (system, user) transport. */
+export function createChatTransport(config: ChatConfig): (system: string, user: string) => Promise<string> {
+  return (system, user) =>
+    completeJson(config, [
+      { role: "system", content: system },
+      { role: "user", content: user },
+    ]);
+}
+
 /** Turns a provider error body into something a teacher (or the founder) can act on. */
 export function describeFailure(status: number, rawBody: string): AiAnalysisError {
   let code = "";

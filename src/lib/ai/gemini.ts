@@ -180,6 +180,11 @@ function describeStatus(status: number, requested: string, detail: string): AiAn
   return new AiAnalysisError("Gemini rejected the request.", `http-${status} (${requested}): ${detail}`);
 }
 
+/** Adapts native Gemini to the generic (system, user) transport. */
+export function createGeminiTransport(config: GeminiConfig): (system: string, user: string) => Promise<string> {
+  return (system, user) => callGemini(config, system, user);
+}
+
 export function createGeminiAnalyzer(config: GeminiConfig): LessonAnalyzer {
   const providerId = config.providerId ?? "gemini";
   const label = config.label ?? `Gemini (${config.model})`;

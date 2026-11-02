@@ -47,7 +47,7 @@ export default async function StudentHomePage({ searchParams }: { searchParams: 
     : { data: [] };
   // Only teacher-approved objectives are visible here; RLS enforces the same rule.
   const { data: objectiveRows } = user && supabase
-    ? await supabase.from("lesson_objectives").select("lesson_id, statement").eq("approved", true).order("position", { ascending: true })
+    ? await supabase.from("lesson_objectives").select("id, lesson_id, statement").eq("approved", true).order("position", { ascending: true })
     : { data: [] };
   // Only published assessments are readable, and the answer key is never selectable.
   const { data: assessmentRows } = user && supabase
@@ -57,11 +57,37 @@ export default async function StudentHomePage({ searchParams }: { searchParams: 
     ? await supabase.from("questions").select("assessment_id")
     : { data: [] };
   const { data: submissionRows } = user && supabase
-    ? await supabase.from("submissions").select("assessment_id, score, total").eq("student_id", user.id)
+    ? await supabase.from("submissions").select("id, assessment_id, score, total").eq("student_id", user.id)
     : { data: [] };
   const { data: achievementRows } = user && supabase
     ? await supabase.from("achievements").select("code, earned_at").eq("student_id", user.id).order("earned_at", { ascending: true })
     : { data: [] };
+
+  // Their own answers, per objective. Facts only: no model is involved in this summary.
+  const submissionIds = ((submissionRows ?? []) as { id: string }[]).map((row) => row.id);
+  const { data: ownAnswerRows } = submissionIds.length && supabase
+    ? await supabase.from("student_answers").select("question_id, is_correct").in("submission_id", submissionIds)
+    : { data: [] };
+  const ownQuestionIds = Array.from(new Set(((ownAnswerRows ?? []) as { question_id: string }[]).map((row) => row.question_id)));
+  const { data: ownQuestionRows } = ownQuestionIds.length && supabase
+    ? await supabase.from("questions").select("id, objective_id").in("id", ownQuestionIds)
+    : { data: [] };
+  const objectiveIdByQuestion = new Map(((ownQuestionRows ?? []) as { id: string; objective_id: string | null }[]).map((row) => [row.id, row.objective_id]));
+  const statementByObjectiveId = new Map(((objectiveRows ?? []) as { id: string; statement: string }[]).map((row) => [row.id, row.statement]));
+
+  const objectiveProgress = new Map<string, { correct: number; total: number }>();
+  for (const answer of (ownAnswerRows ?? []) as { question_id: string; is_correct: boolean }[]) {
+    const objectiveId = objectiveIdByQuestion.get(answer.question_id);
+    if (!objectiveId) continue;
+    const bucket = objectiveProgress.get(objectiveId) ?? { correct: 0, total: 0 };
+    bucket.total += 1;
+    if (answer.is_correct) bucket.correct += 1;
+    objectiveProgress.set(objectiveId, bucket);
+  }
+  const objectiveSummary = Array.from(objectiveProgress.entries())
+    .map(([objectiveId, counts]) => ({ statement: statementByObjectiveId.get(objectiveId) ?? "", ...counts }))
+    .filter((entry) => entry.statement && entry.total > 0)
+    .slice(0, 6);
 
   const challengeCountByLesson = new Map<string, number>();
   {
@@ -172,6 +198,7 @@ export default async function StudentHomePage({ searchParams }: { searchParams: 
           achievements={(achievementRows ?? []) as { code: string; earned_at: string }[]}
           completed={quests.filter((quest) => quest.status === "completed").length}
           level={level}
+          objectiveSummary={objectiveSummary}
           studied={quests.filter((quest) => quest.status === "studied" || quest.status === "completed").length}
           total={quests.length}
           xp={xp}
@@ -229,6 +256,7 @@ function ProgressSummary({
   completed,
   total,
   achievements,
+  objectiveSummary,
 }: {
   level: number;
   xp: number;
@@ -236,6 +264,7 @@ function ProgressSummary({
   completed: number;
   total: number;
   achievements: { code: string; earned_at: string }[];
+  objectiveSummary: { statement: string; correct: number; total: number }[];
 }) {
   const intoLevel = Math.max(0, xp) % 100;
   return <div className="mt-4 grid gap-4 lg:grid-cols-2">
@@ -265,6 +294,20 @@ function ProgressSummary({
         </span>
       </div>
       <p className="mt-3 text-xs leading-5 text-[#62776d]">XP is awarded once per challenge and is calculated on the server. Understanding earns more than speed.</p>
+      {objectiveSummary.length > 0 && (
+        <div className="mt-4 border-t border-[#eef2ea] pt-3">
+          <h3 className="text-xs font-bold uppercase tracking-wide text-[#6a7d72]">What your answers show</h3>
+          <ul className="mt-2 space-y-1 text-xs text-[#496451]">
+            {objectiveSummary.map((entry) => (
+              <li className="flex items-start justify-between gap-3" key={entry.statement}>
+                <span>{entry.statement}</span>
+                <span className="shrink-0 font-bold text-[#29483c]">{entry.correct}/{entry.total}</span>
+              </li>
+            ))}
+          </ul>
+          <p className="mt-2 text-[11px] leading-4 text-[#7b8c81]">Counted from your own submitted answers. A few answers describe practice, not ability.</p>
+        </div>
+      )}
     </section>
 
     <section className="rounded-2xl border border-[#dce4d8] bg-white p-5">

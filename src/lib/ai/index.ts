@@ -1,20 +1,27 @@
 import { createHttpChallengeGenerator } from "./challenge-http";
 import { mockChallengeGenerator } from "./challenge-mock";
 import type { ChallengeGenerator } from "./challenge";
-import { createGeminiAnalyzer, createGeminiChallengeGenerator, GEMINI_API_BASE } from "./gemini";
+import { createGeminiAnalyzer, createGeminiChallengeGenerator, createGeminiTransport, GEMINI_API_BASE } from "./gemini";
+import { createChatTransport } from "./chat";
 import { createHttpAnalyzer } from "./http-analyzer";
 import { mockLessonAnalyzer } from "./mock-analyzer";
+import { mockLearningAnalyst } from "./analysis-mock";
+import { createLiveLearningAnalyst } from "./analysis-live";
+import type { LearningAnalyst } from "./analysis";
 import type { AiSetup, LessonAnalyzer } from "./types";
 
 export { AiAnalysisError } from "./types";
 export type { AiSetup, AnalyzerRun, LessonAnalysis, LessonAnalysisInput, LessonAnalyzer } from "./types";
 export { parseAnalysis } from "./schema";
 export { parseChallenge } from "./challenge";
+export { parseObservations } from "./analysis";
+export type { LearningAnalyst, LearningObservations, Observation } from "./analysis";
 export type { ChallengeGenerator, ChallengeInput, ChallengeObjective, ChallengeRun, GeneratedQuestion } from "./challenge";
 export { geminiSurfaceInUse, GEMINI_API_BASE } from "./gemini";
 
 type Resolved = { analyzer: LessonAnalyzer; setup: AiSetup };
 type ResolvedChallenge = { generator: ChallengeGenerator; setup: AiSetup };
+type ResolvedAnalyst = { analyst: LearningAnalyst; setup: AiSetup };
 
 type AiConfig =
   | {
@@ -153,6 +160,42 @@ export function resolveChallengeGenerator(env: Record<string, string | undefined
 
 export function getLessonAnalyzer(): Resolved {
   return resolveLessonAnalyzer();
+}
+
+/** Chooses the learning analyst. Facts are always computed locally; only interpretation varies. */
+export function resolveLearningAnalyst(env: Record<string, string | undefined> = process.env): ResolvedAnalyst {
+  const config = readConfig(env);
+
+  if (config.live) {
+    const chat = config.kind === "gemini"
+      ? createGeminiTransport({ baseUrl: config.baseUrl, apiKey: config.apiKey, model: config.model })
+      : createChatTransport({ baseUrl: config.baseUrl, apiKey: config.apiKey, model: config.model });
+    const analyst = createLiveLearningAnalyst({
+      id: config.providerId,
+      label: `Live analyst — ${config.providerLabel}`,
+      model: config.model,
+      chat,
+    });
+    return {
+      analyst,
+      setup: {
+        isMock: false,
+        provider: analyst.id,
+        label: analyst.label,
+        note: `${config.providerLabel} is configured. It only sees the computed fact sheet, and its output is validated before it is saved.`,
+      },
+    };
+  }
+
+  return {
+    analyst: mockLearningAnalyst,
+    setup: {
+      isMock: true,
+      provider: mockLearningAnalyst.id,
+      label: mockLearningAnalyst.label,
+      note: mockNote(config.missing),
+    },
+  };
 }
 
 export function getChallengeGenerator(): ResolvedChallenge {

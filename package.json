@@ -9,8 +9,8 @@
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
     "check:world": "node --experimental-strip-types scripts/student-world/check_systems.mjs",
-    "check:ai": "tsc src/lib/ai/index.ts --outDir .check-build/ai --module commonjs --moduleResolution node --target es2022 --esModuleInterop --skipLibCheck --strict && node scripts/ai/check_lesson_analyzer.cjs && node scripts/ai/check_challenge_generator.cjs",
-    "check:live": "tsc src/lib/ai/index.ts --outDir .check-build/ai --module commonjs --moduleResolution node --target es2022 --esModuleInterop --skipLibCheck --strict && node scripts/ai/check_live_provider.cjs"
+    "check:ai": "tsc -p scripts/ai/tsconfig.check.json && node scripts/ai/check_lesson_analyzer.cjs && node scripts/ai/check_challenge_generator.cjs && node scripts/ai/check_learning_analyst.cjs",
+    "check:live": "tsc -p scripts/ai/tsconfig.check.json && node scripts/ai/check_live_provider.cjs"
   },
   "dependencies": {
     "@supabase/ssr": "^0.12.7",

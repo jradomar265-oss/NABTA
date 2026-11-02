@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 import { assignLesson, createClassroom, createLesson } from "@/app/actions/learning";
 import { requireRole } from "@/lib/auth/require-role";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
@@ -144,7 +146,7 @@ export default async function TeacherHomePage({ searchParams }: { searchParams: 
       <div>
         <h2 className="text-2xl font-bold">Classes</h2>
         {classrooms && classrooms.length > 0
-          ? <div className="mt-4 space-y-3">{(classrooms as Classroom[]).map((classroom) => <article className="rounded-xl border border-[#dce4d8] bg-white p-5" key={classroom.id}><h3 className="font-bold">{classroom.name}</h3><p className="mt-2 text-sm text-[#62776d]">Join code: <code className="rounded bg-[#edf3e9] px-2 py-1 font-bold text-[#29483c]">{classroom.join_code}</code></p><p className="mt-3 text-sm text-[#62776d]">{classroom.classroom_memberships?.[0]?.count ?? 0} students joined</p></article>)}</div>
+          ? <div className="mt-4 space-y-3">{(classrooms as Classroom[]).map((classroom) => <article className="rounded-xl border border-[#dce4d8] bg-white p-5" key={classroom.id}><h3 className="font-bold">{classroom.name}</h3><p className="mt-2 text-sm text-[#62776d]">Join code: <code className="rounded bg-[#edf3e9] px-2 py-1 font-bold text-[#29483c]">{classroom.join_code}</code></p><p className="mt-3 text-sm text-[#62776d]">{classroom.classroom_memberships?.[0]?.count ?? 0} students joined</p><Link className="mt-3 inline-block text-sm font-bold text-[#1f674a] underline" href={`/teacher/classrooms/${classroom.id}`}>Class analytics →</Link></article>)}</div>
           : <p className="mt-4 rounded-xl border border-dashed border-[#cfdacd] p-5 text-sm text-[#62776d]">Create your first class to generate a student join code.</p>}
       </div>
 
