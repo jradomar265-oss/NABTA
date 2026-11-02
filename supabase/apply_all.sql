@@ -38,47 +38,39 @@
 --
 --  WHAT IT CREATES, IN DEPENDENCY ORDER
 --
---    #   source migration                     objects
---    --  -----------------------------------  --------------------------------
---    1   202611010001_profiles.sql            type app_role; table profiles;
---                                             fns handle_new_user,
---                                             set_profile_updated_at;
---                                             trgs on_auth_user_created,
---                                             profiles_updated_at
---    2   202611010002_stage3_learning_core    tables classrooms,
---                                             classroom_memberships, lessons,
---                                             lesson_assignments; fns is_teacher,
---                                             teaches_classroom,
---                                             is_classroom_member,
---                                             join_classroom_by_code;
---                                             trg lessons_updated_at
---    3   202611010003_lesson_study_progress    table lesson_study_progress;
---                                             fn mark_lesson_studied
---    4   202611010004_stage4_ai_lesson_...     tables agent_runs,
---                                             lesson_objectives;
---                                             fns assert_answer_in_range,
---                                             assert_existing_answers_in_range;
---                                             trg lesson_objectives_updated_at
---    5   202611010005_stage5_challenges        tables assessments, questions,
---                                             answer_keys; trgs
---                                             answer_keys_in_range,
---                                             questions_answers_in_range,
---                                             assessments_updated_at
---    6   202611010006_stage6_study_quests      tables submissions, student_answers,
---                                             xp_transactions, achievements;
---                                             fns xp_for_questions, level_for_xp,
---                                             submit_challenge
---    7   202611010007_stage7_learning_...      table learning_analyses
---    8   202611010008_stage8_companion         table companion_messages
---    9   202611010009_stage8_interventions     table interventions; the
---                                             assessments (lesson_id, kind)
---                                             uniqueness change
---    10  202611010010_stage9_comparability     questions.difficulty,
---                                             interventions.scope,
---                                             interventions.student_id
+--    #   source migration (supabase/migrations/)          creates
+--    --  -----------------------------------------------  --------------------------------------
+--    1   202611010001_profiles.sql                        type app_role; table profiles;
+--                                                         fns handle_new_user, set_profile_updated_at;
+--                                                         trgs on_auth_user_created, profiles_updated_at
+--    2   202611010002_stage3_learning_core.sql            tables classrooms, classroom_memberships,
+--                                                         lessons, lesson_assignments;
+--                                                         fns is_teacher, teaches_classroom,
+--                                                         is_classroom_member, join_classroom_by_code;
+--                                                         trg lessons_updated_at
+--    3   202611010003_lesson_study_progress.sql           table lesson_study_progress;
+--                                                         fn mark_lesson_studied
+--    4   202611010004_stage4_ai_lesson_understanding.sql  tables agent_runs, lesson_objectives;
+--                                                         fns assert_answer_in_range,
+--                                                         assert_existing_answers_in_range;
+--                                                         trg lesson_objectives_updated_at
+--    5   202611010005_stage5_challenges.sql               tables assessments, questions, answer_keys;
+--                                                         trgs answer_keys_in_range,
+--                                                         questions_answers_in_range,
+--                                                         assessments_updated_at
+--    6   202611010006_stage6_study_quests.sql             tables submissions, student_answers,
+--                                                         xp_transactions, achievements;
+--                                                         fns xp_for_questions, level_for_xp,
+--                                                         submit_challenge
+--    7   202611010007_stage7_learning_analysis.sql        table learning_analyses
+--    8   202611010008_stage8_companion.sql                table companion_messages
+--    9   202611010009_stage8_interventions.sql            table interventions;
+--                                                         assessments uniqueness moves to (lesson_id, kind)
+--    10  202611010010_stage9_comparability.sql            questions.difficulty;
+--                                                         interventions.scope, interventions.student_id
 --
 --    Row level security is enabled on every table and every table gets explicit
---    grants; the 39 row level security policies are named at the start of each
+--    grants. The 39 row level security policies are named at the head of each
 --    section below.
 --
 -- ============================================================================
