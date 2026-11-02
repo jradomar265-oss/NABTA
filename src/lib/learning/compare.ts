@@ -29,10 +29,43 @@ export type Comparison = {
   /** Always false. Kept explicit so a caller cannot quietly claim causation. */
   causalClaim: boolean;
   statement: string;
+  /** Set when the two sides were not a compatible pair and no comparison was made. */
+  incompatibleReason: string | null;
 };
 
 /** A side needs usable evidence before its movement can be read. */
 const MIN_COMPARABLE_ATTEMPTS = 3;
+
+/**
+ * Only these pairings are compatible. A challenge compared with targeted practice
+ * would mix a test with a teaching activity, and comparing a challenge with itself
+ * says nothing. Follow-up evidence is only meaningful against the initial challenge.
+ */
+const COMPATIBLE_PAIRS: Record<string, string[]> = {
+  challenge: ["follow_up"],
+  follow_up: ["challenge"],
+};
+
+export type AssessmentKind = "challenge" | "practice" | "follow_up";
+
+export type Compatibility =
+  | { compatible: true }
+  | { compatible: false; reason: string };
+
+/** Refuses to compare evidence that does not come from a compatible pair of assessments. */
+export function checkCompatibility(beforeKind: AssessmentKind, afterKind: AssessmentKind): Compatibility {
+  if (beforeKind === afterKind) {
+    return { compatible: false, reason: `Both sides come from a ${afterKind.replace("_", "-")} assessment, so there is no change to measure.` };
+  }
+  const allowed = COMPATIBLE_PAIRS[beforeKind] ?? [];
+  if (!allowed.includes(afterKind)) {
+    return {
+      compatible: false,
+      reason: `A ${beforeKind.replace("_", "-")} assessment cannot be compared with a ${afterKind.replace("_", "-")} assessment; only an initial challenge can be compared with a follow-up.`,
+    };
+  }
+  return { compatible: true };
+}
 
 function sideOf(objective: ObjectiveFact | undefined): ComparisonRow["before"] {
   if (!objective) return { attempts: 0, correct: 0, accuracy: null };
@@ -43,7 +76,24 @@ function sideOf(objective: ObjectiveFact | undefined): ComparisonRow["before"] {
  * Rows are matched by objective id. An objective present on only one side is
  * reported as not comparable rather than treated as a change of zero.
  */
-export function compareEvidence(before: AnalysisFacts, after: AnalysisFacts): Comparison {
+export function compareEvidence(
+  before: AnalysisFacts,
+  after: AnalysisFacts,
+  kinds: { before: AssessmentKind; after: AssessmentKind } = { before: "challenge", after: "follow_up" },
+): Comparison {
+  const compatibility = checkCompatibility(kinds.before, kinds.after);
+  if (!compatibility.compatible) {
+    return {
+      rows: [],
+      comparable: 0,
+      improved: 0,
+      lower: 0,
+      causalClaim: false,
+      statement: "These two sets of evidence cannot be compared, so no change is reported.",
+      incompatibleReason: compatibility.reason,
+    };
+  }
+
   const afterById = new Map(after.objectives.map((objective) => [objective.objectiveId, objective]));
   const seen = new Set<string | null>();
 
@@ -68,7 +118,7 @@ export function compareEvidence(before: AnalysisFacts, after: AnalysisFacts): Co
     ? "No objective had enough answers on both occasions, so no comparison can be made."
     : `${improved} of ${comparable} comparable objective${comparable === 1 ? "" : "s"} moved up and ${lower} moved down. This is a change between two assessments, not proof of what caused it.`;
 
-  return { rows, comparable, improved, lower, causalClaim: false, statement };
+  return { rows, comparable, improved, lower, causalClaim: false, statement, incompatibleReason: null };
 }
 
 function buildRow(

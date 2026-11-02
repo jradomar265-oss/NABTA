@@ -1,5 +1,52 @@
 # Development Log
 
+## Migration state (verified 2026-11-01 by PostgREST probe, not assumed)
+
+| Migration | Applied? | Evidence |
+|---|---|---|
+| `0004` stage 4 | yes | `lesson_objectives`, `agent_runs` hold rows |
+| `0005` stage 5 | yes | `assessments`, `questions`, `answer_keys` probe `42501` |
+| `0006` stage 6 | yes | every function present; verifier ran past its assertions |
+| `0007` stage 7 | **yes** | `learning_analyses` returns `42501` (exists, anon denied) |
+| `0008` stage 8 companion | **NOT APPLIED** | `companion_messages` returns `PGRST205` (table missing) |
+| `0009` stage 8 interventions | **NOT APPLIED** | `interventions` returns `PGRST205` |
+
+Consequence: the companion UI renders but cannot save a question until `0008` is applied, and no intervention flow can run until `0009` is applied. Both fail closed with a visible message rather than silently.
+
+## Stage 8 — AI Personal Coach and Targeted Learning
+
+**Execution date:** 2026-11-01  
+**Status:** Implemented; not verified against a live database
+
+### Implemented
+
+- `0009_stage8_interventions.sql`: `assessments.kind` (`challenge` / `practice` / `follow_up`) with uniqueness moved to `(lesson_id, kind)`, and an `interventions` table whose `draft → approved → assigned` transitions are enforced in the actions. `agent_runs.kind` gained `intervention_generation`. RLS is teacher-scoped with `teaches_classroom`; **students have no policy on `interventions`** — they reach the practice and follow-up assessments instead, which carry the existing publication rules.
+- Existing grading preserved: one RPC, one answer-key table, XP once per assessment. No change to `submit_challenge`.
+- `submitChallenge` now addresses an assessment by id (and re-derives the lesson from the assignment), so challenge, practice and follow-up all share one reviewed path. It rejects an assessment that does not belong to the quest.
+- `createIntervention` generates **two separate question sets** — targeted practice and a follow-up check — created as `draft` and unpublished, tied to one approved objective, with an `agent_runs` row. `approveIntervention` requires `draft`. `assignIntervention` requires `approved` and only then publishes both assessments, which is what makes them readable by students.
+- Comparison compatibility is now structural: `checkCompatibility` allows only `challenge → follow_up`. Comparing a challenge with practice, or with itself, returns a stated reason and **no rows**. `causalClaim` remains hard-coded false and the UI prints "none — NABTA does not claim it caused any change".
+- Classroom page gained a before/after table and a targeted-practice panel with per-objective creation and approve/assign controls.
+- Quest page now renders every published activity for the lesson — challenge, practice and follow-up — each with its own result, so follow-up evidence is stored and shown separately.
+
+### Verification
+
+- `npm run typecheck` — PASS (exit 0).
+- `npm run lint` — PASS (exit 0, no warnings).
+- `npm run build` — PASS (exit 0).
+- `npm run check:ai` — PASS, four suites. Comparison suite now also asserts: challenge↔follow-up comparable; challenge↔challenge, challenge↔practice and practice↔follow-up refused; an incompatible pair yields a reason, zero rows and still no causal claim.
+- `GET /` 200 through the dev server.
+- **NOT TESTED:** `0008` and `0009` are not applied. No intervention has been created, approved or assigned; no student has submitted practice or a follow-up; the comparison table has never rendered real evidence. Nothing in this stage has been exercised against the database or a browser session.
+- **NOT TESTED:** live AI for the companion or the intervention generator (no provider credit).
+
+### Known limitations
+
+- Interventions are class-wide. Per-student targeting is not implemented.
+- Practice and follow-up assess the single objective chosen at creation; a multi-objective intervention needs one per objective.
+- The follow-up question set is generated independently, so its difficulty may not match the initial challenge — the comparison reports raw movement and says so.
+- Stage 9 (integration testing, synthetic data, deployment) is untouched.
+
+## Migration state note (superseded)
+
 ## Stage 8 — AI Personal Coach and Targeted Learning (part 1 of 2)
 
 **Execution date:** 2026-11-01  

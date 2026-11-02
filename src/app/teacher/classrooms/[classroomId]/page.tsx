@@ -2,11 +2,13 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { generateLearningAnalysis } from "@/app/actions/analysis";
+import { approveIntervention, assignIntervention, createIntervention } from "@/app/actions/interventions";
 import { requireRole } from "@/lib/auth/require-role";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { resolveLearningAnalyst } from "@/lib/ai";
 import type { LearningObservations } from "@/lib/ai";
 import { buildAnalysisFacts, type AnalysisFacts, type AnswerRow, type QuestionRow } from "@/lib/learning/analysis";
+import { compareEvidence, type AssessmentKind } from "@/lib/learning/compare";
 
 type Params = Promise<{ classroomId: string }>;
 type SearchParams = Promise<{ error?: string; notice?: string }>;
@@ -64,13 +66,14 @@ export default async function ClassroomAnalyticsPage({ params, searchParams }: {
   const objectives = ((objectiveRows ?? []) as { id: string; statement: string }[]).map((row) => ({ id: row.id, statement: row.statement }));
 
   const { data: assessmentRows } = lessonIds.length
-    ? await supabase.from("assessments").select("id").in("lesson_id", lessonIds)
+    ? await supabase.from("assessments").select("id, kind").in("lesson_id", lessonIds)
     : { data: [] };
-  const assessmentIds = ((assessmentRows ?? []) as { id: string }[]).map((row) => row.id);
+  const assessmentKind = new Map(((assessmentRows ?? []) as { id: string; kind: AssessmentKind }[]).map((row) => [row.id, row.kind]));
+  const assessmentIds = Array.from(assessmentKind.keys());
 
   const questions: QuestionRow[] = [];
-  const submissions: { id: string; student_id: string }[] = [];
-  const answers: AnswerRow[] = [];
+  const submissions: { id: string; student_id: string; assessment_id: string }[] = [];
+  const answers: (AnswerRow & { submissionId: string })[] = [];
 
   if (assessmentIds.length > 0) {
     const { data: questionRows } = await supabase.from("questions").select("id, objective_id, options, prompt").in("assessment_id", assessmentIds);
@@ -78,8 +81,8 @@ export default async function ClassroomAnalyticsPage({ params, searchParams }: {
       questions.push({ id: row.id, objectiveId: row.objective_id, options: row.options ?? [], prompt: row.prompt });
     }
 
-    const { data: submissionRows } = await supabase.from("submissions").select("id, student_id").in("assessment_id", assessmentIds);
-    submissions.push(...((submissionRows ?? []) as { id: string; student_id: string }[]));
+    const { data: submissionRows } = await supabase.from("submissions").select("id, student_id, assessment_id").in("assessment_id", assessmentIds);
+    submissions.push(...((submissionRows ?? []) as { id: string; student_id: string; assessment_id: string }[]));
 
     if (submissions.length > 0) {
       const { data: answerRows } = await supabase
@@ -101,6 +104,7 @@ export default async function ClassroomAnalyticsPage({ params, searchParams }: {
           isCorrect: row.is_correct,
           options: question.options,
           studentId,
+          submissionId: row.submission_id,
           submittedAt: "",
         });
       }
@@ -134,6 +138,38 @@ export default async function ClassroomAnalyticsPage({ params, searchParams }: {
     | undefined;
 
   const { setup } = resolveLearningAnalyst();
+
+  // Split the same evidence by assessment kind, so the comparison only ever puts an
+  // initial challenge against a follow-up check.
+  const kindBySubmission = new Map(submissions.map((submission) => [submission.id, assessmentKind.get(submission.assessment_id)]));
+  const answersOfKind = (kind: AssessmentKind) => answers.filter((answer) => kindBySubmission.get(answer.submissionId) === kind);
+
+  const initialFacts = buildAnalysisFacts({
+    classroom: { id: classroom.id as string, name: classroom.name as string },
+    lessons,
+    objectives,
+    questions,
+    answers: answersOfKind("challenge"),
+    students,
+  });
+
+  const followUpFacts = buildAnalysisFacts({
+    classroom: { id: classroom.id as string, name: classroom.name as string },
+    lessons,
+    objectives,
+    questions,
+    answers: answersOfKind("follow_up"),
+    students,
+  });
+
+  const comparison = compareEvidence(initialFacts, followUpFacts, { before: "challenge", after: "follow_up" });
+
+  const { data: interventionRows } = await supabase
+    .from("interventions")
+    .select("id, title, rationale, status, created_at, objective_id")
+    .eq("classroom_id", classroomId)
+    .order("created_at", { ascending: false });
+  const interventions = (interventionRows ?? []) as { id: string; title: string; rationale: string; status: string; created_at: string; objective_id: string | null }[];
 
   return (
     <section className="max-w-5xl">
@@ -262,6 +298,117 @@ export default async function ClassroomAnalyticsPage({ params, searchParams }: {
               </div>
             )}
           </div>
+        )}
+      </section>
+      {/* COMPARISON — initial challenge vs follow-up, never causal */}
+      <section className="mt-5 rounded-2xl border border-[#dce4d8] bg-white p-6">
+        <h2 className="text-lg font-bold">Before and after</h2>
+        <p className="mt-1 text-xs text-[#62776d]">
+          An initial challenge compared with a follow-up check. Only these two kinds are compared; targeted practice is not evidence.
+        </p>
+
+        {comparison.incompatibleReason && (
+          <p className="mt-3 rounded-lg bg-[#f8f5ea] px-4 py-3 text-xs leading-5 text-[#7a6428]">{comparison.incompatibleReason}</p>
+        )}
+
+        <p className="mt-3 text-sm font-semibold text-[#29483c]">{comparison.statement}</p>
+        <p className="mt-1 text-[11px] font-bold uppercase tracking-wide text-[#9a4324]">
+          Causal claim: {comparison.causalClaim ? "made" : "none — NABTA does not claim it caused any change"}
+        </p>
+
+        {comparison.rows.length > 0 && (
+          <div className="mt-3 overflow-x-auto">
+            <table className="w-full min-w-[32rem] border-collapse text-sm">
+              <thead>
+                <tr className="border-b border-[#e3eadf] text-left text-xs uppercase tracking-wide text-[#6a7d72]">
+                  <th className="py-2 pr-3 font-bold">Objective</th>
+                  <th className="py-2 pr-3 font-bold">First attempt</th>
+                  <th className="py-2 pr-3 font-bold">Follow-up</th>
+                  <th className="py-2 font-bold">Change</th>
+                </tr>
+              </thead>
+              <tbody>
+                {comparison.rows.map((row) => (
+                  <tr className="border-b border-[#f1f4ee] align-top" key={row.objectiveId ?? row.statement}>
+                    <td className="py-2 pr-3">{row.statement}</td>
+                    <td className="py-2 pr-3">{row.before.correct}/{row.before.attempts} ({percent(row.before.accuracy)})</td>
+                    <td className="py-2 pr-3">{row.after.correct}/{row.after.attempts} ({percent(row.after.accuracy)})</td>
+                    <td className="py-2">
+                      {row.verdict === "not-comparable"
+                        ? <span className="text-xs text-[#7b8c81]">not comparable — {row.reason}</span>
+                        : <span className="text-xs font-bold">{row.deltaPoints !== null && row.deltaPoints > 0 ? "+" : ""}{row.deltaPoints} points · {row.verdict}</span>}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </section>
+
+      {/* INTERVENTIONS — teacher approval is mandatory before students see anything */}
+      <section className="mt-5 rounded-2xl border border-[#dce4d8] bg-white p-6">
+        <h2 className="text-lg font-bold">Targeted practice</h2>
+        <p className="mt-1 text-xs text-[#62776d]">
+          Practice is generated for one objective, then a separate follow-up check measures movement. Nothing is visible to students until you
+          approve the intervention and assign it.
+        </p>
+
+        {objectiveRows ? (
+          <div className="mt-4 flex flex-wrap gap-2">
+            {facts.objectives
+              .filter((objective) => objective.objectiveId && (objective.status === "gap" || objective.status === "needs-more-evidence"))
+              .map((objective) => {
+                const lessonForObjective = lessons[0];
+                if (!lessonForObjective) return null;
+                return (
+                  <form action={createIntervention} key={objective.objectiveId}>
+                    <input name="classroomId" type="hidden" value={classroom.id as string} />
+                    <input name="lessonId" type="hidden" value={lessonForObjective.id} />
+                    <input name="objectiveId" type="hidden" value={objective.objectiveId as string} />
+                    <button className="min-h-9 rounded-lg border border-[#1f674a] px-3 text-left text-xs font-bold text-[#1f674a] hover:bg-[#edf3e9]" type="submit">
+                      Create practice for “{objective.statement.slice(0, 60)}{objective.statement.length > 60 ? "…" : ""}”
+                    </button>
+                  </form>
+                );
+              })}
+            {facts.objectives.every((objective) => objective.status !== "gap" && objective.status !== "needs-more-evidence") && (
+              <p className="text-xs text-[#62776d]">No objective is currently flagged for practice. Re-run the analysis after more answers arrive.</p>
+            )}
+          </div>
+        ) : null}
+
+        {interventions.length > 0 && (
+          <ul className="mt-4 space-y-2">
+            {interventions.map((intervention) => (
+              <li className="rounded-lg border border-[#e3eadf] px-3 py-2" key={intervention.id}>
+                <div className="flex flex-wrap items-center justify-between gap-2">
+                  <p className="text-sm font-semibold text-[#29483c]">{intervention.title}</p>
+                  <span className={`rounded px-2 py-0.5 text-[11px] font-bold uppercase ${intervention.status === "assigned" ? "bg-[#e7f3e7] text-[#2f6e48]" : intervention.status === "approved" ? "bg-[#e8f0fb] text-[#2f5b8a]" : "bg-[#fdf1e3] text-[#8a5a13]"}`}>
+                    {intervention.status}
+                  </span>
+                </div>
+                <p className="mt-1 text-xs text-[#6a7d72]">{intervention.rationale}</p>
+                <div className="mt-2 flex flex-wrap gap-2">
+                  {intervention.status === "draft" && (
+                    <form action={approveIntervention}>
+                      <input name="interventionId" type="hidden" value={intervention.id} />
+                      <input name="classroomId" type="hidden" value={classroomId} />
+                      <button className="min-h-8 rounded-lg border border-[#1f674a] px-3 text-xs font-bold text-[#1f674a] hover:bg-[#edf3e9]" type="submit">Approve</button>
+                    </form>
+                  )}
+                  {intervention.status === "approved" && (
+                    <form action={assignIntervention}>
+                      <input name="interventionId" type="hidden" value={intervention.id} />
+                      <input name="classroomId" type="hidden" value={classroomId} />
+                      <button className="min-h-8 rounded-lg bg-[#1f674a] px-3 text-xs font-bold text-white hover:bg-[#174f39]" type="submit">Assign to class</button>
+                    </form>
+                  )}
+                  {intervention.status === "assigned" && <span className="text-xs text-[#62776d]">Students can see the practice and follow-up.</span>}
+                </div>
+              </li>
+            ))}
+          </ul>
         )}
       </section>
     </section>

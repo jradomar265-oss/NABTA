@@ -49,9 +49,10 @@ export default async function StudentHomePage({ searchParams }: { searchParams: 
   const { data: objectiveRows } = user && supabase
     ? await supabase.from("lesson_objectives").select("id, lesson_id, statement").eq("approved", true).order("position", { ascending: true })
     : { data: [] };
-  // Only published assessments are readable, and the answer key is never selectable.
+  // Only published challenges count here; targeted practice and follow-up checks are
+  // separate assessments with their own kind (Stage 8).
   const { data: assessmentRows } = user && supabase
-    ? await supabase.from("assessments").select("id, lesson_id").eq("status", "published")
+    ? await supabase.from("assessments").select("id, lesson_id").eq("status", "published").eq("kind", "challenge")
     : { data: [] };
   const { data: questionRows } = user && supabase
     ? await supabase.from("questions").select("assessment_id")

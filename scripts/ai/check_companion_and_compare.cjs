@@ -12,7 +12,7 @@ const { parseCompanionAnswer } = require("../../.check-build/ai/companion.js");
 const { mockCompanion } = require("../../.check-build/ai/companion-mock.js");
 const { resolveCompanion } = require("../../.check-build/ai/index.js");
 const { buildAnalysisFacts } = require("../../.check-build/learning/analysis.js");
-const { compareEvidence } = require("../../.check-build/learning/compare.js");
+const { compareEvidence, checkCompatibility } = require("../../.check-build/learning/compare.js");
 
 const failures = [];
 const check = (condition, message) => {
@@ -139,6 +139,17 @@ check(!parseCompanionAnswer("I think the answer is 2/4.", LESSON).ok, "prose ins
 
   const flat = compareEvidence(factsWith(3, 5), factsWith(3, 5));
   check(flat.rows[0].verdict === "unchanged" && flat.rows[0].deltaPoints === 0, "identical results must read as unchanged");
+
+  // --- compatibility: only challenge vs follow_up may be compared -------------
+  check(checkCompatibility("challenge", "follow_up").compatible === true, "challenge vs follow-up must be comparable");
+  check(checkCompatibility("challenge", "challenge").compatible === false, "a challenge compared with itself must be refused");
+  check(checkCompatibility("challenge", "practice").compatible === false, "a challenge cannot be compared with targeted practice");
+  check(checkCompatibility("practice", "follow_up").compatible === false, "practice cannot be compared with follow-up");
+
+  const refused = compareEvidence(before, after, { before: "challenge", after: "practice" });
+  check(refused.incompatibleReason !== null, "an incompatible pair must produce a reason");
+  check(refused.rows.length === 0, "an incompatible pair must produce no rows");
+  check(refused.causalClaim === false, "even a refused comparison must not claim causation");
 
   if (failures.length) {
     console.log("FAILED");

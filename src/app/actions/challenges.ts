@@ -13,14 +13,18 @@ function questError(assignmentId: string, message: string): never {
 /**
  * Collects the student's choices and hands grading to the database.
  *
- * No score, correctness flag or XP value is computed or accepted here: the client
- * only sends option indices, and `submit_challenge()` re-checks everything against
- * the stored answer key that students cannot read.
+ * The assessment is addressed by id, so initial challenges, targeted practice and
+ * follow-up checks all use this one path. The lesson is re-derived from the
+ * assignment rather than trusted from the form, and `submit_challenge()` re-checks
+ * everything against the stored answer key that students cannot read.
  */
 export async function submitChallenge(formData: FormData) {
-  const parsed = z.string().uuid().safeParse(formData.get("assignmentId"));
+  const parsed = z.object({
+    assignmentId: z.string().uuid(),
+    assessmentId: z.string().uuid(),
+  }).safeParse({ assignmentId: formData.get("assignmentId"), assessmentId: formData.get("assessmentId") });
   if (!parsed.success) redirect("/student?error=That%20quest%20could%20not%20be%20found.");
-  const assignmentId = parsed.data;
+  const { assignmentId, assessmentId } = parsed.data;
 
   const { supabase } = await requireActionRole("student");
 
@@ -33,14 +37,15 @@ export async function submitChallenge(formData: FormData) {
 
   const { data: assessment } = await supabase
     .from("assessments")
-    .select("id, status")
-    .eq("lesson_id", assignment.lesson_id)
+    .select("id, status, lesson_id, kind")
+    .eq("id", assessmentId)
     .maybeSingle();
-  if (!assessment) questError(assignmentId, "This lesson has no challenge yet.");
-  if (assessment.status !== "published") questError(assignmentId, "This challenge has not been published by your teacher.");
+  if (!assessment) questError(assignmentId, "That activity could not be found.");
+  if (assessment.lesson_id !== assignment.lesson_id) questError(assignmentId, "That activity does not belong to this quest.");
+  if (assessment.status !== "published") questError(assignmentId, "This activity has not been published by your teacher.");
 
   const { data: questions } = await supabase.from("questions").select("id, options").eq("assessment_id", assessment.id);
-  if (!questions || questions.length === 0) questError(assignmentId, "This challenge has no questions yet.");
+  if (!questions || questions.length === 0) questError(assignmentId, "This activity has no questions yet.");
 
   const answers: Record<string, number> = {};
   for (const question of questions as { id: string; options: string[] }[]) {

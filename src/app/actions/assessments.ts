@@ -124,13 +124,14 @@ export async function generateChallenges(formData: FormData) {
         lesson_id: lesson.id,
         teacher_id: user.id,
         title: `${lesson.title} — challenge`,
+        kind: "challenge" as const,
         status: "draft",
         approved_at: null,
         published_at: null,
         agent_run_id: runRow?.id ?? null,
         updated_at: new Date().toISOString(),
       },
-      { onConflict: "lesson_id" },
+      { onConflict: "lesson_id,kind" },
     )
     .select("id")
     .single();
