@@ -31,6 +31,7 @@ const good = {
       correctIndex: 0,
       explanation: "Multiplying numerator and denominator by 2 gives 2/4, the same amount as 1/2.",
       objectiveId: OBJECTIVE_A,
+      difficulty: "medium",
     },
   ],
 };
@@ -44,6 +45,10 @@ check(!parseChallenge(outOfRange, allowed).ok, "an out-of-range correctIndex mus
 const duplicate = JSON.parse(JSON.stringify(good));
 duplicate.questions[0].options = ["2/4", "2/4", "3/5"];
 check(!parseChallenge(duplicate, allowed).ok, "duplicate options must be rejected");
+
+const noDifficulty = JSON.parse(JSON.stringify(good));
+delete noDifficulty.questions[0].difficulty;
+check(!parseChallenge(noDifficulty, allowed).ok, "a question without a difficulty label must be rejected");
 
 const badTrueFalse = JSON.parse(JSON.stringify(good));
 badTrueFalse.questions[0].kind = "true_false";
@@ -79,6 +84,7 @@ const objectives = [
   check(questions.every((q) => q.correctIndex >= 0 && q.correctIndex < q.options.length), "every correctIndex must be in range");
   check(questions.every((q) => new Set(q.options.map((o) => o.toLowerCase())).size === q.options.length), "options must be distinct");
   check(questions.every((q) => q.explanation.length >= 10), "every question needs an explanation");
+  check(questions.every((q) => ["easy", "medium", "hard"].includes(q.difficulty)), "every question needs a difficulty label");
 
   // Hand-checked answers: these specific values must not drift.
   const equivalent = questions.find((q) => /equivalent to 1\/2/i.test(q.prompt));

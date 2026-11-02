@@ -18,6 +18,7 @@ type Template = {
   correctIndex: number;
   explanation: string;
   kind: "multiple_choice" | "true_false";
+  difficulty: "easy" | "medium" | "hard";
 };
 
 const TEMPLATES: Template[] = [
@@ -29,6 +30,7 @@ const TEMPLATES: Template[] = [
     correctIndex: 0,
     explanation: "Multiply the numerator and denominator of 1/2 by 2 to get 2/4. Both name the same amount.",
     kind: "multiple_choice",
+    difficulty: "medium",
   },
   {
     keywords: /simplif|lowest term|common factor/i,
@@ -38,6 +40,7 @@ const TEMPLATES: Template[] = [
     correctIndex: 0,
     explanation: "6 and 8 share the factor 2. Dividing both by 2 gives 3/4, and 3 and 4 share no further factor.",
     kind: "multiple_choice",
+    difficulty: "medium",
   },
   {
     keywords: /compare|order|greater|larger|less than/i,
@@ -47,6 +50,7 @@ const TEMPLATES: Template[] = [
     correctIndex: 0,
     explanation: "Rewrite 3/4 as 6/8. Since 6/8 is greater than 5/8, 3/4 is greater.",
     kind: "multiple_choice",
+    difficulty: "medium",
   },
   {
     keywords: /numerator|denominator/i,
@@ -56,6 +60,7 @@ const TEMPLATES: Template[] = [
     correctIndex: 0,
     explanation: "The denominator counts the equal parts the whole is divided into; the numerator (5) counts the parts taken.",
     kind: "multiple_choice",
+    difficulty: "medium",
   },
   {
     keywords: /mixed number|improper/i,
@@ -65,6 +70,7 @@ const TEMPLATES: Template[] = [
     correctIndex: 0,
     explanation: "7/4 is one whole (4/4) plus 3/4, so it is 1 3/4.",
     kind: "multiple_choice",
+    difficulty: "medium",
   },
   {
     keywords: /numerator|denominator|fraction/i,
@@ -74,6 +80,7 @@ const TEMPLATES: Template[] = [
     correctIndex: 0,
     explanation: "The top number of a fraction is the numerator, so in 3/5 the numerator is indeed 3.",
     kind: "true_false",
+    difficulty: "medium",
   },
   {
     keywords: /compare|order|greater/i,
@@ -83,6 +90,7 @@ const TEMPLATES: Template[] = [
     correctIndex: 1,
     explanation: "3/4 equals 0.75 and 1/2 equals 0.5, so 1/2 is smaller than 3/4.",
     kind: "true_false",
+    difficulty: "medium",
   },
   {
     keywords: /decimal|percentage|percent/i,
@@ -92,6 +100,7 @@ const TEMPLATES: Template[] = [
     correctIndex: 0,
     explanation: "3 divided by 4 is 0.75, so 3/4 = 0.75 = 75%.",
     kind: "multiple_choice",
+    difficulty: "medium",
   },
 ];
 
@@ -138,10 +147,14 @@ export const mockChallengeGenerator: ChallengeGenerator = {
       );
     }
 
-    const chosen = matched.slice(0, 5);
+    // Honour a requested size so a follow-up can mirror the original's shape.
+    const requested = input.requirements?.questionCount;
+    const limit = typeof requested === "number" && requested > 0 ? Math.min(requested, matched.length) : 5;
+    const chosen = matched.slice(0, limit);
     const questions: GeneratedQuestion[] = chosen.map((template) => ({
       prompt: template.prompt,
       kind: template.kind,
+      difficulty: template.difficulty,
       options: template.options,
       correctIndex: template.correctIndex,
       explanation: template.explanation,

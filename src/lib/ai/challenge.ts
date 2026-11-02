@@ -1,6 +1,17 @@
 import { z } from "zod";
 
 /** A question as it will be stored. Note: no correctness flag — that is answer_keys only. */
+export type Difficulty = "easy" | "medium" | "hard";
+
+export type ChallengeRequirements = {
+  /** Ask for exactly this many questions when possible. */
+  questionCount?: number;
+  /** Preferred spread of difficulty labels, e.g. { easy: 1, medium: 2 }. */
+  difficultyMix?: Partial<Record<Difficulty, number>>;
+  /** Prompts that must not be reused, so a follow-up is a fresh check. */
+  avoidPrompts?: string[];
+};
+
 export type GeneratedQuestion = {
   prompt: string;
   kind: "multiple_choice" | "true_false";
@@ -8,6 +19,7 @@ export type GeneratedQuestion = {
   correctIndex: number;
   explanation: string;
   objectiveId: string;
+  difficulty: Difficulty;
 };
 
 export type GeneratedChallenge = { questions: GeneratedQuestion[] };
@@ -18,6 +30,7 @@ export type ChallengeInput = {
   title: string;
   content: string;
   objectives: ChallengeObjective[];
+  requirements?: ChallengeRequirements;
 };
 
 export type ChallengeRun = {
@@ -43,6 +56,7 @@ const questionSchema = z
     correctIndex: z.number().int().min(0).max(5),
     explanation: z.string().trim().min(10).max(600),
     objectiveId: z.string().uuid(),
+    difficulty: z.enum(["easy", "medium", "hard"]),
   })
   .superRefine((question, ctx) => {
     if (question.correctIndex >= question.options.length) {

@@ -151,6 +151,7 @@ export async function generateChallenges(formData: FormData) {
         prompt: question.prompt,
         options: question.options,
         objective_id: question.objectiveId,
+        difficulty: question.difficulty,
       })
       .select("id")
       .single();

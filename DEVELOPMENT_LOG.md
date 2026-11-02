@@ -1,5 +1,36 @@
 # Development Log
 
+## Stage 9 (first increment) — assessment comparability
+
+**Execution date:** 2026-11-01  
+**Status:** Implemented and unit-tested; not verified against a live database
+
+### Why this came first
+
+Stage 8 compares an initial challenge with a follow-up check. A transiently harder follow-up would have shown "improvement" that was purely difficulty drift, so comparability now gates whether that movement may be presented as evidence.
+
+### Implemented
+
+- `0010_stage9_comparability.sql`: `questions.difficulty` (`easy`/`medium`/`hard`, nullable) and `interventions.scope` (`class`/`student`, default `class`) with a CHECK tying `scope = 'student'` to a `student_id`.
+- Generators now record a difficulty label: mock templates carry one, and the live prompt requires it. `ChallengeInput.requirements` lets a caller ask for an exact question count, a difficulty mix, and prompts that must not be reused; the mock honours the count.
+- Follow-up generation now requests the practice's question count, its difficulty mix, and the practice prompts as prompts to avoid — so a live model can produce a genuinely fresh, similarly shaped check.
+- `src/lib/learning/comparability.ts`: compares question count, question-type mix, objective coverage, difficulty distribution and prompt distinctness. Any material drift sets `comparable: false` with a named reason; identical prompts are reported as practice rather than a fresh check.
+- The classroom page shows a "Comparable" / "Not directly comparable" panel listing every mismatch and note, and always prints the limitation that matching labels does not prove statistical equivalence. `causalClaim` remains hard-coded false.
+- Interventions are explicitly `scope = 'class'`, and the stored rationale says in words that the practice is class-wide and not tailored to each student's individual gap.
+
+### Verification
+
+- `npm run typecheck` — PASS. `npm run lint` — PASS (0 warnings). `npm run build` — PASS.
+- `npm run check:ai` — PASS, **five** suites. The new comparability suite asserts: a matched pair is comparable; count drift, type flip, objective drift, difficulty shift and repeated prompts each break comparability with a named reason; an empty follow-up says why; missing difficulty labels are disclosed as a note rather than a false mismatch; the disclaimer text is always present.
+- **NOT TESTED:** `0009` and `0010` are not applied, so no intervention, practice or follow-up has ever been generated against the database. The comparability panel has never rendered real assessments.
+
+### Documented limitations
+
+- Matching counts, types, objectives and difficulty labels does **not** prove the two assessments measure the same construct equally well. Difficulty is a generator-assigned label, not a calibrated parameter; two "medium" questions can differ substantially in demands. This is a transparency aid, not a psychometric calibration, and it is not presented as one.
+- The follow-up difficulty mix is *requested* from the generator, not enforced: `parseChallenge` validates structure, not that the returned mix matches the request. The comparability check then reports the actual drift, which is why it exists.
+- Mock mode cannot reword its fixed templates, so a mock practice/follow-up pair is correctly reported as "not directly comparable". That is the honest outcome, not a bug.
+- Interventions remain class-wide. `scope = 'student'` exists in the schema and the CHECK constraint enforces its integrity, but no per-student assignment or per-student RLS path is built.
+
 ## Migration state (verified 2026-11-01 by PostgREST probe, not assumed)
 
 | Migration | Applied? | Evidence |

@@ -9,6 +9,7 @@ import { resolveLearningAnalyst } from "@/lib/ai";
 import type { LearningObservations } from "@/lib/ai";
 import { buildAnalysisFacts, type AnalysisFacts, type AnswerRow, type QuestionRow } from "@/lib/learning/analysis";
 import { compareEvidence, type AssessmentKind } from "@/lib/learning/compare";
+import { checkComparability } from "@/lib/learning/comparability";
 
 type Params = Promise<{ classroomId: string }>;
 type SearchParams = Promise<{ error?: string; notice?: string }>;
@@ -72,13 +73,15 @@ export default async function ClassroomAnalyticsPage({ params, searchParams }: {
   const assessmentIds = Array.from(assessmentKind.keys());
 
   const questions: QuestionRow[] = [];
+  const questionProfiles: { assessmentId: string; id: string; objectiveId: string | null; kind: string; prompt: string; difficulty: string | null }[] = [];
   const submissions: { id: string; student_id: string; assessment_id: string }[] = [];
   const answers: (AnswerRow & { submissionId: string })[] = [];
 
   if (assessmentIds.length > 0) {
-    const { data: questionRows } = await supabase.from("questions").select("id, objective_id, options, prompt").in("assessment_id", assessmentIds);
-    for (const row of (questionRows ?? []) as { id: string; objective_id: string | null; options: string[]; prompt: string }[]) {
+    const { data: questionRows } = await supabase.from("questions").select("id, assessment_id, objective_id, options, prompt, kind, difficulty").in("assessment_id", assessmentIds);
+    for (const row of (questionRows ?? []) as { id: string; assessment_id: string; objective_id: string | null; options: string[]; prompt: string; kind: string; difficulty: string | null }[]) {
       questions.push({ id: row.id, objectiveId: row.objective_id, options: row.options ?? [], prompt: row.prompt });
+      questionProfiles.push({ assessmentId: row.assessment_id, id: row.id, objectiveId: row.objective_id, kind: row.kind, prompt: row.prompt, difficulty: row.difficulty });
     }
 
     const { data: submissionRows } = await supabase.from("submissions").select("id, student_id, assessment_id").in("assessment_id", assessmentIds);
@@ -163,6 +166,12 @@ export default async function ClassroomAnalyticsPage({ params, searchParams }: {
   });
 
   const comparison = compareEvidence(initialFacts, followUpFacts, { before: "challenge", after: "follow_up" });
+
+  // Comparability: did the two occasions actually measure the same thing?
+  const comparability = checkComparability(
+    questionProfiles.filter((question) => assessmentKind.get(question.assessmentId) === "challenge"),
+    questionProfiles.filter((question) => assessmentKind.get(question.assessmentId) === "follow_up"),
+  );
 
   const { data: interventionRows } = await supabase
     .from("interventions")
@@ -310,6 +319,22 @@ export default async function ClassroomAnalyticsPage({ params, searchParams }: {
         {comparison.incompatibleReason && (
           <p className="mt-3 rounded-lg bg-[#f8f5ea] px-4 py-3 text-xs leading-5 text-[#7a6428]">{comparison.incompatibleReason}</p>
         )}
+
+        <div className={`mt-3 rounded-lg px-4 py-3 text-xs leading-5 ${comparability.comparable ? "bg-[#edf3e9] text-[#3f6249]" : "bg-[#fff1e9] text-[#9a4324]"}`}>
+          <p className="font-bold uppercase tracking-wide">{comparability.comparable ? "Comparable" : "Not directly comparable"}</p>
+          <p className="mt-1">{comparability.headline}</p>
+          {comparability.mismatches.length > 0 && (
+            <ul className="mt-2 list-disc pl-4">
+              {comparability.mismatches.map((mismatch) => <li key={`${mismatch.area}-${mismatch.detail}`}>{mismatch.detail}</li>)}
+            </ul>
+          )}
+          {comparability.notes.length > 0 && (
+            <ul className="mt-2 list-disc pl-4 opacity-80">
+              {comparability.notes.map((note) => <li key={note}>{note}</li>)}
+            </ul>
+          )}
+          <p className="mt-2 opacity-80">{comparability.limitations[0]}</p>
+        </div>
 
         <p className="mt-3 text-sm font-semibold text-[#29483c]">{comparison.statement}</p>
         <p className="mt-1 text-[11px] font-bold uppercase tracking-wide text-[#9a4324]">

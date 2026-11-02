@@ -11,18 +11,32 @@ const SYSTEM_PROMPT = [
   "- Exactly one option is correct and `correctIndex` is its zero-based position.",
   "- Include a short `explanation` that says why the correct answer is right.",
   "- Questions must be answerable from the lesson alone; no trick questions.",
-  'Return JSON only: {"questions": [{"prompt": string, "kind": "multiple_choice"|"true_false", "options": string[], "correctIndex": number, "explanation": string, "objectiveId": string}]}',
+  "- Give every question a `difficulty` of easy, medium or hard.",
+  "- If a preferred difficulty mix or an exact question count is supplied, follow it.",
+  "- Never reuse a prompt that is listed as already used.",
+  'Return JSON only: {"questions": [{"prompt": string, "kind": "multiple_choice"|"true_false", "options": string[], "correctIndex": number, "explanation": string, "objectiveId": string, "difficulty": "easy"|"medium"|"hard"}]}',
 ].join("\n");
 
 function userPrompt(input: ChallengeInput, repairReason?: string): string {
   const objectives = input.objectives.map((objective) => `- id: ${objective.id} | ${objective.statement} | skills: ${objective.skills.join(", ")}`).join("\n");
+  const requirements = input.requirements ?? {};
+  const asks: string[] = [];
+  if (requirements.questionCount) asks.push(`Produce exactly ${requirements.questionCount} questions.`);
+  if (requirements.difficultyMix) {
+    asks.push(`Use this difficulty mix: ${Object.entries(requirements.difficultyMix).map(([level, count]) => `${count} ${level}`).join(", ")}.`);
+  }
+  if (requirements.avoidPrompts?.length) {
+    asks.push(`Do not reuse these prompts (they were already used):\n${requirements.avoidPrompts.map((prompt) => `- ${prompt}`).join("\n")}`);
+  }
+  if (asks.length === 0) asks.push("Produce 4 to 6 questions spread across the objectives.");
+
   const parts = [
     `Lesson title: ${input.title}`,
     "Approved objectives:",
     objectives,
     "Lesson text:",
     input.content.slice(0, 12_000),
-    "Produce 4 to 6 questions spread across the objectives.",
+    ...asks,
   ];
   if (repairReason) {
     parts.push(`Your previous answer could not be used because ${repairReason}. Return corrected JSON only.`);

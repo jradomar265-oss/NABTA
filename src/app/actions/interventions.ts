@@ -52,9 +52,14 @@ export async function createIntervention(formData: FormData) {
   const { generator } = resolveChallengeGenerator();
   const objectives = [{ id: objective.id as string, statement: objective.statement as string, skills: (objective.skills as string[] | null) ?? [] }];
 
-  async function generate(): Promise<{ questions: { prompt: string; kind: string; options: string[]; correctIndex: number; explanation: string }[]; provider: string; model: string; durationMs: number }> {
+  async function generate(requirements?: { questionCount?: number; difficultyMix?: Record<string, number>; avoidPrompts?: string[] }) {
     try {
-      const run = await generator.generate({ title: lesson!.title as string, content: lesson!.content as string, objectives });
+      const run = await generator.generate({
+        title: lesson!.title as string,
+        content: lesson!.content as string,
+        objectives,
+        requirements,
+      });
       return { questions: run.challenge.questions, provider: run.provider, model: run.model, durationMs: run.durationMs };
     } catch (error) {
       const message = error instanceof AiAnalysisError ? error.message : "The practice could not be generated. Nothing was saved.";
@@ -62,9 +67,21 @@ export async function createIntervention(formData: FormData) {
     }
   }
 
-  // Two separate sets: practice to teach, then a different follow-up to measure.
+  // Practice teaches, then the follow-up is requested with the same shape so a
+  // comparison has a chance of being fair. Mock mode cannot reword its templates, so
+  // such a pair will honestly read as "not directly comparable".
   const practice = await generate();
-  const followUp = await generate();
+
+  const difficultyMix: Record<string, number> = {};
+  for (const question of practice.questions) {
+    difficultyMix[question.difficulty] = (difficultyMix[question.difficulty] ?? 0) + 1;
+  }
+
+  const followUp = await generate({
+    questionCount: practice.questions.length,
+    difficultyMix,
+    avoidPrompts: practice.questions.map((question) => question.prompt),
+  });
 
   const { data: runRow } = await supabase
     .from("agent_runs")
@@ -116,6 +133,7 @@ export async function createIntervention(formData: FormData) {
           prompt: question.prompt,
           options: question.options,
           objective_id: objective!.id,
+          difficulty: question.difficulty,
         })
         .select("id")
         .single();
@@ -141,8 +159,9 @@ export async function createIntervention(formData: FormData) {
     lesson_id: lesson.id,
     objective_id: objective.id,
     title: `Practice: ${(objective.statement as string).slice(0, 120)}`,
-    rationale: `Created from the class analysis for ${classroom.name as string}. Target: ${objective.statement as string}`,
+    rationale: `Created from the class analysis for ${classroom.name as string}. Target objective: ${objective.statement as string}. This practice is assigned to the whole class; it is not tailored to each student's individual gap.`,
     status: "draft",
+    scope: "class" as const,
     practice_assessment_id: practiceId,
     follow_up_assessment_id: followUpId,
     agent_run_id: runRow?.id ?? null,
