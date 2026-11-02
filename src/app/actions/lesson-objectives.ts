@@ -7,14 +7,22 @@ import { z } from "zod";
 import { requireActionRole } from "@/lib/auth/action-role";
 import { AiAnalysisError, resolveLessonAnalyzer } from "@/lib/ai";
 
-function teacherError(message: string, detail?: string): never {
-  const query = new URLSearchParams({ error: message });
-  if (detail) query.set("detail", detail.slice(0, 180));
-  redirect(`/teacher?${query.toString()}`);
+
+/** Only relative /teacher paths may be used as a redirect target. */
+function safeReturnTo(value: unknown): string {
+  const raw = typeof value === "string" ? value.trim() : "";
+  if (!raw.startsWith("/teacher") || raw.startsWith("//")) return "/teacher";
+  return raw;
 }
 
-function teacherNotice(notice: string): never {
-  redirect(`/teacher?notice=${notice}`);
+function teacherError(returnTo: string, message: string, detail?: string): never {
+  const query = new URLSearchParams({ error: message });
+  if (detail) query.set("detail", detail.slice(0, 180));
+  redirect(`${returnTo}?${query.toString()}`);
+}
+
+function teacherNotice(returnTo: string, notice: string): never {
+  redirect(`${returnTo}?notice=${notice}`);
 }
 
 const uuid = z.string().uuid();
@@ -27,8 +35,9 @@ const uuid = z.string().uuid();
  * AI objectives for the lesson are replaced, teacher-authored ones are kept.
  */
 export async function analyzeLesson(formData: FormData) {
+  const returnTo = safeReturnTo(formData.get("returnTo"));
   const parsed = z.object({ lessonId: z.string().uuid() }).safeParse({ lessonId: formData.get("lessonId") });
-  if (!parsed.success) teacherError("Choose a lesson to analyse.");
+  if (!parsed.success) teacherError(returnTo, "Choose a lesson to analyse.");
   const { supabase, user } = await requireActionRole("teacher");
 
   const { data: lesson } = await supabase
@@ -38,7 +47,7 @@ export async function analyzeLesson(formData: FormData) {
     .eq("teacher_id", user.id)
     .maybeSingle();
 
-  if (!lesson) teacherError("That lesson could not be found.");
+  if (!lesson) teacherError(returnTo, "That lesson could not be found.");
 
   const { analyzer } = resolveLessonAnalyzer();
   const started = Date.now();
@@ -78,7 +87,7 @@ export async function analyzeLesson(formData: FormData) {
       error_message: outcome.message.slice(0, 400),
     });
     revalidatePath("/teacher");
-    teacherError(outcome.message, outcome.detail);
+    teacherError(returnTo, outcome.message, outcome.detail);
   }
 
   const run = outcome.run;
@@ -101,7 +110,7 @@ export async function analyzeLesson(formData: FormData) {
     .single();
 
   if (runError || !runRow) {
-    teacherError("The analysis ran but could not be recorded, so nothing was saved. Please try again.");
+    teacherError(returnTo, "The analysis ran but could not be recorded, so nothing was saved. Please try again.");
   }
 
   // Replace this lesson's previous AI objectives; keep teacher-authored ones.
@@ -111,7 +120,7 @@ export async function analyzeLesson(formData: FormData) {
     .eq("lesson_id", lesson.id)
     .eq("teacher_id", user.id)
     .eq("source", "ai");
-  if (clearError) teacherError("The previous AI objectives could not be replaced. Please try again.");
+  if (clearError) teacherError(returnTo, "The previous AI objectives could not be replaced. Please try again.");
 
   const { error: insertError } = await supabase.from("lesson_objectives").insert(
     run.analysis.objectives.map((objective, index) => ({
@@ -126,14 +135,15 @@ export async function analyzeLesson(formData: FormData) {
       agent_run_id: runRow.id,
     })),
   );
-  if (insertError) teacherError("The objectives could not be saved. Please try again.");
+  if (insertError) teacherError(returnTo, "The objectives could not be saved. Please try again.");
 
   revalidatePath("/teacher");
-  teacherNotice(run.analysis.objectives.length === 1 ? "objective-generated" : "objectives-generated");
+  teacherNotice(returnTo, run.analysis.objectives.length === 1 ? "objective-generated" : "objectives-generated");
 }
 
 /** Teacher edit of one objective. Saving also records the approval flag. */
 export async function updateObjective(formData: FormData) {
+  const returnTo = "/teacher";
   const parsed = z.object({
     objectiveId: z.string().uuid(),
     statement: z.string().trim().min(5).max(500),
@@ -145,7 +155,7 @@ export async function updateObjective(formData: FormData) {
     skills: formData.get("skills") ?? "",
     approved: formData.get("approved") ?? "",
   });
-  if (!parsed.success) teacherError("Write an objective between 5 and 500 characters.");
+  if (!parsed.success) teacherError(returnTo, "Write an objective between 5 and 500 characters.");
   const { supabase, user } = await requireActionRole("teacher");
 
   const skills = parsed.data.skills
@@ -166,15 +176,16 @@ export async function updateObjective(formData: FormData) {
     .eq("id", parsed.data.objectiveId)
     .eq("teacher_id", user.id);
 
-  if (error) teacherError("That objective could not be saved. Please try again.");
+  if (error) teacherError(returnTo, "That objective could not be saved. Please try again.");
   revalidatePath("/teacher");
   revalidatePath("/student");
-  teacherNotice("objective-saved");
+  teacherNotice(returnTo, "objective-saved");
 }
 
 export async function deleteObjective(formData: FormData) {
+  const returnTo = "/teacher";
   const parsed = z.object({ objectiveId: z.string().uuid() }).safeParse({ objectiveId: formData.get("objectiveId") });
-  if (!parsed.success) teacherError("That objective could not be found.");
+  if (!parsed.success) teacherError(returnTo, "That objective could not be found.");
   const { supabase, user } = await requireActionRole("teacher");
 
   const { error } = await supabase
@@ -183,19 +194,20 @@ export async function deleteObjective(formData: FormData) {
     .eq("id", parsed.data.objectiveId)
     .eq("teacher_id", user.id);
 
-  if (error) teacherError("That objective could not be removed. Please try again.");
+  if (error) teacherError(returnTo, "That objective could not be removed. Please try again.");
   revalidatePath("/teacher");
   revalidatePath("/student");
-  teacherNotice("objective-removed");
+  teacherNotice(returnTo, "objective-removed");
 }
 
 /** Teacher-authored objective, for when the analysis missed something. */
 export async function addObjective(formData: FormData) {
+  const returnTo = "/teacher";
   const parsed = z.object({
     lessonId: z.string().uuid(),
     statement: z.string().trim().min(5).max(500),
   }).safeParse({ lessonId: formData.get("lessonId"), statement: formData.get("statement") });
-  if (!parsed.success) teacherError("Write an objective between 5 and 500 characters.");
+  if (!parsed.success) teacherError(returnTo, "Write an objective between 5 and 500 characters.");
   const { supabase, user } = await requireActionRole("teacher");
 
   const { data: lesson } = await supabase
@@ -204,7 +216,7 @@ export async function addObjective(formData: FormData) {
     .eq("id", parsed.data.lessonId)
     .eq("teacher_id", user.id)
     .maybeSingle();
-  if (!lesson) teacherError("That lesson could not be found.");
+  if (!lesson) teacherError(returnTo, "That lesson could not be found.");
 
   const { count } = await supabase
     .from("lesson_objectives")
@@ -222,15 +234,16 @@ export async function addObjective(formData: FormData) {
     approved: false,
   });
 
-  if (error) teacherError("That objective could not be added. Please try again.");
+  if (error) teacherError(returnTo, "That objective could not be added. Please try again.");
   revalidatePath("/teacher");
-  teacherNotice("objective-added");
+  teacherNotice(returnTo, "objective-added");
 }
 
 /** Approves every objective for a lesson in one step. */
 export async function approveLessonObjectives(formData: FormData) {
+  const returnTo = "/teacher";
   const parsed = z.object({ lessonId: uuid }).safeParse({ lessonId: formData.get("lessonId") });
-  if (!parsed.success) teacherError("That lesson could not be found.");
+  if (!parsed.success) teacherError(returnTo, "That lesson could not be found.");
   const { supabase, user } = await requireActionRole("teacher");
 
   const { error } = await supabase
@@ -239,8 +252,8 @@ export async function approveLessonObjectives(formData: FormData) {
     .eq("lesson_id", parsed.data.lessonId)
     .eq("teacher_id", user.id);
 
-  if (error) teacherError("Those objectives could not be approved. Please try again.");
+  if (error) teacherError(returnTo, "Those objectives could not be approved. Please try again.");
   revalidatePath("/teacher");
   revalidatePath("/student");
-  teacherNotice("objectives-approved");
+  teacherNotice(returnTo, "objectives-approved");
 }

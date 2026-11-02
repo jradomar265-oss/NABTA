@@ -2,6 +2,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { generateLearningAnalysis } from "@/app/actions/analysis";
+import { analyzeLesson } from "@/app/actions/lesson-objectives";
+import { generateChallenges } from "@/app/actions/assessments";
 import { approveIntervention, assignIntervention, createIntervention } from "@/app/actions/interventions";
 import { requireRole } from "@/lib/auth/require-role";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
@@ -316,7 +318,7 @@ export default async function ClassroomAnalyticsPage({ params, searchParams }: {
             {latest.observations.difficultyRecommendation && (
               <p className="rounded-lg bg-[#eef2ea] px-3 py-2 text-sm text-[#3f6249]">
                 <span className="font-bold uppercase tracking-wide">{latest.observations.difficultyRecommendation.direction}</span>{" "}
-                � {latest.observations.difficultyRecommendation.reason}
+                — {latest.observations.difficultyRecommendation.reason}
               </p>
             )}
 
@@ -331,6 +333,61 @@ export default async function ClassroomAnalyticsPage({ params, searchParams }: {
           </div>
         )}
       </section>
+      {/* AGENT — one loop: objectives, then challenges, then analysis. Approval stays human. */}
+      <section className="mt-5 rounded-2xl border border-[#d9dfe8] bg-[#fbfcfe] p-6">
+        <h2 className="text-lg font-bold">Run the agent</h2>
+        <p className="mt-1 text-xs leading-5 text-[#5b6b7d]">
+          The agent drafts objectives, then challenges, then the interpretation. Every generated item starts as a draft — nothing reaches
+          students until you approve it.
+        </p>
+
+        {lessons[0] ? (
+          <ol className="mt-4 space-y-3">
+            <li className="flex flex-wrap items-center justify-between gap-2 rounded-lg bg-white px-3 py-2">
+              <div>
+                <p className="text-sm font-semibold text-[#29483c]">1. Objectives</p>
+                <p className="text-xs text-[#62776d]">{objectives.length} approved · from “{lessons[0].title}”</p>
+              </div>
+              <form action={analyzeLesson}>
+                <input name="lessonId" type="hidden" value={lessons[0].id} />
+                <input name="returnTo" type="hidden" value={`/teacher/classrooms/${classroomId}`} />
+                <button className="min-h-8 rounded-lg border border-[#1f674a] px-3 text-xs font-bold text-[#1f674a] hover:bg-[#edf3e9]" type="submit">
+                  Draft objectives
+                </button>
+              </form>
+            </li>
+
+            <li className="flex flex-wrap items-center justify-between gap-2 rounded-lg bg-white px-3 py-2">
+              <div>
+                <p className="text-sm font-semibold text-[#29483c]">2. Challenges</p>
+                <p className="text-xs text-[#62776d]">
+                  {Array.from(assessmentKind.values()).filter((kind) => kind === "challenge").length} challenge set(s) · needs an approved objective
+                </p>
+              </div>
+              <form action={generateChallenges}>
+                <input name="lessonId" type="hidden" value={lessons[0].id} />
+                <input name="returnTo" type="hidden" value={`/teacher/classrooms/${classroomId}`} />
+                <button className="min-h-8 rounded-lg border border-[#1f674a] px-3 text-xs font-bold text-[#1f674a] hover:bg-[#edf3e9]" type="submit">
+                  Draft challenges
+                </button>
+              </form>
+            </li>
+
+            <li className="flex flex-wrap items-center justify-between gap-2 rounded-lg bg-white px-3 py-2">
+              <div>
+                <p className="text-sm font-semibold text-[#29483c]">3. Analysis</p>
+                <p className="text-xs text-[#62776d]">{facts.totals.answers} answer(s) on record · runs on the numbers below</p>
+              </div>
+              <p className="text-xs text-[#5b6b7d]">Use “Analyse this class” in the interpretation panel.</p>
+            </li>
+          </ol>
+        ) : (
+          <p className="mt-3 rounded-lg bg-[#f8f5ea] px-4 py-3 text-xs leading-5 text-[#7a6428]">
+            This class has no lesson yet, so there is nothing for the agent to work on. Create and assign a lesson first.
+          </p>
+        )}
+      </section>
+
       {/* COMPARISON — initial challenge vs follow-up, never causal */}
       <section className="mt-5 rounded-2xl border border-[#dce4d8] bg-white p-6">
         <h2 className="text-lg font-bold">Before and after</h2>

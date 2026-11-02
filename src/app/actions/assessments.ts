@@ -8,14 +8,22 @@ import { requireActionRole } from "@/lib/auth/action-role";
 import { AiAnalysisError, resolveChallengeGenerator } from "@/lib/ai";
 import { contextFromClassroom } from "@/lib/education/context";
 
-function teacherError(message: string, detail?: string): never {
-  const query = new URLSearchParams({ error: message });
-  if (detail) query.set("detail", detail.slice(0, 180));
-  redirect(`/teacher?${query.toString()}`);
+
+/** Only relative /teacher paths may be used as a redirect target. */
+function safeReturnTo(value: unknown): string {
+  const raw = typeof value === "string" ? value.trim() : "";
+  if (!raw.startsWith("/teacher") || raw.startsWith("//")) return "/teacher";
+  return raw;
 }
 
-function teacherNotice(notice: string): never {
-  redirect(`/teacher?notice=${notice}`);
+function teacherError(returnTo: string, message: string, detail?: string): never {
+  const query = new URLSearchParams({ error: message });
+  if (detail) query.set("detail", detail.slice(0, 180));
+  redirect(`${returnTo}?${query.toString()}`);
+}
+
+function teacherNotice(returnTo: string, notice: string): never {
+  redirect(`${returnTo}?notice=${notice}`);
 }
 
 /** Any change to questions must drop the assessment back to an unapproved draft. */
@@ -37,8 +45,9 @@ async function resetToDraft(
  * always returns the assessment to draft.
  */
 export async function generateChallenges(formData: FormData) {
+  const returnTo = safeReturnTo(formData.get("returnTo"));
   const parsed = z.object({ lessonId: z.string().uuid() }).safeParse({ lessonId: formData.get("lessonId") });
-  if (!parsed.success) teacherError("Choose a lesson first.");
+  if (!parsed.success) teacherError(returnTo, "Choose a lesson first.");
   const { supabase, user } = await requireActionRole("teacher");
 
   const { data: lesson } = await supabase
@@ -47,7 +56,7 @@ export async function generateChallenges(formData: FormData) {
     .eq("id", parsed.data.lessonId)
     .eq("teacher_id", user.id)
     .maybeSingle();
-  if (!lesson) teacherError("That lesson could not be found.");
+  if (!lesson) teacherError(returnTo, "That lesson could not be found.");
 
   const { data: objectiveRows } = await supabase
     .from("lesson_objectives")
@@ -59,7 +68,7 @@ export async function generateChallenges(formData: FormData) {
 
   const objectives = (objectiveRows ?? []) as { id: string; statement: string; skills: string[] | null }[];
   if (objectives.length === 0) {
-    teacherError("Approve at least one learning objective before generating challenges.");
+    teacherError(returnTo, "Approve at least one learning objective before generating challenges.");
   }
 
   // A lesson may be assigned to several classes; use the first assignment to infer
@@ -107,7 +116,7 @@ export async function generateChallenges(formData: FormData) {
       error_message: outcome.message.slice(0, 400),
     });
     revalidatePath("/teacher");
-    teacherError(outcome.message, outcome.detail);
+    teacherError(returnTo, outcome.message, outcome.detail);
   }
 
   const run = outcome.run;
@@ -149,10 +158,10 @@ export async function generateChallenges(formData: FormData) {
     .select("id")
     .single();
 
-  if (assessmentError || !assessment) teacherError("The challenge set could not be created. Please try again.");
+  if (assessmentError || !assessment) teacherError(returnTo, "The challenge set could not be created. Please try again.");
 
   const { error: clearError } = await supabase.from("questions").delete().eq("assessment_id", assessment.id);
-  if (clearError) teacherError("Previous questions could not be replaced. Please try again.");
+  if (clearError) teacherError(returnTo, "Previous questions could not be replaced. Please try again.");
 
   for (const [index, question] of run.challenge.questions.entries()) {
     const { data: inserted, error: questionError } = await supabase
@@ -169,18 +178,18 @@ export async function generateChallenges(formData: FormData) {
       .select("id")
       .single();
 
-    if (questionError || !inserted) teacherError("The questions could not be saved. Please try again.");
+    if (questionError || !inserted) teacherError(returnTo, "The questions could not be saved. Please try again.");
 
     const { error: keyError } = await supabase.from("answer_keys").insert({
       question_id: inserted.id,
       correct_index: question.correctIndex,
       explanation: question.explanation,
     });
-    if (keyError) teacherError("The answer key could not be saved. Nothing was published.");
+    if (keyError) teacherError(returnTo, "The answer key could not be saved. Nothing was published.");
   }
 
   revalidatePath("/teacher");
-  teacherNotice("challenges-generated");
+  teacherNotice(returnTo, "challenges-generated");
 }
 
 const questionInput = z.object({
@@ -193,6 +202,7 @@ const questionInput = z.object({
 });
 
 export async function updateQuestion(formData: FormData) {
+  const returnTo = "/teacher";
   const options = String(formData.get("options") ?? "")
     .split("\n")
     .map((option) => option.trim())
@@ -208,29 +218,29 @@ export async function updateQuestion(formData: FormData) {
   });
 
   if (!parsed.success) {
-    teacherError("Check the question: it needs a prompt, 2–6 distinct options, a valid correct answer and an explanation.");
+    teacherError(returnTo, "Check the question: it needs a prompt, 2–6 distinct options, a valid correct answer and an explanation.");
   }
 
   const { supabase } = await requireActionRole("teacher");
   const data = parsed.data;
 
-  if (data.correctIndex >= data.options.length) teacherError("The correct answer must be one of the listed options.");
+  if (data.correctIndex >= data.options.length) teacherError(returnTo, "The correct answer must be one of the listed options.");
   const normalised = data.options.map((option) => option.toLowerCase());
-  if (new Set(normalised).size !== normalised.length) teacherError("Options must be distinct.");
-  if (data.kind === "true_false" && data.options.length !== 2) teacherError("A true/false question needs exactly two options.");
+  if (new Set(normalised).size !== normalised.length) teacherError(returnTo, "Options must be distinct.");
+  if (data.kind === "true_false" && data.options.length !== 2) teacherError(returnTo, "A true/false question needs exactly two options.");
 
   const { data: question } = await supabase
     .from("questions")
     .select("id, assessment_id")
     .eq("id", data.questionId)
     .maybeSingle();
-  if (!question) teacherError("That question could not be found.");
+  if (!question) teacherError(returnTo, "That question could not be found.");
 
   const { error: updateError } = await supabase
     .from("questions")
     .update({ prompt: data.prompt, kind: data.kind, options: data.options })
     .eq("id", question.id);
-  if (updateError) teacherError("That question could not be saved. Please try again.");
+  if (updateError) teacherError(returnTo, "That question could not be saved. Please try again.");
 
   const { error: keyError } = await supabase
     .from("answer_keys")
@@ -238,17 +248,18 @@ export async function updateQuestion(formData: FormData) {
       { question_id: question.id, correct_index: data.correctIndex, explanation: data.explanation },
       { onConflict: "question_id" },
     );
-  if (keyError) teacherError("The answer key could not be saved. Please try again.");
+  if (keyError) teacherError(returnTo, "The answer key could not be saved. Please try again.");
 
   await resetToDraft(supabase, question.assessment_id as string);
   revalidatePath("/teacher");
   revalidatePath("/student");
-  teacherNotice("question-saved");
+  teacherNotice(returnTo, "question-saved");
 }
 
 export async function deleteQuestion(formData: FormData) {
+  const returnTo = "/teacher";
   const parsed = z.object({ questionId: z.string().uuid() }).safeParse({ questionId: formData.get("questionId") });
-  if (!parsed.success) teacherError("That question could not be found.");
+  if (!parsed.success) teacherError(returnTo, "That question could not be found.");
   const { supabase } = await requireActionRole("teacher");
 
   const { data: question } = await supabase
@@ -256,21 +267,22 @@ export async function deleteQuestion(formData: FormData) {
     .select("id, assessment_id")
     .eq("id", parsed.data.questionId)
     .maybeSingle();
-  if (!question) teacherError("That question could not be found.");
+  if (!question) teacherError(returnTo, "That question could not be found.");
 
   const { error } = await supabase.from("questions").delete().eq("id", question.id);
-  if (error) teacherError("That question could not be removed. Please try again.");
+  if (error) teacherError(returnTo, "That question could not be removed. Please try again.");
 
   await resetToDraft(supabase, question.assessment_id as string);
   revalidatePath("/teacher");
   revalidatePath("/student");
-  teacherNotice("question-removed");
+  teacherNotice(returnTo, "question-removed");
 }
 
 /** Teacher approval is mandatory before publishing; status transitions are enforced here, not in the UI. */
 export async function approveAssessment(formData: FormData) {
+  const returnTo = "/teacher";
   const parsed = z.object({ assessmentId: z.string().uuid() }).safeParse({ assessmentId: formData.get("assessmentId") });
-  if (!parsed.success) teacherError("That challenge set could not be found.");
+  if (!parsed.success) teacherError(returnTo, "That challenge set could not be found.");
   const { supabase, user } = await requireActionRole("teacher");
 
   const { data: assessment } = await supabase
@@ -278,27 +290,28 @@ export async function approveAssessment(formData: FormData) {
     .select("id, teacher_id")
     .eq("id", parsed.data.assessmentId)
     .maybeSingle();
-  if (!assessment || assessment.teacher_id !== user.id) teacherError("That challenge set could not be found.");
+  if (!assessment || assessment.teacher_id !== user.id) teacherError(returnTo, "That challenge set could not be found.");
 
   const { count } = await supabase
     .from("questions")
     .select("id", { count: "exact", head: true })
     .eq("assessment_id", assessment.id);
-  if (!count) teacherError("Add at least one question before approving.");
+  if (!count) teacherError(returnTo, "Add at least one question before approving.");
 
   const { error } = await supabase
     .from("assessments")
     .update({ status: "approved", approved_at: new Date().toISOString(), updated_at: new Date().toISOString() })
     .eq("id", assessment.id);
-  if (error) teacherError("That challenge set could not be approved. Please try again.");
+  if (error) teacherError(returnTo, "That challenge set could not be approved. Please try again.");
 
   revalidatePath("/teacher");
-  teacherNotice("assessment-approved");
+  teacherNotice(returnTo, "assessment-approved");
 }
 
 export async function publishAssessment(formData: FormData) {
+  const returnTo = "/teacher";
   const parsed = z.object({ assessmentId: z.string().uuid() }).safeParse({ assessmentId: formData.get("assessmentId") });
-  if (!parsed.success) teacherError("That challenge set could not be found.");
+  if (!parsed.success) teacherError(returnTo, "That challenge set could not be found.");
   const { supabase, user } = await requireActionRole("teacher");
 
   const { data: assessment } = await supabase
@@ -306,32 +319,33 @@ export async function publishAssessment(formData: FormData) {
     .select("id, status, teacher_id")
     .eq("id", parsed.data.assessmentId)
     .maybeSingle();
-  if (!assessment || assessment.teacher_id !== user.id) teacherError("That challenge set could not be found.");
-  if (assessment.status !== "approved") teacherError("Approve the challenge set before publishing it to students.");
+  if (!assessment || assessment.teacher_id !== user.id) teacherError(returnTo, "That challenge set could not be found.");
+  if (assessment.status !== "approved") teacherError(returnTo, "Approve the challenge set before publishing it to students.");
 
   const { error } = await supabase
     .from("assessments")
     .update({ status: "published", published_at: new Date().toISOString(), updated_at: new Date().toISOString() })
     .eq("id", assessment.id);
-  if (error) teacherError("That challenge set could not be published. Please try again.");
+  if (error) teacherError(returnTo, "That challenge set could not be published. Please try again.");
 
   revalidatePath("/teacher");
   revalidatePath("/student");
-  teacherNotice("assessment-published");
+  teacherNotice(returnTo, "assessment-published");
 }
 
 export async function unpublishAssessment(formData: FormData) {
+  const returnTo = "/teacher";
   const parsed = z.object({ assessmentId: z.string().uuid() }).safeParse({ assessmentId: formData.get("assessmentId") });
-  if (!parsed.success) teacherError("That challenge set could not be found.");
+  if (!parsed.success) teacherError(returnTo, "That challenge set could not be found.");
   const { supabase } = await requireActionRole("teacher");
 
   const { error } = await supabase
     .from("assessments")
     .update({ status: "approved", published_at: null, updated_at: new Date().toISOString() })
     .eq("id", parsed.data.assessmentId);
-  if (error) teacherError("That challenge set could not be unpublished. Please try again.");
+  if (error) teacherError(returnTo, "That challenge set could not be unpublished. Please try again.");
 
   revalidatePath("/teacher");
   revalidatePath("/student");
-  teacherNotice("assessment-unpublished");
+  teacherNotice(returnTo, "assessment-unpublished");
 }
