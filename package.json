@@ -9,7 +9,7 @@
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
     "check:world": "node --experimental-strip-types scripts/student-world/check_systems.mjs",
-    "check:ai": "tsc -p scripts/ai/tsconfig.check.json && node scripts/ai/check_lesson_analyzer.cjs && node scripts/ai/check_challenge_generator.cjs && node scripts/ai/check_learning_analyst.cjs",
+    "check:ai": "tsc -p scripts/ai/tsconfig.check.json && node scripts/ai/check_lesson_analyzer.cjs && node scripts/ai/check_challenge_generator.cjs && node scripts/ai/check_learning_analyst.cjs && node scripts/ai/check_companion_and_compare.cjs",
     "check:live": "tsc -p scripts/ai/tsconfig.check.json && node scripts/ai/check_live_provider.cjs"
   },
   "dependencies": {

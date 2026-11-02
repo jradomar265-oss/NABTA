@@ -1,5 +1,35 @@
 # Development Log
 
+## Stage 8 — AI Personal Coach and Targeted Learning (part 1 of 2)
+
+**Execution date:** 2026-11-01  
+**Status:** Learning Companion and progress comparison shipped; interventions, follow-up assessment and teacher approval **not built yet**
+
+### Implemented
+
+- Migration `202611010008_stage8_companion.sql`: `companion_messages` with three structural guarantees — a student may only write rows about themselves for a lesson assigned to their own class; **the teacher of that class can read the thread** (adult oversight of AI conversations with minors); and nothing in the table can award XP or mark work complete.
+- `src/lib/ai/companion.ts`: the companion contract. `parseCompanionAnswer` rejects a non-refusal that cites no lesson quote, a refusal that *does* cite one, and any quote that does not appear in the lesson text — so an explanation cannot be invented from general knowledge.
+- Deterministic mock companion: matches lesson sentences against the question by keyword, restates the best one, hands the thinking back, and **refuses** when nothing overlaps or the lesson is too short to ground an answer.
+- Live companion shares the transport used by the other stages and receives only the lesson text and approved objectives — never the assessment, never an answer key.
+- Student UI on the quest page: "Ask NABTA about this lesson", with a mock/live badge, the previous four turns, a distinct style for refusals, and a plain statement that the teacher can see these questions.
+- `src/lib/learning/compare.ts`: before/after comparison per objective, matched by id. Movement below 3 answers on either side is reported as **not comparable with a stated reason**, not as zero change. `causalClaim` is hard-coded false and the summary says in plain words that a change between two assessments is not proof of cause.
+
+### Verification
+
+- `npm run typecheck` — PASS (exit 0).
+- `npm run lint` — PASS (exit 0, no warnings).
+- `npm run build` — PASS (exit 0).
+- `npm run check:ai` — PASS, **four** suites. New suite covers: grounding rejection (no quote, invented quote), refusal rules (a refusal must not cite), off-topic refusal, thin-lesson refusal with `contextMissing`, determinism, provider resolution, and comparison maths (2/5→4/5 = +40 points "improved"; 1/2 answers = not comparable; 4/5→2/5 = "lower"; equal = "unchanged"; the summary disclaims causation).
+- `GET /` 200 through the dev server.
+- **NOT TESTED:** `0008` is not applied and no student has asked a question, so the companion has never answered against a real lesson in the browser.
+
+### Remaining Stage 8 work (part 2)
+
+- `interventions` table + teacher approval flow, with server-enforced `draft → approved → assigned` transitions.
+- Targeted practice generated from a learning gap, and a separate follow-up assessment (`assessments.kind`), so follow-up evidence is stored apart from the first attempt.
+- Teacher UI to approve and assign an intervention, and a page comparing the initial and follow-up snapshots using `compareEvidence`.
+- The comparison module is written and tested, but nothing renders it yet.
+
 ## Stage 7 — AI Learning Analysis and Teacher Analytics
 
 **Execution date:** 2026-11-01  

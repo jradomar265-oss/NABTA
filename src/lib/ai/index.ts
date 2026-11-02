@@ -8,6 +8,9 @@ import { mockLessonAnalyzer } from "./mock-analyzer";
 import { mockLearningAnalyst } from "./analysis-mock";
 import { createLiveLearningAnalyst } from "./analysis-live";
 import type { LearningAnalyst } from "./analysis";
+import { mockCompanion } from "./companion-mock";
+import { createLiveCompanion } from "./companion-live";
+import type { Companion } from "./companion";
 import type { AiSetup, LessonAnalyzer } from "./types";
 
 export { AiAnalysisError } from "./types";
@@ -16,12 +19,15 @@ export { parseAnalysis } from "./schema";
 export { parseChallenge } from "./challenge";
 export { parseObservations } from "./analysis";
 export type { LearningAnalyst, LearningObservations, Observation } from "./analysis";
+export { parseCompanionAnswer } from "./companion";
+export type { Companion, CompanionAnswer, CompanionInput } from "./companion";
 export type { ChallengeGenerator, ChallengeInput, ChallengeObjective, ChallengeRun, GeneratedQuestion } from "./challenge";
 export { geminiSurfaceInUse, GEMINI_API_BASE } from "./gemini";
 
 type Resolved = { analyzer: LessonAnalyzer; setup: AiSetup };
 type ResolvedChallenge = { generator: ChallengeGenerator; setup: AiSetup };
 type ResolvedAnalyst = { analyst: LearningAnalyst; setup: AiSetup };
+type ResolvedCompanion = { companion: Companion; setup: AiSetup };
 
 type AiConfig =
   | {
@@ -200,4 +206,40 @@ export function resolveLearningAnalyst(env: Record<string, string | undefined> =
 
 export function getChallengeGenerator(): ResolvedChallenge {
   return resolveChallengeGenerator();
+}
+
+/** Chooses the student learning companion. It only ever sees one lesson. */
+export function resolveCompanion(env: Record<string, string | undefined> = process.env): ResolvedCompanion {
+  const config = readConfig(env);
+
+  if (config.live) {
+    const chat = config.kind === "gemini"
+      ? createGeminiTransport({ baseUrl: config.baseUrl, apiKey: config.apiKey, model: config.model })
+      : createChatTransport({ baseUrl: config.baseUrl, apiKey: config.apiKey, model: config.model });
+    const companion = createLiveCompanion({
+      id: config.providerId,
+      label: `Live companion — ${config.providerLabel}`,
+      model: config.model,
+      chat,
+    });
+    return {
+      companion,
+      setup: {
+        isMock: false,
+        provider: companion.id,
+        label: companion.label,
+        note: `${config.providerLabel} is configured. The companion only sees this lesson, and every explanation must quote it.`,
+      },
+    };
+  }
+
+  return {
+    companion: mockCompanion,
+    setup: {
+      isMock: true,
+      provider: mockCompanion.id,
+      label: mockCompanion.label,
+      note: mockNote(config.missing, "Answers are matched from the lesson text by keyword, not written by a model."),
+    },
+  };
 }
