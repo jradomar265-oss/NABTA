@@ -1,5 +1,38 @@
 # Development Log
 
+## Critical bug found during Stage 9 verification and fixed
+
+**Found by** an independent verification pass that stood up a real PostgreSQL cluster, applied the schema, and exercised the policies.
+
+**Bug:** the policy `"Students can read assigned lessons"` (added in `202611010002`) read:
+
+```sql
+using (exists (
+  select 1 from public.lesson_assignments la
+  where la.lesson_id = id and public.is_classroom_member(la.classroom_id)
+));
+```
+
+Inside the subquery, an unqualified `id` resolves against `lesson_assignments`, which owns an `id` column. The predicate therefore compared `la.lesson_id` to `la.id` and matched only when those two happened to be equal — effectively never. Reproduced: a student saw 0 rows from `public.lessons`; after aligning the ids, 1.
+
+**Impact:** students could not read lesson content through this policy, so any query embedding `lessons(...)` into an assignment returned null — the quest page would render a title-less, content-less lesson. It had not surfaced yet only because no real student session had been run.
+
+**Fix:** `202611010011_fix_student_lessons_policy.sql` drops and recreates the policy with the outer column qualified (`la.lesson_id = public.lessons.id`). Access scope is unchanged: still only lessons assigned to a class the student belongs to. Verified by a student-role regression test that deliberately makes `lesson_assignments.id` differ from `lessons.id`.
+
+**Lesson for the process:** every RLS predicate that correlates a subquery against the policy's own table must qualify the outer column. Reviewing the remaining 39 policies for the same pattern is part of Stage 9.
+
+## Consolidated schema bundle
+
+`supabase/apply_all.sql` — every migration as one idempotent file, verified by executing it on a real PostgreSQL 18 cluster:
+
+- empty database: run twice, both clean;
+- migrations 0001–0008 applied with live rows: run twice, clean, rows preserved;
+- fully applied: run twice, schema unchanged;
+- `pg_dump -s` equivalence across all three starting points: 0 differences including ACLs;
+- functional test as `authenticated`: grading scored 2/2, awarded 22 XP once, a retake awarded 0, achievements and study progress written, and `answer_keys` returned 0 rows to the student.
+
+The numbered files in `supabase/migrations/` remain the source of truth; the bundle must be regenerated when a migration is added.
+
 ## Stage 9 (first increment) — assessment comparability
 
 **Execution date:** 2026-11-01  
