@@ -4,8 +4,8 @@ import {
   generateChallenges,
   publishAssessment,
   unpublishAssessment,
-  updateQuestion,
 } from "@/app/actions/assessments";
+import { QuestionEditor } from "./QuestionEditor";
 import type { AiSetup } from "@/lib/ai/types";
 
 export type QuestionView = {
@@ -137,45 +137,14 @@ export function AssessmentPanel({
                   )}
                 </div>
 
-                <form action={updateQuestion} className="mt-2 space-y-2">
-                  <input name="questionId" type="hidden" value={question.id} />
-                  <label className="block text-xs font-semibold text-[#496451]">
-                    Question
-                    <textarea className="mt-1 min-h-14 w-full rounded-lg border border-[#d5dfd4] px-2 py-1.5 text-sm font-normal" defaultValue={question.prompt} maxLength={600} name="prompt" required />
-                  </label>
-                  <div className="grid gap-2 sm:grid-cols-[1fr_9rem]">
-                    <label className="block text-xs font-semibold text-[#496451]">
-                      Options <span className="font-normal text-[#7b8c81]">(one per line)</span>
-                      <textarea className="mt-1 min-h-24 w-full rounded-lg border border-[#d5dfd4] px-2 py-1.5 font-mono text-sm font-normal" defaultValue={question.options.join("\n")} name="options" required />
-                    </label>
-                    <div className="space-y-2">
-                      <label className="block text-xs font-semibold text-[#496451]">
-                        Format
-                        <select className="mt-1 min-h-9 w-full rounded-lg border border-[#d5dfd4] bg-white px-2 text-sm font-normal" defaultValue={question.kind} name="kind">
-                          <option value="multiple_choice">Multiple choice</option>
-                          <option value="true_false">True / false</option>
-                        </select>
-                      </label>
-                      <label className="block text-xs font-semibold text-[#496451]">
-                        Correct answer
-                        <select className="mt-1 min-h-9 w-full rounded-lg border border-[#d5dfd4] bg-white px-2 text-sm font-normal" defaultValue={String(question.correctIndex)} name="correctIndex">
-                          {question.options.map((option, optionIndex) => (
-                            <option key={`${question.id}-${optionIndex}`} value={optionIndex}>
-                              {optionIndex + 1}. {option.slice(0, 28)}
-                            </option>
-                          ))}
-                        </select>
-                      </label>
-                    </div>
-                  </div>
-                  <label className="block text-xs font-semibold text-[#496451]">
-                    Explanation <span className="font-normal text-[#7b8c81]">(shown with the answer key, students only after answering)</span>
-                    <textarea className="mt-1 min-h-12 w-full rounded-lg border border-[#d5dfd4] px-2 py-1.5 text-sm font-normal" defaultValue={question.explanation} maxLength={600} name="explanation" required />
-                  </label>
-                  <button className="min-h-9 rounded-lg border border-[#1f674a] px-3 text-xs font-bold text-[#1f674a] hover:bg-[#edf3e9]" type="submit">
-                    Save question
-                  </button>
-                </form>
+                <QuestionEditor
+                  correctIndex={question.correctIndex}
+                  explanation={question.explanation}
+                  kind={question.kind}
+                  options={question.options}
+                  prompt={question.prompt}
+                  questionId={question.id}
+                />
 
                 <form action={deleteQuestion} className="mt-2">
                   <input name="questionId" type="hidden" value={question.id} />
