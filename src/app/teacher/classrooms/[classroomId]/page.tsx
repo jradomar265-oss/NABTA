@@ -298,6 +298,28 @@ export default async function ClassroomAnalyticsPage({ params, searchParams }: {
               ))}
             </ul>
 
+            {latest.observations.challengeItems.length > 0 && (
+              <div className="rounded-lg border border-[#ece2cd] bg-white px-3 py-2">
+                <p className="text-xs font-bold uppercase tracking-wide text-[#8a7a5a]">How the questions behaved</p>
+                <ul className="mt-1 space-y-2">
+                  {latest.observations.challengeItems.map((item, index) => (
+                    <li key={`${item.questionId}-${index}`}>
+                      <p className="text-sm font-semibold text-[#3f3a2e]">{item.statement}</p>
+                      <p className="text-xs italic text-[#7d6c48]">Evidence: {item.evidence}</p>
+                      <p className="text-[11px] font-bold uppercase text-[#8a7a5a]">{item.confidence} confidence</p>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {latest.observations.difficultyRecommendation && (
+              <p className="rounded-lg bg-[#eef2ea] px-3 py-2 text-sm text-[#3f6249]">
+                <span className="font-bold uppercase tracking-wide">{latest.observations.difficultyRecommendation.direction}</span>{" "}
+                — {latest.observations.difficultyRecommendation.reason}
+              </p>
+            )}
+
             {latest.observations.limitations.length > 0 && (
               <div className="rounded-lg bg-[#f8f5ea] px-4 py-3 text-xs leading-5 text-[#7a6428]">
                 <p className="font-bold uppercase tracking-wide">What this analysis cannot tell you</p>

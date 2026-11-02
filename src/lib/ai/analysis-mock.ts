@@ -28,6 +28,8 @@ export const mockLearningAnalyst: LearningAnalyst = {
       const empty: LearningObservations = {
         summary: `No student has answered the challenge for ${facts.classroom.name} yet, so there is nothing to interpret.`,
         observations: [],
+        challengeItems: [],
+        difficultyRecommendation: null,
         limitations: [facts.insufficientReasons[0] ?? "No answers recorded."],
         insufficientEvidence: true,
       };
@@ -89,6 +91,43 @@ export const mockLearningAnalyst: LearningAnalyst = {
     const strengths = observations.filter((observation) => observation.kind === "strength").length;
     const gaps = observations.filter((observation) => observation.kind === "gap").length;
 
+    // Comment on how the QUESTIONS behaved, from the option counts alone.
+    const challengeItems: LearningObservations["challengeItems"] = [];
+    for (const question of facts.questions) {
+      if (question.evidenceState !== "usable") continue;
+      const percent = question.accuracy === null ? 0 : Math.round(question.accuracy * 100);
+      const spread = question.optionCounts.map((count, index) => `option ${index + 1} chosen ${count} time(s)`).join(", ");
+      if (question.status === "too-hard") {
+        challengeItems.push({
+          questionId: question.questionId,
+          statement: `This question was answered correctly only ${percent}% of the time, so it may be testing something the lesson did not settle.`,
+          evidence: `${question.correct}/${question.attempts} correct (${percent}%); ${spread}.`,
+          confidence: question.attempts >= 8 ? "moderate" : "low",
+        });
+      } else if (question.status === "too-easy") {
+        challengeItems.push({
+          questionId: question.questionId,
+          statement: "Almost everyone answered this question correctly, so it tells you little about who needs help.",
+          evidence: `${question.correct}/${question.attempts} correct (${percent}%); ${spread}.`,
+          confidence: question.attempts >= 8 ? "moderate" : "low",
+        });
+      }
+      if (challengeItems.length >= 5) break;
+    }
+
+    const hasGap = facts.objectives.some((objective) => objective.status === "gap");
+    const allSecure = facts.objectives.every((objective) => objective.status === "strength" || objective.status === "not-assessed");
+    const tooHard = facts.questions.some((question) => question.status === "too-hard");
+
+    const difficultyRecommendation: LearningObservations["difficultyRecommendation"] =
+      facts.evidenceState !== "usable"
+        ? null
+        : hasGap || tooHard
+          ? { direction: "easier", reason: `Accuracy is low enough that the next set should rehearse the same objective with more scaffolding before raising demand.` }
+          : allSecure
+            ? { direction: "harder", reason: "Every assessed objective is secure on this evidence, so the next set can add a step of difficulty." }
+            : { direction: "keep", reason: "The current demand looks appropriate; more evidence is needed before changing it." };
+
     const limitations = [
       ...facts.insufficientReasons,
       "Based on one assessment of one class; it describes these answers, not the students' ability in general.",
@@ -97,6 +136,8 @@ export const mockLearningAnalyst: LearningAnalyst = {
     const candidate: LearningObservations = {
       summary: `${facts.classroom.name}: ${facts.totals.correct} of ${facts.totals.answers} answers correct (${Math.round((facts.totals.accuracy ?? 0) * 100)}%) across ${facts.objectives.length} objectives. ${strengths} secure area(s), ${gaps} area(s) needing practice.`,
       observations: observations.slice(0, 6),
+      challengeItems,
+      difficultyRecommendation,
       limitations,
       insufficientEvidence: facts.evidenceState !== "usable",
     };

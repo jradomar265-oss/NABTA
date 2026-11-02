@@ -91,6 +91,18 @@ const good = {
 };
 check(parseObservations(good, facts).ok, "a well-formed observation must parse");
 
+// --- question-level reporting -----------------------------------------------
+const questionId = facts.questions[0].questionId;
+const withItem = { ...good, challengeItems: [{ questionId, statement: "Very few students answered this correctly.", evidence: "0 of 4 correct (0%).", confidence: "moderate" }], difficultyRecommendation: { direction: "easier", reason: "Accuracy is low." } };
+$withItemResult = parseObservations(withItem, facts);
+check($withItemResult.ok, `a challenge-item comment with a real question id must parse: ${$withItemResult.ok ? "" : $withItemResult.reason}`);
+const strayItem = { ...good, challengeItems: [{ questionId: "3f2504e0-4f89-41d3-9a0c-0305e82c99ff", statement: "A question that is not in the fact sheet.", evidence: "0 of 4 correct.", confidence: "low" }] };
+check(!parseObservations(strayItem, facts).ok, "a challenge-item comment about an unknown question must be rejected");
+const badDirection = { ...good, difficultyRecommendation: { direction: "sideways", reason: "Anything." } };
+check(!parseObservations(badDirection, facts).ok, "an unknown difficulty direction must be rejected");
+check(facts.questions.length > 0, "the fact sheet must carry per-question facts");
+check(facts.questions.every((q) => Array.isArray(q.optionCounts)), "every question fact must carry option counts");
+
 const strayObjective = JSON.parse(JSON.stringify(good));
 strayObjective.observations[0].objectiveId = "3f2504e0-4f89-41d3-9a0c-0305e82c3399";
 check(!parseObservations(strayObjective, facts).ok, "an observation about an objective outside the fact sheet must be rejected");
@@ -101,7 +113,7 @@ check(!parseObservations(noEvidence, facts).ok, "an observation without cited nu
 
 const overclaims = JSON.parse(JSON.stringify(good));
 overclaims.insufficientEvidence = false;
-const thinFacts = { objectives: facts.objectives, evidenceState: "insufficient" };
+const thinFacts = { objectives: facts.objectives, questions: facts.questions, evidenceState: "insufficient" };
 check(!parseObservations(overclaims, thinFacts).ok, "thin facts must not be reported as sufficient evidence");
 
 (async () => {

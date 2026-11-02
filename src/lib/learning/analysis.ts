@@ -26,6 +26,7 @@ export type QuestionRow = {
   objectiveId: string | null;
   options: string[];
   prompt: string;
+  difficulty?: string | null;
 };
 
 /**
@@ -57,6 +58,26 @@ export type ObjectiveFact = {
   status: "strength" | "gap" | "on-track" | "not-assessed" | "needs-more-evidence";
 };
 
+/**
+ * Per-question behaviour. This is what lets the AI comment on the *questions* rather
+ * than only on the objective totals — still from computed counts, never from guesses.
+ */
+export type QuestionFact = {
+  questionId: string;
+  objectiveId: string | null;
+  prompt: string;
+  attempts: number;
+  correct: number;
+  accuracy: number | null;
+  evidenceState: EvidenceState;
+  /** How often each option was chosen, by index. */
+  optionCounts: number[];
+  /** The stored correct position, when any answer row revealed it. */
+  correctIndex: number | null;
+  difficulty: string | null;
+  status: "too-easy" | "too-hard" | "working" | "needs-more-evidence" | "not-attempted";
+};
+
 export type StudentFact = {
   studentId: string;
   displayName: string;
@@ -78,6 +99,7 @@ export type AnalysisFacts = {
   };
   objectives: ObjectiveFact[];
   students: StudentFact[];
+  questions: QuestionFact[];
   evidenceState: EvidenceState;
   insufficientReasons: string[];
   thresholds: typeof THRESHOLDS;
@@ -134,6 +156,11 @@ export function buildAnalysisFacts(input: {
     perObjective.set(objective.id, { attempts: 0, correct: 0, students: new Set(), wrongChoices: new Map(), questions: new Set() });
   }
 
+  const perQuestion = new Map<string, { attempts: number; correct: number; optionCounts: number[]; correctIndex: number | null }>();
+  for (const question of input.questions) {
+    perQuestion.set(question.id, { attempts: 0, correct: 0, optionCounts: [], correctIndex: null });
+  }
+
   const perStudent = new Map<string, { attempts: number; correct: number; objectives: Set<string> }>();
   for (const student of input.students) {
     perStudent.set(student.id, { attempts: 0, correct: 0, objectives: new Set() });
@@ -157,6 +184,16 @@ export function buildAnalysisFacts(input: {
       if (answer.isCorrect) bucket.correct += 1;
       else bucket.wrongChoices.set(answer.choiceIndex, (bucket.wrongChoices.get(answer.choiceIndex) ?? 0) + 1);
       bucket.students.add(answer.studentId);
+    }
+
+    const questionBucket = perQuestion.get(answer.questionId);
+    if (questionBucket) {
+      questionBucket.attempts += 1;
+      if (answer.isCorrect) questionBucket.correct += 1;
+      questionBucket.correctIndex = answer.correctIndex;
+      const width = Math.max(questionBucket.optionCounts.length, question?.options.length ?? 0, answer.correctIndex + 1);
+      while (questionBucket.optionCounts.length < width) questionBucket.optionCounts.push(0);
+      if (answer.choiceIndex >= 0) questionBucket.optionCounts[answer.choiceIndex] = (questionBucket.optionCounts[answer.choiceIndex] ?? 0) + 1;
     }
 
     const student = perStudent.get(answer.studentId);
@@ -192,6 +229,35 @@ export function buildAnalysisFacts(input: {
       evidenceState: evidenceStateFor(bucket.attempts),
       topDistractor,
       status: objectiveStatus(bucket.attempts, accuracy),
+    };
+  });
+
+  const questions: QuestionFact[] = input.questions.map((question) => {
+    const bucket = perQuestion.get(question.id)!;
+    const accuracy = accuracyOf(bucket.correct, bucket.attempts);
+    const evidenceState = evidenceStateFor(bucket.attempts);
+    const status: QuestionFact["status"] =
+      bucket.attempts === 0
+        ? "not-attempted"
+        : evidenceState !== "usable"
+          ? "needs-more-evidence"
+          : (accuracy ?? 0) >= 0.95
+            ? "too-easy"
+            : (accuracy ?? 0) <= 0.4
+              ? "too-hard"
+              : "working";
+    return {
+      questionId: question.id,
+      objectiveId: question.objectiveId,
+      prompt: question.prompt,
+      attempts: bucket.attempts,
+      correct: bucket.correct,
+      accuracy,
+      evidenceState,
+      optionCounts: bucket.optionCounts,
+      correctIndex: bucket.correctIndex,
+      difficulty: question.difficulty ?? null,
+      status,
     };
   });
 
@@ -259,6 +325,7 @@ export function buildAnalysisFacts(input: {
     },
     objectives,
     students,
+    questions,
     evidenceState,
     insufficientReasons,
     thresholds: THRESHOLDS,
