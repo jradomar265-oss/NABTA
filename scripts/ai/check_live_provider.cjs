@@ -62,7 +62,8 @@ function show(label, value) {
 
   if (analyzerSetup.isMock) {
     console.log(`\nNothing to test: ${analyzerSetup.note}`);
-    console.log("Set AI_PROVIDER=gemini, AI_API_KEY and AI_MODEL in .env.local, then run this again.");
+    console.log("To go live: set AI_PROVIDER (gemini or openai-compatible) plus the key and model in .env.local,");
+    console.log("restart the dev server, then run this again.");
     process.exit(1);
   }
 

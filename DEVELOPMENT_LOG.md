@@ -1,5 +1,14 @@
 # Development Log
 
+## Open founder actions (carry forward until done)
+
+1. **OpenAI credit.** Checked 2026-11-01: the key authenticates but the account returns `http-429 credit_balance_exhausted`. `AI_PROVIDER` is therefore commented out in `.env.local` and the app runs mock mode. To go live: add credit, uncomment `AI_PROVIDER`, restart the dev server, run `npm run check:live`. If a 404 appears then, the model name (`gpt-6.1-sol`) is not available to the account.
+2. **Apply migrations `0004`, `0005`, `0006`** in the Supabase SQL editor, in order. Until then Stages 4–6 have no tables and nothing they write can persist.
+3. **Run `supabase/tests/stage6_grading_check.sql`** after the migrations, then make one student submission and one teacher analysis to confirm the flows against the live database.
+4. **Founder art review:** the student character sheet and the five quest medallions are still generated candidates.
+5. **GitHub remote** is not configured, so nothing can be pushed.
+6. **Not yet verified against a real database:** `answer_keys` invisibility to students, the publish gate, XP once-per-assessment, and the RLS on study progress.
+
 ## Stage 6 — Student Study Quest Experience
 
 **Execution date:** 2026-11-01  
