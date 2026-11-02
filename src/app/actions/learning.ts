@@ -14,10 +14,28 @@ function studentError(message: string): never {
 }
 
 export async function createClassroom(formData: FormData) {
-  const parsed = z.object({ name: z.string().trim().min(1).max(80) }).safeParse({ name: formData.get("name") });
-  if (!parsed.success) teacherError("Enter a class name of up to 80 characters.");
+  const parsed = z.object({
+    name: z.string().trim().min(1).max(80),
+    // Education context is optional: a class without it still works, prompts fall back
+    // to neutral wording rather than assuming a year group.
+    gradeLevel: z.union([z.literal(""), z.coerce.number().int().min(1).max(12)]).optional(),
+    subject: z.string().trim().max(60).optional(),
+    curriculum: z.string().trim().max(80).optional(),
+  }).safeParse({
+    name: formData.get("name"),
+    gradeLevel: formData.get("gradeLevel") ?? "",
+    subject: formData.get("subject") ?? "",
+    curriculum: formData.get("curriculum") ?? "",
+  });
+  if (!parsed.success) teacherError("Enter a class name of up to 80 characters, and a grade between 1 and 12 if you set one.");
   const { supabase, user } = await requireActionRole("teacher");
-  const { error } = await supabase.from("classrooms").insert({ name: parsed.data.name, teacher_id: user.id });
+  const { error } = await supabase.from("classrooms").insert({
+    name: parsed.data.name,
+    teacher_id: user.id,
+    grade_level: parsed.data.gradeLevel === "" || parsed.data.gradeLevel === undefined ? null : parsed.data.gradeLevel,
+    subject: parsed.data.subject || null,
+    curriculum: parsed.data.curriculum || null,
+  });
   if (error) teacherError("We could not create that class. Please try again.");
   revalidatePath("/teacher");
   redirect("/teacher?notice=class-created");

@@ -1,5 +1,7 @@
 /** Prompt text shared by every transport, so a provider swap cannot change the pedagogy. */
 
+import { promptContextBlock, type EducationContext } from "../education/context";
+
 export const ANALYSIS_SYSTEM_PROMPT = [
   "You analyse a teacher's lesson text and return learning objectives.",
   "Rules:",
@@ -28,8 +30,9 @@ export function analysisUserPrompt(
   return parts.join("\n\n");
 }
 
-export const CHALLENGE_SYSTEM_PROMPT = [
-  "You write short assessment questions for a Grade 6 lesson the teacher supplied.",
+export function challengeSystemPrompt(context?: EducationContext | null): string { return [
+  "You write short assessment questions for a school lesson the teacher supplied.",
+  promptContextBlock(context),
   "Rules:",
   "- Use only the lesson text and the approved objectives. Never introduce facts they do not contain.",
   "- Every question must reference one of the supplied objective ids exactly as given in `objectiveId`.",
@@ -38,7 +41,7 @@ export const CHALLENGE_SYSTEM_PROMPT = [
   "- Include a short `explanation` that says why the correct answer is right.",
   "- Questions must be answerable from the lesson alone; no trick questions.",
   'Return JSON only: {"questions": [{"prompt": string, "kind": "multiple_choice"|"true_false", "options": string[], "correctIndex": number, "explanation": string, "objectiveId": string}]}',
-].join("\n");
+].join("\n"); }
 
 export function challengeUserPrompt(
   input: { title: string; content: string; objectives: { id: string; statement: string; skills: string[] }[] },

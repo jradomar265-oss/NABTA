@@ -120,9 +120,20 @@ export default async function TeacherHomePage({ searchParams }: { searchParams: 
     <div className="mt-8 grid gap-6 lg:grid-cols-2">
       <form action={createClassroom} className="rounded-2xl border border-[#dce4d8] bg-white p-6">
         <h2 className="text-xl font-bold">Create a class</h2>
-        <p className="mt-2 text-sm leading-6 text-[#62776d]">Students join with the generated code. You will see their membership once they enrol.</p>
+        <p className="mt-2 text-sm leading-6 text-[#62776d]">Students join with the generated code. The grade and subject let NABTA pitch explanations and difficulty at the right level — they are optional, and a class without them still works.</p>
         <label className="mt-5 block text-sm font-semibold">Class name
-          <input className="mt-2 min-h-11 w-full rounded-lg border border-[#d5dfd4] px-3 font-normal" maxLength={80} name="name" placeholder="Grade 6 Maths — Fractions" required />
+          <input className="mt-2 min-h-11 w-full rounded-lg border border-[#d5dfd4] px-3 font-normal" maxLength={80} name="name" placeholder="Grade 8 Science — Ecosystems" required />
+        </label>
+        <div className="mt-4 grid gap-3 sm:grid-cols-2">
+          <label className="block text-sm font-semibold">Grade <span className="font-normal text-[#62776d]">(optional)</span>
+            <input className="mt-2 min-h-11 w-full rounded-lg border border-[#d5dfd4] px-3 font-normal" max={12} min={1} name="gradeLevel" placeholder="6" type="number" />
+          </label>
+          <label className="block text-sm font-semibold">Subject <span className="font-normal text-[#62776d]">(optional)</span>
+            <input className="mt-2 min-h-11 w-full rounded-lg border border-[#d5dfd4] px-3 font-normal" maxLength={60} name="subject" placeholder="Mathematics" />
+          </label>
+        </div>
+        <label className="mt-4 block text-sm font-semibold">Curriculum <span className="font-normal text-[#62776d]">(optional)</span>
+          <input className="mt-2 min-h-11 w-full rounded-lg border border-[#d5dfd4] px-3 font-normal" maxLength={80} name="curriculum" placeholder="UAE MOE" />
         </label>
         <button className="mt-5 min-h-11 rounded-lg bg-[#1f674a] px-5 text-sm font-bold text-white hover:bg-[#174f39]" type="submit">Create class</button>
       </form>

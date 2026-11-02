@@ -1,3 +1,5 @@
+import type { EducationContext } from "../education/context";
+
 import { z } from "zod";
 
 /** A question as it will be stored. Note: no correctness flag — that is answer_keys only. */
@@ -31,6 +33,8 @@ export type ChallengeInput = {
   content: string;
   objectives: ChallengeObjective[];
   requirements?: ChallengeRequirements;
+  /** Grade, subject and curriculum. Optional; prompts fall back to neutral wording. */
+  context?: EducationContext | null;
 };
 
 export type ChallengeRun = {

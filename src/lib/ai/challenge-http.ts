@@ -1,9 +1,10 @@
 import { completeJson } from "./chat";
 import { parseChallenge, type ChallengeGenerator, type ChallengeInput, type ChallengeRun } from "./challenge";
+import { promptContextBlock } from "../education/context";
 import { AiAnalysisError } from "./types";
 
 const SYSTEM_PROMPT = [
-  "You write short assessment questions for a Grade 6 lesson the teacher supplied.",
+  "You write short assessment questions for a school lesson the teacher supplied.",
   "Rules:",
   "- Use only the lesson text and the approved objectives. Never introduce facts they do not contain.",
   "- Every question must reference one of the supplied objective ids exactly as given in `objectiveId`.",
@@ -57,7 +58,7 @@ export function createHttpChallengeGenerator(config: {
 
   const ask = (input: ChallengeInput, repairReason?: string) =>
     completeJson(config, [
-      { role: "system", content: SYSTEM_PROMPT },
+      { role: "system", content: `${SYSTEM_PROMPT}` + "\n\n" + promptContextBlock(input.context) },
       { role: "user", content: userPrompt(input, repairReason) },
     ]);
 

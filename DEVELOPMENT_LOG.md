@@ -1,5 +1,60 @@
 # Development Log
 
+## Education context: grade, subject, curriculum (architecture, not a rebuild)
+
+**Execution date:** 2026-11-01  
+**Status:** Implemented; Grade 6 flow preserved; nothing verified against a live database
+
+### Why
+
+NABTA is not a Grade 6 mathematics product — that is the reference fixture. The
+audit found the real limitation was not the mock generators (legitimately
+fractions-only) but that **no grade, subject or curriculum could travel into a
+prompt at all**, so a Grade 10 lesson would have been rendered at Grade 6 reading
+level with no signal that anything was wrong.
+
+### Implemented
+
+- `0012_education_context.sql`: nullable `grade_level` (1–12), `subject`, `curriculum`
+  on `classrooms`, each with a named CHECK constraint added via drop-if-exists so the
+  migration is safe to re-run. All three nullable, so existing classrooms and the
+  Grade 6 fixture keep working untouched; **no policy, grant, trigger or index changed**.
+- `src/lib/education/context.ts`: the context type, age bands (early-primary /
+  primary / middle / senior / unspecified) with explicit per-band guidance for reader
+  level, examples and tone, plus `describeContext` and `promptContextBlock`.
+- Every generative prompt now takes the context: challenge generation, learning
+  companion, and class analysis. The "Grade 6" literals are gone from all three.
+  With no context the block says the grade is **not specified** and instructs the
+  model to aim at no particular year group — it does not fall back to Grade 6.
+- Difficulty is stated as relative to the supplied grade rather than absolute.
+- Class creation takes optional grade, subject and curriculum, validated server-side;
+  blank means NULL, not zero.
+- Context is threaded from the database at every call site: companion (from the
+  assignment's class), class analysis (the class being analysed), challenge generation
+  (the lesson's first assignment), and intervention generation (the target class).
+
+### Verification
+
+- `npm run typecheck` — PASS. `npm run lint` — PASS (0 warnings). `npm run build` — PASS.
+- `npm run check:ai` — PASS, **six** suites. The new education-context suite asserts:
+  age-band boundaries including null and out-of-range; context helpers including a
+  null row; and — the important ones — that **none of the three prompts mention
+  "Grade 6" with or without a context**, that a supplied grade/subject/curriculum
+  appears, and that difficulty is described as relative to the grade.
+- Grade 6 regression: the fractions mock generators are untouched and their suites
+  still pass, so the reference definition continues to work as the regression test.
+- **NOT TESTED:** `0012` is not applied, no class has a grade set, and no live provider
+  has ever been called — so the adapted prompts have only been asserted structurally,
+  never observed in a real model response.
+
+### Remaining, deliberately deferred
+
+- Curriculum standards mapping (e.g. UAE MOE codes) and standards-based reporting.
+- Per-grade quest nodes, world regions or art.
+- Localisation (Arabic runtime strings) — architecture-ready, not implemented.
+- Kindergarten and post-12 grades: the CHECK allows 1–12 only.
+- Per-grade XP curves. XP stays grade-agnostic by design.
+
 ## Critical bug found during Stage 9 verification and fixed
 
 **Found by** an independent verification pass that stood up a real PostgreSQL cluster, applied the schema, and exercised the policies.

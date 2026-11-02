@@ -15,7 +15,7 @@
 
 
 -- ============================================================================
--- 1/11 — 202611010001_profiles.sql
+-- 1/12 — 202611010001_profiles.sql
 -- ============================================================================
 
 create type public.app_role as enum ('student', 'teacher');
@@ -87,7 +87,7 @@ create trigger profiles_updated_at
   for each row execute procedure public.set_profile_updated_at();
 
 -- ============================================================================
--- 2/11 — 202611010002_stage3_learning_core.sql
+-- 2/12 — 202611010002_stage3_learning_core.sql
 -- ============================================================================
 
 -- Stage 3: teacher-created classes and lessons, student membership, and saved onboarding.
@@ -265,7 +265,7 @@ create trigger lessons_updated_at
   for each row execute procedure public.set_profile_updated_at();
 
 -- ============================================================================
--- 3/11 — 202611010003_lesson_study_progress.sql
+-- 3/12 — 202611010003_lesson_study_progress.sql
 -- ============================================================================
 
 -- Stage 3: per-student quest progress for the learning world.
@@ -335,7 +335,7 @@ $$;
 grant execute on function public.mark_lesson_studied(uuid) to authenticated;
 
 -- ============================================================================
--- 4/11 — 202611010004_stage4_ai_lesson_understanding.sql
+-- 4/12 — 202611010004_stage4_ai_lesson_understanding.sql
 -- ============================================================================
 
 -- Stage 4: AI lesson understanding.
@@ -427,7 +427,7 @@ create trigger lesson_objectives_updated_at
   for each row execute procedure public.set_profile_updated_at();
 
 -- ============================================================================
--- 5/11 — 202611010005_stage5_challenges.sql
+-- 5/12 — 202611010005_stage5_challenges.sql
 -- ============================================================================
 
 -- Stage 5: AI challenge generation and publishing.
@@ -604,7 +604,7 @@ create trigger assessments_updated_at
   for each row execute procedure public.set_profile_updated_at();
 
 -- ============================================================================
--- 6/11 — 202611010006_stage6_study_quests.sql
+-- 6/12 — 202611010006_stage6_study_quests.sql
 -- ============================================================================
 
 -- Stage 6: student study quests — submissions, server-side grading, XP, achievements.
@@ -904,7 +904,7 @@ $$;
 grant execute on function public.submit_challenge(uuid, jsonb) to authenticated;
 
 -- ============================================================================
--- 7/11 — 202611010007_stage7_learning_analysis.sql
+-- 7/12 — 202611010007_stage7_learning_analysis.sql
 -- ============================================================================
 
 -- Stage 7: learning analysis and teacher analytics.
@@ -964,7 +964,7 @@ create policy "Teachers delete their own analyses"
 -- their own progress from their own answers, computed, never from this table.
 
 -- ============================================================================
--- 8/11 — 202611010008_stage8_companion.sql
+-- 8/12 — 202611010008_stage8_companion.sql
 -- ============================================================================
 
 -- Stage 8 (part 1): the AI Learning Companion.
@@ -1031,7 +1031,7 @@ create policy "Teachers read companion threads for their classes"
   ));
 
 -- ============================================================================
--- 9/11 — 202611010009_stage8_interventions.sql
+-- 9/12 — 202611010009_stage8_interventions.sql
 -- ============================================================================
 
 -- Stage 8 (part 2): interventions and follow-up evidence.
@@ -1095,7 +1095,7 @@ create policy "Teachers manage interventions for their own classes"
 -- practice and follow-up assessments, which carry their own publication rules.
 
 -- ============================================================================
--- 10/11 — 202611010010_stage9_comparability.sql
+-- 10/12 — 202611010010_stage9_comparability.sql
 -- ============================================================================
 
 -- Stage 9: what a comparability check needs to be honest about.
@@ -1128,7 +1128,7 @@ alter table public.interventions add constraint interventions_student_scope_chec
   );
 
 -- ============================================================================
--- 11/11 — 202611010011_fix_student_lessons_policy.sql
+-- 11/12 — 202611010011_fix_student_lessons_policy.sql
 -- ============================================================================
 
 -- Stage 9 (found while verifying the consolidated schema bundle).
@@ -1163,3 +1163,45 @@ create policy "Students can read assigned lessons"
     where la.lesson_id = public.lessons.id
       and public.is_classroom_member(la.classroom_id)
   ));
+
+-- ============================================================================
+-- 12/12 — 202611010012_education_context.sql
+-- ============================================================================
+
+-- Stage 9: education context on a class.
+--
+-- NABTA is not a Grade 6 mathematics product. A class now carries the educational
+-- context that prompts, difficulty and safety behaviour need: grade, subject and
+-- curriculum.
+--
+-- All three are NULLABLE on purpose:
+--   * existing classrooms keep working untouched (no backfill, no rewrite);
+--   * the current Grade 6 mathematics demo remains a valid configuration rather than
+--     a hardcoded assumption;
+--   * a class with no context still functions — prompts fall back to neutral wording
+--     instead of silently pretending to be Grade 6.
+--
+-- No policy, grant, constraint, trigger or index is removed or weakened here.
+
+alter table public.classrooms
+  -- 1-12 covers the school years NABTA targets. Kindergarten and post-12 are a
+  -- future widening, not an assumption baked in now.
+  add column if not exists grade_level integer,
+  add column if not exists subject text,
+  add column if not exists curriculum text;
+
+-- Constraints added separately so a re-run cannot duplicate them, and so an existing
+-- row with an out-of-range value fails loudly rather than being silently coerced.
+alter table public.classrooms drop constraint if exists classrooms_grade_level_check;
+alter table public.classrooms add constraint classrooms_grade_level_check
+  check (grade_level is null or grade_level between 1 and 12);
+
+alter table public.classrooms drop constraint if exists classrooms_subject_check;
+alter table public.classrooms add constraint classrooms_subject_check
+  check (subject is null or char_length(trim(subject)) between 1 and 60);
+
+alter table public.classrooms drop constraint if exists classrooms_curriculum_check;
+alter table public.classrooms add constraint classrooms_curriculum_check
+  check (curriculum is null or char_length(trim(curriculum)) between 1 and 80);
+
+-- Colours are not part of this change.

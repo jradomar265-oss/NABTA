@@ -36,7 +36,7 @@ const APPLIED = ["0001", "0002", "0003", "0004", "0005", "0006", "0007", "0008",
  * either checks for the object or replaces it. Anything NOT in this set is excluded
  * from the pending file rather than risk a duplicate-object error mid-way.
  */
-const IDEMPOTENT = ["0010", "0011"];
+const IDEMPOTENT = ["0010", "0011", "0012"];
 
 const files = readdirSync(MIGRATIONS).filter((name) => name.endsWith(".sql")).sort();
 

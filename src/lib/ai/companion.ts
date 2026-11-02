@@ -1,5 +1,7 @@
 import { z } from "zod";
 
+import { promptContextBlock, type EducationContext } from "../education/context";
+
 /**
  * The AI Learning Companion contract.
  *
@@ -14,6 +16,8 @@ export type CompanionInput = {
   question: string;
   /** Questions already asked in this thread, oldest first, to keep answers from repeating. */
   recentTurns?: { question: string; answer: string }[];
+  /** Grade, subject and curriculum, so explanations suit the student. */
+  context?: EducationContext | null;
 };
 
 export type CompanionAnswer = {
@@ -103,19 +107,20 @@ export function parseCompanionAnswer(raw: unknown, lessonContent: string): Parse
   return { ok: true, value: parsed.data };
 }
 
-export const COMPANION_SYSTEM_PROMPT = [
-  "You are NABTA's learning companion for a Grade 6 student studying one specific lesson.",
+export function companionSystemPrompt(context?: EducationContext | null): string { return [
+  "You are NABTA's learning companion, helping one student with one specific lesson.",
+  promptContextBlock(context),
   "You explain, hint and encourage. You never grade and you never take over the work.",
   "Hard rules:",
   "- Answer ONLY from the lesson text you are given. If the lesson does not cover it, refuse.",
   "- Never state the answer to an assessment question. If asked, give a hint that helps them work it out.",
   "- If the question is off-topic, personal, or unrelated to this lesson, refuse politely in one sentence.",
-  "- Grade 6 reading level: short sentences, no jargon the lesson does not use.",
+  "- Match the writing level described in the educational context. No jargon the lesson does not use.",
   "- Be warm but brief: at most 120 words.",
   "- Never ask for personal information.",
   'Return JSON only: {"answer": string, "refused": boolean, "groundedIn": string[], "nextStep": string}',
   "`groundedIn` must contain 1-3 short quotes copied exactly from the lesson, and must be empty when refused.",
-].join("\n");
+].join("\n"); }
 
 export function companionUserPrompt(input: CompanionInput, repairReason?: string): string {
   const parts = [

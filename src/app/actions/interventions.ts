@@ -6,6 +6,7 @@ import { z } from "zod";
 
 import { requireActionRole } from "@/lib/auth/action-role";
 import { AiAnalysisError, resolveChallengeGenerator } from "@/lib/ai";
+import { contextFromClassroom } from "@/lib/education/context";
 
 function back(classroomId: string, kind: "error" | "notice", message: string): never {
   redirect(`/teacher/classrooms/${classroomId}?${kind}=${encodeURIComponent(message)}`);
@@ -34,7 +35,7 @@ export async function createIntervention(formData: FormData) {
 
   const { supabase, user } = await requireActionRole("teacher");
 
-  const { data: classroom } = await supabase.from("classrooms").select("id, name").eq("id", classroomId).eq("teacher_id", user.id).maybeSingle();
+  const { data: classroom } = await supabase.from("classrooms").select("id, name, grade_level, subject, curriculum").eq("id", classroomId).eq("teacher_id", user.id).maybeSingle();
   if (!classroom) back(classroomId, "error", "That class could not be found.");
 
   const { data: lesson } = await supabase.from("lessons").select("id, title, content").eq("id", lessonId).eq("teacher_id", user.id).maybeSingle();
@@ -58,6 +59,7 @@ export async function createIntervention(formData: FormData) {
         title: lesson!.title as string,
         content: lesson!.content as string,
         objectives,
+        context: contextFromClassroom(classroom),
         requirements,
       });
       return { questions: run.challenge.questions, provider: run.provider, model: run.model, durationMs: run.durationMs };

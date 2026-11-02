@@ -6,6 +6,7 @@ import { z } from "zod";
 
 import { requireActionRole } from "@/lib/auth/action-role";
 import { AiAnalysisError, resolveCompanion } from "@/lib/ai";
+import { contextFromClassroom } from "@/lib/education/context";
 
 const MAX_QUESTION = 600;
 
@@ -37,7 +38,7 @@ export async function askCompanion(formData: FormData) {
   // RLS already scopes this to the student's own assignments.
   const { data: assignment } = await supabase
     .from("lesson_assignments")
-    .select("id, lesson_id, lessons(title, content)")
+    .select("id, lesson_id, lessons(title, content), classrooms(name, grade_level, subject, curriculum)")
     .eq("id", parsed.data.assignmentId)
     .maybeSingle();
   if (!assignment) back(parsed.data.assignmentId, "askError", "That lesson could not be found.");
@@ -63,6 +64,9 @@ export async function askCompanion(formData: FormData) {
     .limit(3);
   const recentTurns = ((recentRows ?? []) as { question: string; answer: string }[]).reverse();
 
+  const classroomRow = Array.isArray(assignment.classrooms) ? assignment.classrooms[0] : assignment.classrooms;
+  const context = contextFromClassroom(classroomRow as { grade_level?: number | null; subject?: string | null; curriculum?: string | null } | null);
+
   const { companion } = resolveCompanion();
 
   let outcome: { ok: true; run: Awaited<ReturnType<typeof companion.answer>> } | { ok: false; message: string };
@@ -75,6 +79,7 @@ export async function askCompanion(formData: FormData) {
         objectives,
         question: parsed.data.question,
         recentTurns,
+        context,
       }),
     };
   } catch (error) {

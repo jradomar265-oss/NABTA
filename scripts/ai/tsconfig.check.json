@@ -15,5 +15,5 @@
       "@/*": ["src/*"]
     }
   },
-  "include": ["../../src/lib/ai/**/*.ts", "../../src/lib/learning/**/*.ts"]
+  "include": ["../../src/lib/ai/**/*.ts", "../../src/lib/learning/**/*.ts", "../../src/lib/education/**/*.ts"]
 }

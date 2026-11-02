@@ -6,6 +6,7 @@ import { z } from "zod";
 
 import { requireActionRole } from "@/lib/auth/action-role";
 import { AiAnalysisError, resolveChallengeGenerator } from "@/lib/ai";
+import { contextFromClassroom } from "@/lib/education/context";
 
 function teacherError(message: string, detail?: string): never {
   const query = new URLSearchParams({ error: message });
@@ -61,6 +62,17 @@ export async function generateChallenges(formData: FormData) {
     teacherError("Approve at least one learning objective before generating challenges.");
   }
 
+  // A lesson may be assigned to several classes; use the first assignment to infer
+  // the grade and subject. Absent context means neutral wording, never Grade 6.
+  const { data: assignment } = await supabase
+    .from("lesson_assignments")
+    .select("classroom_id, classrooms(grade_level, subject, curriculum)")
+    .eq("lesson_id", lesson.id)
+    .limit(1)
+    .maybeSingle();
+  const classroomRow = assignment ? (Array.isArray(assignment.classrooms) ? assignment.classrooms[0] : assignment.classrooms) : null;
+  const context = contextFromClassroom(classroomRow as { grade_level?: number | null; subject?: string | null; curriculum?: string | null } | null);
+
   const { generator } = resolveChallengeGenerator();
   const started = Date.now();
 
@@ -69,6 +81,7 @@ export async function generateChallenges(formData: FormData) {
     const run = await generator.generate({
       title: lesson.title,
       content: lesson.content ?? "",
+      context,
       objectives: objectives.map((objective) => ({ id: objective.id, statement: objective.statement, skills: objective.skills ?? [] })),
     });
     outcome = { ok: true, run };

@@ -7,6 +7,7 @@ import { z } from "zod";
 import { requireActionRole } from "@/lib/auth/action-role";
 import { AiAnalysisError, resolveLearningAnalyst } from "@/lib/ai";
 import { buildAnalysisFacts, type AnswerRow, type QuestionRow } from "@/lib/learning/analysis";
+import { contextFromClassroom } from "@/lib/education/context";
 
 /**
  * Computes the facts for one class, then asks the configured analyst to interpret
@@ -28,7 +29,7 @@ export async function generateLearningAnalysis(formData: FormData) {
 
   const { data: classroom } = await supabase
     .from("classrooms")
-    .select("id, name")
+    .select("id, name, grade_level, subject, curriculum")
     .eq("id", classroomId)
     .eq("teacher_id", user.id)
     .maybeSingle();
@@ -140,7 +141,7 @@ export async function generateLearningAnalysis(formData: FormData) {
 
   let outcome: { ok: true; run: Awaited<ReturnType<typeof analyst.analyse>> } | { ok: false; message: string; detail?: string };
   try {
-    outcome = { ok: true, run: await analyst.analyse(computed) };
+    outcome = { ok: true, run: await analyst.analyse(computed, contextFromClassroom(classroom)) };
   } catch (error) {
     outcome = {
       ok: false,

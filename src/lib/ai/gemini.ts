@@ -5,7 +5,7 @@ import {
   type ChallengeRun,
 } from "./challenge";
 import { parseAnalysis } from "./schema";
-import { ANALYSIS_SYSTEM_PROMPT, CHALLENGE_SYSTEM_PROMPT, analysisUserPrompt, challengeUserPrompt } from "./prompts";
+import { ANALYSIS_SYSTEM_PROMPT, challengeSystemPrompt, analysisUserPrompt, challengeUserPrompt } from "./prompts";
 import { AiAnalysisError, type AnalyzerRun, type LessonAnalysisInput, type LessonAnalyzer } from "./types";
 
 /**
@@ -230,7 +230,7 @@ export function createGeminiChallengeGenerator(config: GeminiConfig): ChallengeG
       const started = Date.now();
       const allowed = input.objectives.map((objective) => objective.id);
       const ask = (repairReason?: string) =>
-        callGemini(config, CHALLENGE_SYSTEM_PROMPT, challengeUserPrompt(input, repairReason));
+        callGemini(config, challengeSystemPrompt(input.context), challengeUserPrompt(input, repairReason));
 
       const first = parseChallenge(await ask(), allowed);
       if (first.ok) {

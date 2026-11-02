@@ -1,11 +1,12 @@
 import {
-  ANALYSIS_SYSTEM_PROMPT,
+  analysisSystemPrompt,
   analysisUserPrompt,
   parseObservations,
   type LearningAnalysisRun,
   type LearningAnalyst,
 } from "./analysis";
 import type { AnalysisFacts } from "@/lib/learning/analysis";
+import type { EducationContext } from "@/lib/education/context";
 import { AiAnalysisError } from "./types";
 
 /** A chat transport: takes a system and user message, returns the model's text. */
@@ -32,12 +33,12 @@ export function createLiveLearningAnalyst(options: {
     label: options.label,
     isMock: false,
 
-    async analyse(facts: AnalysisFacts): Promise<LearningAnalysisRun> {
+    async analyse(facts: AnalysisFacts, context?: EducationContext | null): Promise<LearningAnalysisRun> {
       const started = Date.now();
       const objectiveIds = facts.objectives.map((objective) => objective.objectiveId).filter(Boolean) as string[];
 
       const ask = (repairReason?: string) =>
-        options.chat(ANALYSIS_SYSTEM_PROMPT, analysisUserPrompt(facts, objectiveIds, repairReason));
+        options.chat(analysisSystemPrompt(context), analysisUserPrompt(facts, objectiveIds, repairReason));
 
       const first = parseObservations(await ask(), facts);
       if (first.ok) {

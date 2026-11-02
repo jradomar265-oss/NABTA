@@ -1,5 +1,7 @@
 import { z } from "zod";
 
+import { promptContextBlock, type EducationContext } from "../education/context";
+
 import type { AnalysisFacts, EvidenceState } from "@/lib/learning/analysis";
 
 /** An interpretation, never a measurement. Every one must carry its numbers. */
@@ -30,7 +32,7 @@ export interface LearningAnalyst {
   readonly id: string;
   readonly label: string;
   readonly isMock: boolean;
-  analyse(facts: AnalysisFacts): Promise<LearningAnalysisRun>;
+  analyse(facts: AnalysisFacts, context?: EducationContext | null): Promise<LearningAnalysisRun>;
 }
 
 const observationSchema = z.object({
@@ -131,8 +133,9 @@ export function factsForPrompt(facts: AnalysisFacts): string {
     .join("\n");
 }
 
-export const ANALYSIS_SYSTEM_PROMPT = [
-  "You help a teacher interpret assessment numbers for a Grade 6 class.",
+export function analysisSystemPrompt(context?: EducationContext | null): string { return [
+  "You help a teacher interpret assessment numbers for one class.",
+  promptContextBlock(context),
   "You are given a fact sheet that was computed from stored answers. You do not calculate anything yourself.",
   "Rules:",
   "- Every observation MUST cite the numbers it is based on, copied from the fact sheet (attempts, correct count, percentage, number of students).",
@@ -143,7 +146,7 @@ export const ANALYSIS_SYSTEM_PROMPT = [
   "- Keep 'limitations' to honest scope statements (small sample, single assessment, one class).",
   "- objectiveId must be one of the ids implicit in the fact-sheet order; use the exact uuid supplied in the input list.",
   'Return JSON only: {"summary": string, "observations": [{"kind": "strength"|"gap"|"insufficient", "objectiveId": string|null, "statement": string, "evidence": string, "confidence": "high"|"moderate"|"low"}], "limitations": string[], "insufficientEvidence": boolean}',
-].join("\n");
+].join("\n"); }
 
 export function analysisUserPrompt(facts: AnalysisFacts, objectiveIds: string[], repairReason?: string): string {
   const ids = facts.objectives

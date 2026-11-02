@@ -19,6 +19,7 @@
 --    it, so applying this file twice is harmless:
 --      202611010010_stage9_comparability.sql
 --      202611010011_fix_student_lessons_policy.sql
+--      202611010012_education_context.sql
 --
 --  EXCLUDED ON PURPOSE (not idempotent, so never re-run blindly)
 --      none
@@ -37,7 +38,7 @@
 
 
 -- ============================================================================
--- 1/2 — 202611010010_stage9_comparability.sql
+-- 1/3 — 202611010010_stage9_comparability.sql
 -- ============================================================================
 
 -- Stage 9: what a comparability check needs to be honest about.
@@ -70,7 +71,7 @@ alter table public.interventions add constraint interventions_student_scope_chec
   );
 
 -- ============================================================================
--- 2/2 — 202611010011_fix_student_lessons_policy.sql
+-- 2/3 — 202611010011_fix_student_lessons_policy.sql
 -- ============================================================================
 
 -- Stage 9 (found while verifying the consolidated schema bundle).
@@ -105,3 +106,45 @@ create policy "Students can read assigned lessons"
     where la.lesson_id = public.lessons.id
       and public.is_classroom_member(la.classroom_id)
   ));
+
+-- ============================================================================
+-- 3/3 — 202611010012_education_context.sql
+-- ============================================================================
+
+-- Stage 9: education context on a class.
+--
+-- NABTA is not a Grade 6 mathematics product. A class now carries the educational
+-- context that prompts, difficulty and safety behaviour need: grade, subject and
+-- curriculum.
+--
+-- All three are NULLABLE on purpose:
+--   * existing classrooms keep working untouched (no backfill, no rewrite);
+--   * the current Grade 6 mathematics demo remains a valid configuration rather than
+--     a hardcoded assumption;
+--   * a class with no context still functions — prompts fall back to neutral wording
+--     instead of silently pretending to be Grade 6.
+--
+-- No policy, grant, constraint, trigger or index is removed or weakened here.
+
+alter table public.classrooms
+  -- 1-12 covers the school years NABTA targets. Kindergarten and post-12 are a
+  -- future widening, not an assumption baked in now.
+  add column if not exists grade_level integer,
+  add column if not exists subject text,
+  add column if not exists curriculum text;
+
+-- Constraints added separately so a re-run cannot duplicate them, and so an existing
+-- row with an out-of-range value fails loudly rather than being silently coerced.
+alter table public.classrooms drop constraint if exists classrooms_grade_level_check;
+alter table public.classrooms add constraint classrooms_grade_level_check
+  check (grade_level is null or grade_level between 1 and 12);
+
+alter table public.classrooms drop constraint if exists classrooms_subject_check;
+alter table public.classrooms add constraint classrooms_subject_check
+  check (subject is null or char_length(trim(subject)) between 1 and 60);
+
+alter table public.classrooms drop constraint if exists classrooms_curriculum_check;
+alter table public.classrooms add constraint classrooms_curriculum_check
+  check (curriculum is null or char_length(trim(curriculum)) between 1 and 80);
+
+-- Colours are not part of this change.

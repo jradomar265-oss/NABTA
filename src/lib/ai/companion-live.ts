@@ -1,5 +1,5 @@
 import {
-  COMPANION_SYSTEM_PROMPT,
+  companionSystemPrompt,
   companionUserPrompt,
   parseCompanionAnswer,
   type Companion,
@@ -36,7 +36,7 @@ export function createLiveCompanion(options: {
       const contextMissing = input.lessonContent.trim().length < 80;
 
       const ask = (repairReason?: string) =>
-        options.chat(COMPANION_SYSTEM_PROMPT, companionUserPrompt(input, repairReason));
+        options.chat(companionSystemPrompt(input.context), companionUserPrompt(input, repairReason));
 
       const first = parseCompanionAnswer(await ask(), input.lessonContent);
       if (first.ok) {
