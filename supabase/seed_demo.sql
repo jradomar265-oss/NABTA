@@ -31,9 +31,11 @@
 do $$
 declare
   -- EDIT THESE THREE LINES -----------------------------------------------------
-  teacher_email constant text := 'teacher@example.com';
-  student_one_email constant text := 'student1@example.com';
-  student_two_email constant text := 'student2@example.com';
+  -- Two students are needed: the class-level judgement threshold is two students,
+  -- so a single student always reports "not enough evidence".
+  teacher_email constant text := 'teacher@test.com';
+  student_one_email constant text := 'student@test.com';
+  student_two_email constant text := 'student2@test.com';
   -- ---------------------------------------------------------------------------
 
   teacher_id uuid;
