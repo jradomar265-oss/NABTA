@@ -15,7 +15,7 @@
 
 
 -- ============================================================================
--- 1/12 — 202611010001_profiles.sql
+-- 1/13 — 202611010001_profiles.sql
 -- ============================================================================
 
 create type public.app_role as enum ('student', 'teacher');
@@ -87,7 +87,7 @@ create trigger profiles_updated_at
   for each row execute procedure public.set_profile_updated_at();
 
 -- ============================================================================
--- 2/12 — 202611010002_stage3_learning_core.sql
+-- 2/13 — 202611010002_stage3_learning_core.sql
 -- ============================================================================
 
 -- Stage 3: teacher-created classes and lessons, student membership, and saved onboarding.
@@ -265,7 +265,7 @@ create trigger lessons_updated_at
   for each row execute procedure public.set_profile_updated_at();
 
 -- ============================================================================
--- 3/12 — 202611010003_lesson_study_progress.sql
+-- 3/13 — 202611010003_lesson_study_progress.sql
 -- ============================================================================
 
 -- Stage 3: per-student quest progress for the learning world.
@@ -335,7 +335,7 @@ $$;
 grant execute on function public.mark_lesson_studied(uuid) to authenticated;
 
 -- ============================================================================
--- 4/12 — 202611010004_stage4_ai_lesson_understanding.sql
+-- 4/13 — 202611010004_stage4_ai_lesson_understanding.sql
 -- ============================================================================
 
 -- Stage 4: AI lesson understanding.
@@ -427,7 +427,7 @@ create trigger lesson_objectives_updated_at
   for each row execute procedure public.set_profile_updated_at();
 
 -- ============================================================================
--- 5/12 — 202611010005_stage5_challenges.sql
+-- 5/13 — 202611010005_stage5_challenges.sql
 -- ============================================================================
 
 -- Stage 5: AI challenge generation and publishing.
@@ -604,7 +604,7 @@ create trigger assessments_updated_at
   for each row execute procedure public.set_profile_updated_at();
 
 -- ============================================================================
--- 6/12 — 202611010006_stage6_study_quests.sql
+-- 6/13 — 202611010006_stage6_study_quests.sql
 -- ============================================================================
 
 -- Stage 6: student study quests — submissions, server-side grading, XP, achievements.
@@ -904,7 +904,7 @@ $$;
 grant execute on function public.submit_challenge(uuid, jsonb) to authenticated;
 
 -- ============================================================================
--- 7/12 — 202611010007_stage7_learning_analysis.sql
+-- 7/13 — 202611010007_stage7_learning_analysis.sql
 -- ============================================================================
 
 -- Stage 7: learning analysis and teacher analytics.
@@ -964,7 +964,7 @@ create policy "Teachers delete their own analyses"
 -- their own progress from their own answers, computed, never from this table.
 
 -- ============================================================================
--- 8/12 — 202611010008_stage8_companion.sql
+-- 8/13 — 202611010008_stage8_companion.sql
 -- ============================================================================
 
 -- Stage 8 (part 1): the AI Learning Companion.
@@ -1031,7 +1031,7 @@ create policy "Teachers read companion threads for their classes"
   ));
 
 -- ============================================================================
--- 9/12 — 202611010009_stage8_interventions.sql
+-- 9/13 — 202611010009_stage8_interventions.sql
 -- ============================================================================
 
 -- Stage 8 (part 2): interventions and follow-up evidence.
@@ -1095,7 +1095,7 @@ create policy "Teachers manage interventions for their own classes"
 -- practice and follow-up assessments, which carry their own publication rules.
 
 -- ============================================================================
--- 10/12 — 202611010010_stage9_comparability.sql
+-- 10/13 — 202611010010_stage9_comparability.sql
 -- ============================================================================
 
 -- Stage 9: what a comparability check needs to be honest about.
@@ -1128,7 +1128,7 @@ alter table public.interventions add constraint interventions_student_scope_chec
   );
 
 -- ============================================================================
--- 11/12 — 202611010011_fix_student_lessons_policy.sql
+-- 11/13 — 202611010011_fix_student_lessons_policy.sql
 -- ============================================================================
 
 -- Stage 9 (found while verifying the consolidated schema bundle).
@@ -1165,7 +1165,7 @@ create policy "Students can read assigned lessons"
   ));
 
 -- ============================================================================
--- 12/12 — 202611010012_education_context.sql
+-- 12/13 — 202611010012_education_context.sql
 -- ============================================================================
 
 -- Stage 9: education context on a class.
@@ -1205,3 +1205,97 @@ alter table public.classrooms add constraint classrooms_curriculum_check
   check (curriculum is null or char_length(trim(curriculum)) between 1 and 80);
 
 -- Colours are not part of this change.
+
+-- ============================================================================
+-- 13/13 — 202611010013_fix_correlated_policies.sql
+-- ============================================================================
+
+-- Stage 9: sweep for the unqualified-correlation bug class.
+--
+-- Postgres resolves an unqualified column in a subquery against the *innermost* table
+-- that owns it. Three policies compared a column of `lesson_assignments` to an
+-- unqualified name that also exists on `lesson_assignments`, so the predicate became
+-- `la.lesson_id = la.lesson_id` — always true — and the intended join disappeared.
+--
+-- Found by fixing 202611010011 and then auditing the remaining correlated policies.
+-- Each fix below qualifies the outer column. No policy gains access it should not
+-- have; two lose access they should never have had.
+
+-- ---------------------------------------------------------------------------
+-- 1. Students could read EVERY approved objective (over-permissive).
+--    Original: where la.lesson_id = lesson_id   -- both sides resolve to la
+--    Effect: any student in any class could read every approved objective, including
+--    objectives for lessons never assigned to them.
+-- ---------------------------------------------------------------------------
+drop policy if exists "Students read approved objectives for assigned lessons" on public.lesson_objectives;
+
+create policy "Students read approved objectives for assigned lessons"
+  on public.lesson_objectives for select to authenticated
+  using (
+    approved
+    and exists (
+      select 1
+      from public.lesson_assignments la
+      where la.lesson_id = public.lesson_objectives.lesson_id
+        and public.is_classroom_member(la.classroom_id)
+    )
+  );
+
+-- ---------------------------------------------------------------------------
+-- 2. Students could read EVERY published assessment (over-permissive).
+--    Original: where la.lesson_id = lesson_id   -- both sides resolve to la
+--    Effect: any student in any class could read any published assessment, including
+--    assessments for lessons never assigned to them. Unpublished ones stayed hidden,
+--    and answer keys were never exposed, but the assessment rows leaked.
+-- ---------------------------------------------------------------------------
+drop policy if exists "Students read published assessments for assigned lessons" on public.assessments;
+
+create policy "Students read published assessments for assigned lessons"
+  on public.assessments for select to authenticated
+  using (
+    status = 'published'
+    and exists (
+      select 1
+      from public.lesson_assignments la
+      where la.lesson_id = public.assessments.lesson_id
+        and public.is_classroom_member(la.classroom_id)
+    )
+  );
+
+-- ---------------------------------------------------------------------------
+-- 3. The companion insert check validated the assignment but not the lesson
+--    (vacuous condition, not a leak).
+--    Original: where la.id = assignment_id and la.lesson_id = lesson_id
+--    Effect: `la.lesson_id = lesson_id` was always true, so a student could record a
+--    question against their own assignment while claiming any lesson_id. The row was
+--    still theirs, so nothing leaked; the label could be wrong.
+-- ---------------------------------------------------------------------------
+drop policy if exists "Students ask about their own assigned lesson" on public.companion_messages;
+
+create policy "Students ask about their own assigned lesson"
+  on public.companion_messages for insert to authenticated
+  with check (
+    student_id = (select auth.uid())
+    and exists (
+      select 1
+      from public.lesson_assignments la
+      join public.classroom_memberships m on m.classroom_id = la.classroom_id
+      where la.id = assignment_id
+        and la.lesson_id = public.companion_messages.lesson_id
+        and m.student_id = (select auth.uid())
+    )
+  );
+
+-- ---------------------------------------------------------------------------
+-- Audited and left unchanged (verified correct, listed for the reviewer):
+--   Teachers manage their own objectives / assessments / agent runs
+--     -> `l.id = lesson_id` / `a.id = assessment_id`: the inner table has no such
+--        column (lessons owns `id`, not `lesson_id`), so it resolves outward. Correct.
+--   Students read questions of published assessments
+--     -> `a.id = assessment_id` resolves outward, and the inner lesson join is fully
+--        qualified (`la.lesson_id = a.lesson_id`). Correct.
+--   Students read their own answers / Teachers read submissions for their classes
+--     -> `s.id = submission_id` resolves outward. Correct.
+--   Membership policies using public.teaches_classroom(classroom_id)
+--     -> classroom_id is a column of the policy's own table. Correct.
+-- ---------------------------------------------------------------------------
