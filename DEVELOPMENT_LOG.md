@@ -29,7 +29,8 @@ Inside the subquery, an unqualified `id` resolves against `lesson_assignments`, 
 - migrations 0001–0008 applied with live rows: run twice, clean, rows preserved;
 - fully applied: run twice, schema unchanged;
 - `pg_dump -s` equivalence across all three starting points: 0 differences including ACLs;
-- functional test as `authenticated`: grading scored 2/2, awarded 22 XP once, a retake awarded 0, achievements and study progress written, and `answer_keys` returned 0 rows to the student.
+- functional test as `authenticated`: grading scored 2/2, awarded 22 XP once, a retake awarded 0, achievements and study progress written, and `answer_keys` returned 0 rows to the student;
+- the lesson-visibility fix is covered by a student-role regression test with a deliberately mismatched assignment id, and proved sensitive: reinstalling the buggy policy makes 3 of its 4 assertions fail, and re-applying the bundle makes all 4 pass. The bundle therefore holds 39 distinct policies but 40 `create policy` statements — stage 11 replaces one name, always immediately after its own drop.
 
 The numbered files in `supabase/migrations/` remain the source of truth; the bundle must be regenerated when a migration is added.
 

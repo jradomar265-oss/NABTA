@@ -17,8 +17,8 @@
 --
 --  IDEMPOTENT
 --    Safe on an empty database, on a partially migrated one (for example with
---    202611010001 through 202611010008 applied and 202611010009 /
---    202611010010 not), and on a fully migrated one. Re-running it changes
+--    202611010001 through 202611010008 applied and 202611010009 through
+--    202611010011 not), and on a fully migrated one. Re-running it changes
 --    nothing and raises no "already exists" errors.
 --
 --  WHAT IT DOES NOT DO
@@ -68,16 +68,20 @@
 --                                                         assessments uniqueness moves to (lesson_id, kind)
 --    10  202611010010_stage9_comparability.sql            questions.difficulty;
 --                                                         interventions.scope, interventions.student_id
+--    11  202611010011_fix_student_lessons_policy.sql      recreates lessons policy
+--                                                         "Students can read assigned lessons"
+--                                                         with an explicit outer qualifier
 --
 --    Row level security is enabled on every table and every table gets explicit
---    grants. The 39 row level security policies are named at the head of each
---    section below.
+--    grants. There are 39 distinct policies; each is named at the head of the
+--    section that creates it. Stage 11 replaces one of those names, so that
+--    single `create policy` appears twice - always right after its own drop.
 --
 -- ============================================================================
 
 
 -- ============================================================================
--- 1/10 - 202611010001_profiles.sql
+-- 1/11 - 202611010001_profiles.sql
 -- Role enum, one profile row per auth user, and the triggers that keep it fresh.
 --
 -- Policies (2):
@@ -169,7 +173,7 @@ create trigger profiles_updated_at
 
 
 -- ============================================================================
--- 2/10 - 202611010002_stage3_learning_core.sql
+-- 2/11 - 202611010002_stage3_learning_core.sql
 -- Teacher-created classes and lessons, student membership, saved onboarding.
 --
 -- Policies (12):
@@ -181,7 +185,7 @@ create trigger profiles_updated_at
 --                          "Teachers can manage memberships"
 --                          "Teachers can remove memberships"
 --   lessons:               "Teachers can manage their lessons"
---                          "Students can read assigned lessons"
+--                          "Students can read assigned lessons"  <- replaced in stage 11
 --   lesson_assignments:    "Teachers and members can read assignments"
 --                          "Teachers can create assignments for their classes"
 --                          "Teachers can remove assignments from their classes"
@@ -380,7 +384,7 @@ create trigger lessons_updated_at
 
 
 -- ============================================================================
--- 3/10 - 202611010003_lesson_study_progress.sql
+-- 3/11 - 202611010003_lesson_study_progress.sql
 -- Per-student quest progress for the learning world.
 --
 -- A quest is a lesson assignment. Students can only record a *study* step here;
@@ -456,7 +460,7 @@ grant execute on function public.mark_lesson_studied(uuid) to authenticated;
 
 
 -- ============================================================================
--- 4/10 - 202611010004_stage4_ai_lesson_understanding.sql
+-- 4/11 - 202611010004_stage4_ai_lesson_understanding.sql
 -- AI lesson understanding.
 --
 -- Two tables: `agent_runs` records every analysis attempt (success or failure, so
@@ -561,7 +565,7 @@ create trigger lesson_objectives_updated_at
 
 
 -- ============================================================================
--- 5/10 - 202611010005_stage5_challenges.sql
+-- 5/11 - 202611010005_stage5_challenges.sql
 -- AI challenge generation and publishing.
 --
 -- The answer key is structurally separate from the question. `questions.options`
@@ -771,7 +775,7 @@ create trigger assessments_updated_at
 
 
 -- ============================================================================
--- 6/10 - 202611010006_stage6_study_quests.sql
+-- 6/11 - 202611010006_stage6_study_quests.sql
 -- Student study quests - submissions, server-side grading, XP, achievements.
 --
 -- Grading happens in this SECURITY DEFINER function and nowhere else. Students have
@@ -1088,7 +1092,7 @@ grant execute on function public.submit_challenge(uuid, jsonb) to authenticated;
 
 
 -- ============================================================================
--- 7/10 - 202611010007_stage7_learning_analysis.sql
+-- 7/11 - 202611010007_stage7_learning_analysis.sql
 -- Learning analysis and teacher analytics.
 --
 -- Two deliberate stores:
@@ -1170,7 +1174,7 @@ create policy "Teachers delete their own analyses"
 
 
 -- ============================================================================
--- 8/10 - 202611010008_stage8_companion.sql
+-- 8/11 - 202611010008_stage8_companion.sql
 -- The AI Learning Companion.
 --
 -- A student asks a question about the lesson they are studying and gets a grounded
@@ -1246,7 +1250,7 @@ create policy "Teachers read companion threads for their classes"
 
 
 -- ============================================================================
--- 9/10 - 202611010009_stage8_interventions.sql
+-- 9/11 - 202611010009_stage8_interventions.sql
 -- Interventions and follow-up evidence.
 --
 -- Option (a): assessments gain a `kind`, and uniqueness moves from `lesson_id` to
@@ -1333,7 +1337,7 @@ create policy "Teachers manage interventions for their own classes"
 
 
 -- ============================================================================
--- 10/10 - 202611010010_stage9_comparability.sql
+-- 10/11 - 202611010010_stage9_comparability.sql
 -- What a comparability check needs to be honest about.
 --
 -- Two additions, both nullable so existing rows stay valid:
@@ -1365,3 +1369,36 @@ alter table public.interventions add constraint interventions_student_scope_chec
     (scope = 'class' and student_id is null)
     or (scope = 'student' and student_id is not null)
   );
+
+
+-- ============================================================================
+-- 11/11 - 202611010011_fix_student_lessons_policy.sql
+-- Fix an over-restrictive RLS policy on `lessons`.
+--
+-- Stage 2 created "Students can read assigned lessons" with an unqualified `id`:
+-- inside the subquery that name resolves against `lesson_assignments`, which has
+-- its own `id` column, so the comparison became `la.lesson_id = la.id` instead of
+-- `la.lesson_id = lessons.id`. A student could only read a lesson whose assignment
+-- id happened to equal the lesson id - effectively never. Any query that embedded
+-- `lessons(...)` from an assignment returned null content.
+--
+-- Qualifying the outer column fixes it. This does not widen access: a student still
+-- only reads lessons assigned to a class they belong to.
+--
+-- Policies (1, replacing the stage 2 version):
+--   lessons: "Students can read assigned lessons"
+-- ============================================================================
+
+-- Idempotent as written: drop-if-exists then recreate under the same name, so the
+-- policy count is unchanged. This is the only `create policy` that appears twice in
+-- the bundle, and the second occurrence must always follow the first.
+drop policy if exists "Students can read assigned lessons" on public.lessons;
+
+create policy "Students can read assigned lessons"
+  on public.lessons for select to authenticated
+  using (exists (
+    select 1
+    from public.lesson_assignments la
+    where la.lesson_id = public.lessons.id
+      and public.is_classroom_member(la.classroom_id)
+  ));

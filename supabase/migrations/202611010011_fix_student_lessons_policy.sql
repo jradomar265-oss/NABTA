@@ -1,4 +1,6 @@
--- Stage 9: fix an over-restrictive RLS policy on `lessons`.
+-- Stage 9 (found while verifying the consolidated schema bundle).
+--
+-- Fix an over-restrictive RLS policy on `lessons`.
 --
 -- The policy added in 202611010002_stage3_learning_core.sql reads:
 --
