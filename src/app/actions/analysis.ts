@@ -22,18 +22,39 @@ export async function generateLearningAnalysis(formData: FormData) {
   const parsed = z.object({ classroomId: z.string().uuid() }).safeParse({ classroomId: formData.get("classroomId") });
   const fallback = "/teacher";
   if (!parsed.success) redirect(`${fallback}?error=${encodeURIComponent("Choose a class first.")}`);
-  const classroomId = parsed.data;
+  const classroomId = parsed.data.classroomId;
   const page = `/teacher/classrooms/${classroomId}`;
 
   const { supabase, user } = await requireActionRole("teacher");
 
-  const { data: classroom } = await supabase
+  const { data: classroom, error: classroomError } = await supabase
     .from("classrooms")
     .select("id, name, grade_level, subject, curriculum")
     .eq("id", classroomId)
     .eq("teacher_id", user.id)
     .maybeSingle();
-  if (!classroom) redirect(`${fallback}?error=${encodeURIComponent("That class could not be found.")}`);
+
+  // A query error is not the same thing as a missing row. Reporting both as "class not
+  // found" is what hid an invalid-uuid bug behind what looked like an RLS problem, so
+  // the two paths are now separate and neither is swallowed.
+  if (classroomError) {
+    console.error("[analysis] classroom lookup failed", {
+      message: classroomError.message,
+      code: classroomError.code,
+      details: classroomError.details,
+      hint: classroomError.hint,
+      classroomId,
+      userId: user.id,
+    });
+    redirect(`${fallback}?error=${encodeURIComponent(`The class lookup failed: ${classroomError.message}`)}`);
+  }
+
+  if (!classroom) {
+    console.error("[analysis] classroom not found", { classroomId, userId: user.id });
+    redirect(
+      `${fallback}?error=${encodeURIComponent("That class could not be found. It may belong to another teacher, or it may have been deleted.")}`,
+    );
+  }
 
   const { data: assignmentRows } = await supabase
     .from("lesson_assignments")
