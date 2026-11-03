@@ -63,18 +63,32 @@ right — the plan is explicit that this is not evidence.
 
 ## D. Submit, grade, award XP
 
+**Status after the first run: D is NOT verified.** The seed created a submission for
+both demo students, and the quest page hides the submit form whenever a submission
+exists (`src/app/student/quest/[assignmentId]/page.tsx:223`). The 3/4 result observed
+in the first run was therefore the **seeded** result panel — no POST was made and
+`submit_challenge()` did not execute.
+
 | # | Assertion | Result |
 |---|---|---|
-| D1 | All questions render with their options | |
-| D2 | Submitting returns a score immediately | |
-| D3 | Every `student_answers` row: `is_correct = (choice_index = correct_index)` | |
-| D4 | Explanations are shown only after answering | |
-| D5 | `xp_awarded` is greater than zero and matches the XP rule | |
-| D6 | **Resubmitting does not create a second `xp_transactions` row** | |
-| D7 | `attempt_no` increments on a retake | |
-| D8 | Student's XP total equals the sum of their ledger rows | |
-| D9 | Quest medallion flips to `completed` after submission | |
-| D10 | Achievements award once each (`first_quest`, `perfect_score`) | |
+| D1 | All questions render with their options | **UNVERIFIED** — the form was never rendered; only the seeded result was seen |
+| D2 | Submitting returns a score immediately | **UNVERIFIED** — the score shown came from seeded data |
+| D3 | Every `student_answers` row: `is_correct = (choice_index = correct_index)` | **UNVERIFIED** — seeded rows were hand-computed by the seed, so this check was circular. Must be re-run on a row the RPC produced. |
+| D4 | Explanations are shown only after answering | UNVERIFIED |
+| D5 | `xp_awarded` is greater than zero and matches the XP rule | **UNVERIFIED** — the 18 XP seen was seeded |
+| D6 | **Resubmitting does not create a second `xp_transactions` row** | **UNVERIFIED** — no second submission was possible, so the rule was never exercised |
+| D7 | `attempt_no` increments on a retake | **UNVERIFIED** — retakes are not reachable from the UI |
+| D8 | Student's XP total equals the sum of their ledger rows | **PASS** — ledger integrity holds independently of how the rows were created |
+| D9 | Quest medallion flips to `completed` after submission | UNVERIFIED |
+| D10 | Achievements award once each (`first_quest`, `perfect_score`) | UNVERIFIED |
+
+**Where D can be closed without code changes:** section G publishes the targeted
+practice, which neither student has submitted. Submitting it is the first real
+execution of `submit_challenge()`, and closes D1–D6, D9 and D10 in one action.
+
+**Open product decision:** retakes are not implemented — the form is hidden once a
+submission exists. D7 cannot pass until retakes are either built or explicitly dropped
+from scope.
 
 ## E. Companion
 
