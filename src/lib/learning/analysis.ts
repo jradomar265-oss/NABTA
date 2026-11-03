@@ -60,7 +60,7 @@ export type ObjectiveFact = {
 
 /**
  * Per-question behaviour. This is what lets the AI comment on the *questions* rather
- * than only on the objective totals — still from computed counts, never from guesses.
+ * than only on the objective totals â€” still from computed counts, never from guesses.
  */
 export type QuestionFact = {
   questionId: string;

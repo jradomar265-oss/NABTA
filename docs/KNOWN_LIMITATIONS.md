@@ -92,6 +92,41 @@ evidence about any individual student.
 - The AI reads computed numbers and may not produce new ones. A well-written
   observation can still be wrong if the numbers behind it are thin.
 
+### 5a. Retakes are double-counted (known, not yet fixed)
+
+The fact sheet counts **every answer row**, including earlier attempts. A student who
+retakes a challenge therefore contributes twice: two sets of answers, twice the weight
+in every class percentage, and the same question counted twice toward the
+three-attempts threshold at which an objective becomes "usable".
+
+Observed on the demo class: one student answered the seeded challenge, then resubmitted
+it. Their objective shows 6 attempts from a 4-question challenge, and their weight is
+double the other student's.
+
+Why it matters: the analysis presents these as class percentages. A retaking student
+silently outvotes their classmates, and an objective can reach the evidence threshold
+on repeat attempts by one person rather than on answers from several.
+
+Why it is not fixed yet: the correct behaviour is a product decision — use the latest
+attempt per student and assessment, the first attempt, or the best. Each gives a
+different answer for "what does this class know", and choosing one without a decision
+from the founder would silently change what every analysis means.
+
+Until then: treat class percentages as **answer-weighted, not student-weighted**, and
+prefer the per-student rows when the two disagree.
+
+### 5b. `insufficientEvidence` is a class-level flag, not an objective-level one
+
+The stored `insufficient_evidence` answers "can anything be said about this class as a
+whole?" — which needs at least two students. It does **not** mean every objective has
+enough evidence.
+
+A report can therefore be `insufficientEvidence: false` while one objective is shown as
+needing more evidence, because objective hypotheses need three attempts each. Both
+statements are true at the same time. The field name invites the wrong reading, and the
+UI should always present the per-objective evidence state alongside it.
+
+
 ## 6. Stages 5–8 have never run end to end
 
 | Stage | State |

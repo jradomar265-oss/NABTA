@@ -165,7 +165,7 @@ export function factsForPrompt(facts: AnalysisFacts): string {
         const spread = question.optionCounts.length
           ? question.optionCounts.map((count, optionIndex) => `${optionIndex + 1}:${count}`).join(" ")
           : "none recorded";
-        return `Q${index + 1} (${question.questionId}) "${question.prompt}" — answered ${question.attempts}, ${question.correct} correct (${accuracy}), difficulty ${question.difficulty ?? "none"}, status ${question.status}, option counts [${spread}], correct option ${question.correctIndex === null ? "unknown" : question.correctIndex + 1}`;
+        return `Q${index + 1} (${question.questionId}) "${question.prompt}" â€” answered ${question.attempts}, ${question.correct} correct (${accuracy}), difficulty ${question.difficulty ?? "none"}, status ${question.status}, option counts [${spread}], correct option ${question.correctIndex === null ? "unknown" : question.correctIndex + 1}`;
       })
       .join("\n") || "none",
     "Students who answered:",
