@@ -3,11 +3,13 @@ import { signOut } from "@/app/actions/auth";
 import type { AppRole } from "@/lib/auth/require-role";
 
 export function WorkspaceShell({
+  bleed = false,
   role,
   displayName,
   children,
 }: {
   role: AppRole;
+  bleed?: boolean;
   displayName: string;
   children: React.ReactNode;
 }) {
@@ -45,7 +47,7 @@ export function WorkspaceShell({
           </div>
         </div>
       </header>
-      <main className="mx-auto max-w-6xl px-5 py-10 sm:px-8">{children}</main>
+      <main className={bleed ? "w-full" : "mx-auto max-w-6xl px-5 py-10 sm:px-8"}>{children}</main>
     </div>
   );
 }
