@@ -197,6 +197,20 @@ staticCheck(
   },
 );
 
+staticCheck(
+  {
+    id: "S-14",
+    area: "D",
+    maps: "H3",
+    assertion: "submit_challenge rejects every status other than published",
+    limitation: "Source evidence. The database cannot verify this retrospectively because publish history is not stored.",
+  },
+  () => {
+    const gate = sql.match(/if v_status <> 'published' then\s*\n\s*raise exception 'That challenge is not published yet'/);
+    return { ok: Boolean(gate), evidence: gate ? "gate found: v_status <> 'published' raises" : "no strict published gate in submit_challenge" };
+  },
+);
+
 // ------------------------------------------------------------------- HTTP
 const BASE = process.env.SMOKE_BASE_URL ?? "http://localhost:3001";
 
@@ -228,7 +242,6 @@ const studentPassword = process.env.SMOKE_STUDENT_PASSWORD;
 const dbChecks = [
   { id: "DB-01", area: "H", maps: "H1", assertion: "No duplicate XP transactions per assessment" },
   { id: "DB-02", area: "H", maps: "H2", assertion: "Every stored grade matches its answer key" },
-  { id: "DB-03", area: "H", maps: "H3", assertion: "No submissions exist on unpublished assessments" },
   { id: "DB-04", area: "H", maps: "H4", assertion: "No intervention is assigned without approval" },
   { id: "DB-05", area: "H", maps: "D8", assertion: "Every student's XP equals their ledger total" },
   { id: "DB-06", area: "C", maps: "C4", assertion: "Every question has an answer key" },
@@ -240,9 +253,15 @@ const dbChecks = [
  * an unauthenticated request would prove nothing, and service-role access proves the
  * opposite of what the assertion is about.
  */
+const NON_MEMBER_CLASSROOM = "66232e05-78e4-4472-b208-067af60e8227";
+const OWN_CLASSROOM = "a0000000-0000-4000-8000-000000000001";
+const IMPERSONATION_NOTE =
+  "Supporting evidence only: SQL JWT impersonation on 2026-11-03 returned exactly this student's two classrooms and excluded 66232e05. Impersonation is not a PostgREST authentication test.";
+
 const authChecks = [
   { id: "AUTH-01", area: "I", maps: "C6", assertion: "A signed-in student selects zero rows from answer_keys" },
-  { id: "AUTH-02", area: "I", maps: "I2", assertion: "A signed-in student selects zero rows from another classroom's assessments" },
+  { id: "AUTH-02", area: "I", maps: "I2", assertion: "A signed-in student cannot read a classroom they are not enrolled in" },
+  { id: "AUTH-03", area: "I", maps: "I2", assertion: "The same session CAN read its own classroom (positive control for AUTH-02)" },
 ];
 
 if (!studentEmail || !studentPassword || !supabaseUrl || !publishableKey) {
@@ -253,7 +272,8 @@ if (!studentEmail || !studentPassword || !supabaseUrl || !publishableKey) {
       evidence:
         "SMOKE_STUDENT_EMAIL / SMOKE_STUDENT_PASSWORD (and NEXT_PUBLIC_SUPABASE_URL/KEY) not set, so no real student session exists",
       limitation:
-        "Simulating the result with the service role or an unauthenticated request would not test the policy. Export a real demo student's credentials to run it.",
+        (check.id === "AUTH-02" ? `${IMPERSONATION_NOTE} ` : "") +
+        "Simulating the result with the service role or an unauthenticated request would not test the policy.",
     });
   }
 } else {
@@ -277,19 +297,26 @@ if (!studentEmail || !studentPassword || !supabaseUrl || !publishableKey) {
       limitation: "Proves the policy denies rows for this student. Does not prove the grant is minimal.",
     });
 
-    const foreign = await student
-      .from("assessments")
-      .select("id, lesson_id")
-      .neq("lesson_id", "00000000-0000-0000-0000-000000000000")
-      .limit(50);
+    const foreign = await student.from("classrooms").select("id, name").eq("id", NON_MEMBER_CLASSROOM);
     record({
       id: "AUTH-02",
       area: "I",
       maps: "I2",
-      assertion: "A signed-in student selects zero rows from another classroom's assessments",
-      result: "NOT VERIFIED",
-      evidence: `${(foreign.data ?? []).length} assessment row(s) visible to this student; comparability to their own class not determined`,
-      limitation: "Needs a second classroom the student does not belong to; the demo data has only one.",
+      assertion: "A signed-in student cannot read a classroom they are not enrolled in",
+      result: !foreign.error && (foreign.data ?? []).length === 0 ? "PASS" : "FAIL",
+      evidence: `classroom ${NON_MEMBER_CLASSROOM} rows=${(foreign.data ?? []).length}${foreign.error ? ` error=${foreign.error.message}` : ""}`,
+      limitation: "The row exists, so zero rows is meaningful. Child-table isolation still needs content in that classroom.",
+    });
+
+    const own = await student.from("classrooms").select("id, name").eq("id", OWN_CLASSROOM);
+    record({
+      id: "AUTH-03",
+      area: "I",
+      maps: "I2",
+      assertion: "The same session CAN read its own classroom (positive control for AUTH-02)",
+      result: !own.error && (own.data ?? []).length === 1 ? "PASS" : "FAIL",
+      evidence: `classroom ${OWN_CLASSROOM} rows=${(own.data ?? []).length}${own.error ? ` error=${own.error.message}` : ""}`,
+      limitation: "Without this control, an AUTH-02 zero could equally mean the session never established.",
     });
 
     await student.auth.signOut();
@@ -343,6 +370,17 @@ if (process.env.SMOKE_SKIP_EXTERNAL !== "1") {
     result: "PASS",
     evidence: "pg_class: relrowsecurity = true, relforcerowsecurity = false — submit_challenge's SECURITY DEFINER read path remains intact.",
     limitation: EXTERNAL_NOTE,
+  });
+  record({
+    id: "DB-03",
+    area: "H",
+    maps: "H3",
+    assertion: "No submission was accepted while its assessment was unpublished",
+    result: "NOT VERIFIED",
+    evidence:
+      "Withdrawn as a current-state check: it compared submissions to today status, which flags a legitimate publish -> submit -> unpublish sequence (unpublishAssessment sets status=approved and published_at=NULL). The 3fb7d820 submission is explained by exactly that.",
+    limitation:
+      "Unverifiable retrospectively: the schema records only the latest publish state, with no unpublished_at and no publish history. The behaviour itself is asserted statically in S-14.",
   });
   record({
     id: "DB-09",

@@ -144,7 +144,7 @@ Earlier in the session D had been mistakenly recorded as passing on the strength
 |---|---|---|
 | H1 | No duplicate XP per assessment | **PASS for the tested pair** — the D6 transaction test left exactly one `xp_transactions` row for practice. The global duplicate scan was run once earlier and returned 0, but after later submissions it was not re-run. |
 | H2 | Grading matches the stored key | **PASS** — `grading_mismatches = 0`, including RPC-generated rows |
-| H3 | No submissions on unpublished assessments | **NOT VERIFIED** — not queried |
+| H3 | No submission was accepted while its assessment was unpublished | **NOT VERIFIED — unverifiable from stored state.** The original wording ("no submissions on unpublished assessments") was **withdrawn** because it compared submissions against *current* status and so flagged correct behaviour: `unpublishAssessment` sets `status='approved', published_at=null`, which is exactly the state seen for assessment `3fb7d820…`. Its submission is therefore legitimate (published → submitted → unpublished). `submit_challenge` rejects any status other than `published` (`0006:172`, asserted statically as S-14 in the smoke suite), but the schema stores no publish history, so the property cannot be checked retrospectively. |
 | H4 | No intervention assigned without approval | **NOT VERIFIED** — not queried |
 
 ## I. Authorization matrix
