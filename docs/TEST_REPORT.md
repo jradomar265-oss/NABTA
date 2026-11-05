@@ -112,7 +112,7 @@ Earlier in the session D had been mistakenly recorded as passing on the strength
 | # | Assertion | Result |
 |---|---|---|
 | F1 | Per-objective totals on screen match stored evidence | **PASS** — 3/6 and 2/2 shown, reconciling to the stored snapshot of 8 answers / 5 correct |
-| F2 | `evidence_snapshot` totals equal the answers table | **NOT VERIFIED** — reconciliation was started, then the retake turned out not to exist. No documented equality check. |
+| F2 | `evidence_snapshot` totals equal the answers table | **PASS** — recomputed the class scope bounded to `created_at` and `submitted_at <= analysis time`: answers 8 = 8, correct 5 = 5, students 2 = 2, questions 4 = 4. Note the scope must be time-bounded: practice and follow-up were submitted later, so today's scoped total is 12 while the snapshot correctly froze 8. |
 | F3 | With thin evidence, `insufficient_evidence` is true and the report says why | **PASS** — the thin objective was reported as needing more evidence; the class-level flag was correctly `false` because two students had answered |
 | F4 | Every observation cites a number that appears above it | **PASS** — both observations cited their counts |
 | F5 | No causal language | **PASS** — none observed in the mock output |
