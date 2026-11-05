@@ -221,6 +221,9 @@ await httpCheck({ id: "H-04", area: "I", maps: "I2", assertion: "Anonymous visit
 // --------------------------------------------------------------------- DB
 const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+const publishableKey = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
+const studentEmail = process.env.SMOKE_STUDENT_EMAIL;
+const studentPassword = process.env.SMOKE_STUDENT_PASSWORD;
 
 const dbChecks = [
   { id: "DB-01", area: "H", maps: "H1", assertion: "No duplicate XP transactions per assessment" },
@@ -229,7 +232,70 @@ const dbChecks = [
   { id: "DB-04", area: "H", maps: "H4", assertion: "No intervention is assigned without approval" },
   { id: "DB-05", area: "H", maps: "D8", assertion: "Every student's XP equals their ledger total" },
   { id: "DB-06", area: "C", maps: "C4", assertion: "Every question has an answer key" },
+  { id: "DB-07", area: "H", maps: "S-04", assertion: "answer_keys has no DELETE grant for authenticated (0014 applied)" },
 ];
+
+/**
+ * Authenticated student checks use a REAL signed-in session with the publishable key,
+ * never the service role. Without student credentials this is reported NOT VERIFIED:
+ * an unauthenticated request would prove nothing, and service-role access proves the
+ * opposite of what the assertion is about.
+ */
+const authChecks = [
+  { id: "AUTH-01", area: "I", maps: "C6", assertion: "A signed-in student selects zero rows from answer_keys" },
+  { id: "AUTH-02", area: "I", maps: "I2", assertion: "A signed-in student selects zero rows from another classroom's assessments" },
+];
+
+if (!studentEmail || !studentPassword || !supabaseUrl || !publishableKey) {
+  for (const check of authChecks) {
+    record({
+      ...check,
+      result: "NOT VERIFIED",
+      evidence:
+        "SMOKE_STUDENT_EMAIL / SMOKE_STUDENT_PASSWORD (and NEXT_PUBLIC_SUPABASE_URL/KEY) not set, so no real student session exists",
+      limitation:
+        "Simulating the result with the service role or an unauthenticated request would not test the policy. Export a real demo student's credentials to run it.",
+    });
+  }
+} else {
+  const { createClient } = await import("@supabase/supabase-js");
+  const student = createClient(supabaseUrl, publishableKey, { auth: { persistSession: false } });
+  const { error: signInError } = await student.auth.signInWithPassword({ email: studentEmail, password: studentPassword });
+
+  if (signInError) {
+    for (const check of authChecks) {
+      record({ ...check, result: "FAIL", evidence: `sign-in failed: ${signInError.message}`, limitation: "" });
+    }
+  } else {
+    const keys = await student.from("answer_keys").select("question_id").limit(5);
+    record({
+      id: "AUTH-01",
+      area: "I",
+      maps: "C6",
+      assertion: "A signed-in student selects zero rows from answer_keys",
+      result: !keys.error && (keys.data ?? []).length === 0 ? "PASS" : "FAIL",
+      evidence: `rows=${(keys.data ?? []).length}${keys.error ? ` error=${keys.error.message}` : ""}`,
+      limitation: "Proves the policy denies rows for this student. Does not prove the grant is minimal.",
+    });
+
+    const foreign = await student
+      .from("assessments")
+      .select("id, lesson_id")
+      .neq("lesson_id", "00000000-0000-0000-0000-000000000000")
+      .limit(50);
+    record({
+      id: "AUTH-02",
+      area: "I",
+      maps: "I2",
+      assertion: "A signed-in student selects zero rows from another classroom's assessments",
+      result: "NOT VERIFIED",
+      evidence: `${(foreign.data ?? []).length} assessment row(s) visible to this student; comparability to their own class not determined`,
+      limitation: "Needs a second classroom the student does not belong to; the demo data has only one.",
+    });
+
+    await student.auth.signOut();
+  }
+}
 
 if (!serviceKey || !supabaseUrl) {
   for (const check of dbChecks) {
@@ -241,16 +307,11 @@ if (!serviceKey || !supabaseUrl) {
     });
   }
 } else {
-  const { createClient } = await import("@supabase/supabase-js");
-  const db = createClient(supabaseUrl, serviceKey, { auth: { persistSession: false } });
-
-  const dupXp = await db.rpc("smoke_duplicate_xp").catch(() => ({ error: { message: "rpc unavailable" } }));
-  void dupXp;
   for (const check of dbChecks) {
     record({
       ...check,
       result: "NOT VERIFIED",
-      evidence: "database checks are not implemented yet — a service-role key was supplied but no read-only SQL runner exists",
+      evidence: "a service-role key was supplied but no read-only SQL runner exists yet",
       limitation: "Needs a read-only SQL path (pg or a Postgres RPC); deferred rather than faked.",
     });
   }

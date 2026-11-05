@@ -145,7 +145,30 @@ exercised in unit checks with hand-built fixtures.
 
 ## 7. Security: four bugs were found, and the class of bug is subtle
 
-Found during review and fixed. Listed because they are informative, not because they
+### 7a. FORCE ROW LEVEL SECURITY must stay disabled on `answer_keys`
+
+`public.answer_keys` has RLS enabled but **not** forced. This is deliberate and
+load-bearing.
+
+`submit_challenge()` is `SECURITY DEFINER`, so it executes with the owning role's
+privileges. The owning role bypasses RLS unless `FORCE ROW LEVEL SECURITY` is set. That
+bypass is the only reason a student can be graded against an answer key they cannot
+select — the function reads keys the caller's policy would deny.
+
+Enabling `FORCE ROW LEVEL SECURITY` on this table would apply policies to the owner too,
+the function would find zero rows, and **grading would fail for every student**. If that
+change is ever wanted for defence in depth, the function must first be exempted (for
+example via a dedicated role with its own policy), and the change must be re-verified
+end to end.
+
+The table-level grant is also broader than the ideal: `authenticated` holds `select`,
+`insert` and `update` on `answer_keys` because Supabase exposes a single database role
+for every signed-in user, while "teacher" is an application concept (`profiles.role`,
+`public.is_teacher()`). Privileges therefore cannot distinguish a teacher from a
+student, which makes **row-level security the only protection for answer keys**. The
+unused `delete` privilege was revoked in `0014`. Moving key writes behind a
+`SECURITY DEFINER` RPC so that `insert`/`update` can be revoked is recommended before
+any public release, and is not done yet.Found during review and fixed. Listed because they are informative, not because they
 are open:
 
 | Bug | Effect | Fixed in |

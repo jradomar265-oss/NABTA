@@ -21,6 +21,7 @@
 --      202611010011_fix_student_lessons_policy.sql
 --      202611010012_education_context.sql
 --      202611010013_fix_correlated_policies.sql
+--      202611010014_answer_keys_least_privilege.sql
 --
 --  EXCLUDED ON PURPOSE (not idempotent, so never re-run blindly)
 --      none
@@ -39,7 +40,7 @@
 
 
 -- ============================================================================
--- 1/4 — 202611010010_stage9_comparability.sql
+-- 1/5 — 202611010010_stage9_comparability.sql
 -- ============================================================================
 
 -- Stage 9: what a comparability check needs to be honest about.
@@ -72,7 +73,7 @@ alter table public.interventions add constraint interventions_student_scope_chec
   );
 
 -- ============================================================================
--- 2/4 — 202611010011_fix_student_lessons_policy.sql
+-- 2/5 — 202611010011_fix_student_lessons_policy.sql
 -- ============================================================================
 
 -- Stage 9 (found while verifying the consolidated schema bundle).
@@ -109,7 +110,7 @@ create policy "Students can read assigned lessons"
   ));
 
 -- ============================================================================
--- 3/4 — 202611010012_education_context.sql
+-- 3/5 — 202611010012_education_context.sql
 -- ============================================================================
 
 -- Stage 9: education context on a class.
@@ -151,7 +152,7 @@ alter table public.classrooms add constraint classrooms_curriculum_check
 -- Colours are not part of this change.
 
 -- ============================================================================
--- 4/4 — 202611010013_fix_correlated_policies.sql
+-- 4/5 — 202611010013_fix_correlated_policies.sql
 -- ============================================================================
 
 -- Stage 9: sweep for the unqualified-correlation bug class.
@@ -243,3 +244,35 @@ create policy "Students ask about their own assigned lesson"
 --   Membership policies using public.teaches_classroom(classroom_id)
 --     -> classroom_id is a column of the policy's own table. Correct.
 -- ---------------------------------------------------------------------------
+
+-- ============================================================================
+-- 5/5 — 202611010014_answer_keys_least_privilege.sql
+-- ============================================================================
+
+-- Stage 9: least-privilege hardening for answer_keys.
+--
+-- `0005` granted SELECT, INSERT, UPDATE and DELETE on public.answer_keys to
+-- `authenticated`. Three of those are used; DELETE never is.
+--
+-- Evidence, from the application paths:
+--   assessments.ts:183  insert  (generating challenges)
+--   assessments.ts:246  upsert  (editing a question's key)
+--   interventions.ts:144 insert (generating practice and follow-up keys)
+--   teacher/page.tsx:63  select  (rendering the key in the teacher editor)
+--
+-- Keys are removed only through the foreign-key cascade when a question is deleted
+-- (`answer_keys.question_id references public.questions (id) on delete cascade`).
+-- A cascade is performed internally and does not check the deleting user's DELETE
+-- privilege on the child table, so revoking it cannot break question deletion.
+--
+-- What this migration deliberately does NOT change:
+--   * SELECT, INSERT and UPDATE stay — the paths above need them;
+--   * RLS is untouched; FORCE ROW LEVEL SECURITY stays off, because
+--     submit_challenge() reads this table under SECURITY DEFINER owner privileges and
+--     would find no rows if the owner were subject to policies;
+--   * no policy is added or dropped.
+--
+-- The real protection for answer keys remains row-level security: one policy, for
+-- teachers on their own assessments, and no student policy at all.
+
+revoke delete on table public.answer_keys from authenticated;

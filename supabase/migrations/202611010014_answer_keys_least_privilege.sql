@@ -1,0 +1,27 @@
+-- Stage 9: least-privilege hardening for answer_keys.
+--
+-- `0005` granted SELECT, INSERT, UPDATE and DELETE on public.answer_keys to
+-- `authenticated`. Three of those are used; DELETE never is.
+--
+-- Evidence, from the application paths:
+--   assessments.ts:183  insert  (generating challenges)
+--   assessments.ts:246  upsert  (editing a question's key)
+--   interventions.ts:144 insert (generating practice and follow-up keys)
+--   teacher/page.tsx:63  select  (rendering the key in the teacher editor)
+--
+-- Keys are removed only through the foreign-key cascade when a question is deleted
+-- (`answer_keys.question_id references public.questions (id) on delete cascade`).
+-- A cascade is performed internally and does not check the deleting user's DELETE
+-- privilege on the child table, so revoking it cannot break question deletion.
+--
+-- What this migration deliberately does NOT change:
+--   * SELECT, INSERT and UPDATE stay — the paths above need them;
+--   * RLS is untouched; FORCE ROW LEVEL SECURITY stays off, because
+--     submit_challenge() reads this table under SECURITY DEFINER owner privileges and
+--     would find no rows if the owner were subject to policies;
+--   * no policy is added or dropped.
+--
+-- The real protection for answer keys remains row-level security: one policy, for
+-- teachers on their own assessments, and no student policy at all.
+
+revoke delete on table public.answer_keys from authenticated;
