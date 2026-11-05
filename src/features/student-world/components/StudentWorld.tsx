@@ -17,12 +17,15 @@ export function StudentWorld({
   level,
   xp,
   quests,
+  fullBleed = false,
   displayName,
 }: {
   level: number;
   xp: number;
   quests: WorldQuest[];
   displayName: string;
+  /** Fill the viewport instead of sitting inside page chrome. */
+  fullBleed?: boolean;
 }) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const [layout, setLayout] = useState<WorldLayout | null>(null);
@@ -364,11 +367,11 @@ export function StudentWorld({
   const selected = quests.find((quest) => quest.slot === selectedSlot) ?? null;
 
   return (
-    <div className="mt-8">
-      <div className="relative overflow-hidden rounded-3xl border-4 border-[#284c42] bg-[#1d3b33] shadow-[0_24px_70px_-32px_rgba(15,45,37,0.85)]">
+    <div className={fullBleed ? "h-[100dvh] w-full" : "mt-8"}>
+      <div className={fullBleed ? "relative h-full w-full overflow-hidden bg-[#1d3b33]" : "relative overflow-hidden rounded-3xl border-4 border-[#284c42] bg-[#1d3b33] shadow-[0_24px_70px_-32px_rgba(15,45,37,0.85)]"}>
         <canvas
           aria-label="NABTA learning world. Use the quest list below the map to move between lessons."
-          className="block aspect-[3/2] w-full touch-none select-none"
+          className={fullBleed ? "block h-full w-full touch-none select-none" : "block aspect-[3/2] w-full touch-none select-none"}
           ref={canvasRef}
           role="img"
         />

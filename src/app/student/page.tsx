@@ -180,7 +180,7 @@ export default async function StudentHomePage({ searchParams }: { searchParams: 
         <button className="mt-6 min-h-11 rounded-lg bg-[#1f674a] px-5 text-sm font-bold text-white hover:bg-[#174f39]" type="submit">Enter my learning space</button>
       </form>
       : <>
-        <StudentWorld displayName={student?.display_name ?? profile.display_name} level={level} quests={placeable} xp={xp} />
+        <StudentWorld displayName={student?.display_name ?? profile.display_name} fullBleed level={level} quests={placeable} xp={xp} />
         <ProgressSummary
           achievements={(achievementRows ?? []) as { code: string; earned_at: string }[]}
           completed={quests.filter((quest) => quest.status === "completed").length}
