@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { WorldHud } from "./Hud";
 import { useCallback, useEffect, useMemo, useRef, useState, useTransition } from "react";
 
 import { markLessonStudied } from "@/app/actions/learning";
@@ -372,30 +373,14 @@ export function StudentWorld({
           role="img"
         />
 
-        {/* HUD: identity, level, XP */}
-        <div className="pointer-events-none absolute left-3 top-3 rounded-xl border-2 border-[#6d8578] bg-[#22343a]/95 px-3 py-2 text-white shadow-lg sm:left-4 sm:top-4">
-          <div className="flex items-center gap-3">
-            <span aria-hidden="true" className="grid size-9 place-items-center rounded-lg border border-[#a0d86c] bg-[#376342] text-base">
-              🌱
-            </span>
-            <div>
-              <p className="text-sm font-bold tracking-wide">NABTA</p>
-              <p className="text-[11px] text-[#cfe3d2]">
-                {displayName} · Lv. {level}
-              </p>
-              <span className="mt-1 block h-2 w-28 overflow-hidden rounded-full bg-black/45">
-                <span className="block h-full rounded-full bg-[#91d956]" style={{ width: `${Math.round((levelProgress.current / levelProgress.needed) * 100)}%` }} />
-              </span>
-              <p className="mt-0.5 text-[10px] text-[#b9d3bd]">{xp} XP</p>
-            </div>
-          </div>
-        </div>
-
-        <div className="absolute right-3 top-3 flex items-center gap-2 sm:right-4 sm:top-4">
-          <span className="rounded-xl border-2 border-[#6d8578] bg-[#22343a]/95 px-3 py-2 text-xs font-bold text-white">
-            {completed}/{quests.length} completed
-          </span>
-        </div>
+        <WorldHud
+          completed={completed}
+          displayName={displayName}
+          level={level}
+          levelProgress={levelProgress}
+          total={quests.length}
+          xp={xp}
+        />
 
         {/* Zoom + recenter controls */}
         <div className="absolute bottom-3 right-3 flex overflow-hidden rounded-lg border-2 border-[#6d8578] bg-[#22343a]/95 text-white sm:bottom-4 sm:right-4">
