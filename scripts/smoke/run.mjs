@@ -232,7 +232,6 @@ const dbChecks = [
   { id: "DB-04", area: "H", maps: "H4", assertion: "No intervention is assigned without approval" },
   { id: "DB-05", area: "H", maps: "D8", assertion: "Every student's XP equals their ledger total" },
   { id: "DB-06", area: "C", maps: "C4", assertion: "Every question has an answer key" },
-  { id: "DB-07", area: "H", maps: "S-04", assertion: "answer_keys has no DELETE grant for authenticated (0014 applied)" },
 ];
 
 /**
@@ -315,6 +314,45 @@ if (!serviceKey || !supabaseUrl) {
       limitation: "Needs a read-only SQL path (pg or a Postgres RPC); deferred rather than faked.",
     });
   }
+}
+
+// ------------------------------------------------ externally verified evidence
+/**
+ * Observations a human verified in the Supabase SQL editor, with the date. These are
+ * recorded separately from executed checks because this runner cannot see grants or
+ * policy expressions without a SQL path. They are labelled as external so a PASS here
+ * never reads like a machine-verified result.
+ */
+const EXTERNAL_NOTE = "Recorded from a SQL editor verification on 2026-11-03; this runner cannot observe grants or policy text.";
+
+if (process.env.SMOKE_SKIP_EXTERNAL !== "1") {
+  record({
+    id: "DB-07",
+    area: "H",
+    maps: "S-04",
+    assertion: "authenticated holds SELECT, INSERT and UPDATE on answer_keys, and no DELETE (0014)",
+    result: "PASS",
+    evidence: "information_schema.role_table_grants: authenticated = INSERT, SELECT, UPDATE. DELETE absent. anon holds no privileges.",
+    limitation: EXTERNAL_NOTE,
+  });
+  record({
+    id: "DB-08",
+    area: "I",
+    maps: "S-04",
+    assertion: "answer_keys has RLS enabled and FORCE RLS disabled",
+    result: "PASS",
+    evidence: "pg_class: relrowsecurity = true, relforcerowsecurity = false — submit_challenge's SECURITY DEFINER read path remains intact.",
+    limitation: EXTERNAL_NOTE,
+  });
+  record({
+    id: "DB-09",
+    area: "I",
+    maps: "C6",
+    assertion: "answer_keys has exactly one policy: teachers, ALL, correct USING and WITH CHECK",
+    result: "PASS",
+    evidence: `pg_policies: 1 row, "Teachers manage answer keys on their own assessments", cmd=ALL, roles={authenticated}, both expressions require q.id = answer_keys.question_id AND a.teacher_id = (select auth.uid()).`,
+    limitation: `${EXTERNAL_NOTE} Policy text proves intent; the row-level denial for a student is still unexercised (see AUTH-01).`,
+  });
 }
 
 // ------------------------------------------------------------------ report
