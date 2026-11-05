@@ -1,9 +1,8 @@
 import { joinClassroom, saveStudentOnboarding } from "@/app/actions/learning";
 import { requireRole } from "@/lib/auth/require-role";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
-import { xpForQuestions } from "@/lib/learning/xp";
 import { StudentWorld } from "@/features/student-world/components/StudentWorld";
-import type { QuestStatus, WorldQuest } from "@/features/student-world/types";
+import { buildWorldQuests } from "@/lib/world/loader";
 
 type SearchParams = Promise<{ error?: string; notice?: string }>;
 type Membership = { classroom_id: string; classrooms: { name: string } | null };
@@ -125,39 +124,26 @@ export default async function StudentHomePage({ searchParams }: { searchParams: 
     objective: approvedObjectiveByLesson.get(assignment.lesson_id) ?? "",
   }));
 
-  // Quest states are derived server-side: the first unstudied lesson in a class is
-  // available, later lessons in that class stay locked, studied lessons are done.
-  const nextAvailable = new Set<string>();
-  const classWithOpenQuest = new Set<string>();
-  for (const assignment of assignments) {
-    if (classWithOpenQuest.has(assignment.classroomId)) continue;
-    if (!studied.has(assignment.id)) {
-      nextAvailable.add(assignment.id);
-      classWithOpenQuest.add(assignment.classroomId);
-    }
-  }
+  // World slots come from world_locations.sort_order. The whole progression derivation
+  // now lives in the loader, so the page only supplies facts. A failed or empty
+  // locations query degrades to array order rather than an empty world.
+  const { data: locationRows } = supabase
+    ? await supabase.from("world_locations").select("sort_order").order("sort_order", { ascending: true })
+    : { data: null };
 
-  const quests: WorldQuest[] = assignments.map((assignment, index) => {
-    const isCompleted = completedLessonIds.has(assignment.lessonId);
-    const status: QuestStatus = isCompleted
-      ? "completed"
-      : studied.has(assignment.id)
-        ? "studied"
-        : nextAvailable.has(assignment.id)
-          ? "available"
-          : "locked";
-    const questionCount = challengeCountByLesson.get(assignment.lessonId) ?? 0;
-    return {
+  const quests = buildWorldQuests({
+    locationOrder: ((locationRows ?? []) as { sort_order: number }[]).map((row) => row.sort_order),
+    assignments: assignments.map((assignment) => ({
       id: assignment.id,
-      slot: index,
+      classroomId: assignment.classroomId,
+      lessonId: assignment.lessonId,
       title: assignment.lesson?.title ?? "Lesson",
       objective: assignment.objective || assignment.lesson?.learning_objective || "",
       classroomName: assignment.classroom?.name ?? "Class lesson",
-      status,
-      rewardXp: questionCount > 0 ? xpForQuestions(questionCount, questionCount) : 0,
-      challengeQuestions: questionCount,
-      challengeMaxXp: questionCount > 0 ? xpForQuestions(questionCount, questionCount) : 0,
-    };
+      questions: challengeCountByLesson.get(assignment.lessonId) ?? 0,
+      studied: studied.has(assignment.id),
+      completed: completedLessonIds.has(assignment.lessonId),
+    })),
   });
 
   const isOnboarded = Boolean(student?.onboarding_completed);
@@ -169,7 +155,7 @@ export default async function StudentHomePage({ searchParams }: { searchParams: 
   return <section className="max-w-5xl">
     <p className="text-sm font-bold uppercase tracking-wide text-[#b65e35]">My learning world</p>
     <h1 className="mt-3 text-4xl font-bold">Welcome{isOnboarded ? ` back, ${student?.display_name ?? profile.display_name}` : " to NABTA"}.</h1>
-    <p className="mt-4 max-w-2xl text-base leading-7 text-[#62776d]">Your path grows from the lessons your teacher assigns—not from time spent clicking around.</p>
+    <p className="mt-4 max-w-2xl text-base leading-7 text-[#62776d]">Your path grows from the lessons your teacher assigns — not from time spent clicking around.</p>
     {params.error && <p className="mt-6 rounded-lg bg-[#fff1e9] px-4 py-3 text-sm text-[#9a4324]" role="alert">{params.error}</p>}
     {params.notice && <p className="mt-6 rounded-lg bg-[#edf3e9] px-4 py-3 text-sm text-[#496451]" role="status">{params.notice === "class-joined" ? "Class joined. Your assigned lessons will appear below." : "Your learning profile is saved."}</p>}
     {!isOnboarded
