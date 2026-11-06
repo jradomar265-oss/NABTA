@@ -1,0 +1,149 @@
+{
+ "status": "READY_FOR_FINAL_APPROVAL",
+ "conclusion": "The (1292,20) and (701,261) coordinates were reporting errors. No manifest record, extracted file or source region corresponds to them. The authoritative bboxes are VG007=(1298,23,234,265) and VG012=(767,292,101,140).",
+ "manifest_bboxes": {
+  "VG007": [
+   1298,
+   23,
+   234,
+   265
+  ],
+  "VG012": [
+   767,
+   292,
+   101,
+   140
+  ]
+ },
+ "probe_coordinates": {
+  "1292,20": {
+   "exact_match": false
+  },
+  "701,261": {
+   "exact_match": false
+  }
+ },
+ "identity_evidence": {
+  "VG007": {
+   "file": "vegetation-full/veg_007_234x265.png",
+   "bbox": [
+    1298,
+    23,
+    234,
+    265
+   ],
+   "dimensions": [
+    234,
+    265
+   ],
+   "file_equals_source_crop_at_manifest_bbox": true,
+   "crop_at_1292_20_equals_file": false
+  },
+  "VG012": {
+   "file": "vegetation-full/veg_012_101x140.png",
+   "bbox": [
+    767,
+    292,
+    101,
+    140
+   ],
+   "dimensions": [
+    101,
+    140
+   ],
+   "file_equals_source_crop_at_manifest_bbox": true,
+   "crop_at_701_261_equals_file": false
+  }
+ },
+ "corrections": [
+  {
+   "id": "VG007",
+   "original": {
+    "file": "vegetation-full/veg_007_234x265.png",
+    "bbox": [
+     1298,
+     23,
+     234,
+     265
+    ],
+    "dimensions": [
+     234,
+     265
+    ],
+    "opaque_px": 40457,
+    "saturated_px": 31619
+   },
+   "corrected": {
+    "file": "vegetation-corrected/veg_007_234x265_corrected_230x265.png",
+    "bbox": [
+     1298,
+     23,
+     230,
+     265
+    ],
+    "dimensions": [
+     230,
+     265
+    ],
+    "opaque_px": 40368,
+    "saturated_px": 31619,
+    "equals_source_crop": true,
+    "equals_left_slice_of_original": true
+   },
+   "residue_columns_removed": 4,
+   "artwork_px_lost": 0,
+   "pixels_identical_to_source_crop": true,
+   "verdict": "PASS",
+   "identity_confirmed": true
+  },
+  {
+   "id": "VG012",
+   "original": {
+    "file": "vegetation-full/veg_012_101x140.png",
+    "bbox": [
+     767,
+     292,
+     101,
+     140
+    ],
+    "dimensions": [
+     101,
+     140
+    ],
+    "opaque_px": 8659,
+    "saturated_px": 6514
+   },
+   "corrected": {
+    "file": "vegetation-corrected/veg_012_101x140_corrected_98x140.png",
+    "bbox": [
+     767,
+     292,
+     98,
+     140
+    ],
+    "dimensions": [
+     98,
+     140
+    ],
+    "opaque_px": 8627,
+    "saturated_px": 6514,
+    "equals_source_crop": true,
+    "equals_left_slice_of_original": true
+   },
+   "residue_columns_removed": 3,
+   "artwork_px_lost": 0,
+   "pixels_identical_to_source_crop": true,
+   "verdict": "PASS",
+   "identity_confirmed": true
+  }
+ ],
+ "sources_checked": [
+  "metadata/vegetation-full-manifest.json",
+  "metadata/vegetation-final-audit-manifest.json",
+  "cleaned/vegetation-sheet-methodB.png",
+  "vegetation-full/veg_007_234x265.png",
+  "vegetation-full/veg_012_101x140.png",
+  "vegetation-corrected/*.png",
+  "metadata/vegetation-corrections.json"
+ ]
+}

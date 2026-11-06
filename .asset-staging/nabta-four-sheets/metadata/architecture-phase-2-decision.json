@@ -1,0 +1,94 @@
+{
+ "phase": "Architecture Phase 2",
+ "status": "CLOSED - method selected, production work NOT authorized",
+ "selected_method": {
+  "id": "A",
+  "predicate": "min(R,G,B) >= 214 and channel spread <= 6",
+  "flood_fill": "border-seeded, 4-connectivity",
+  "approved_scope": "method selection only"
+ },
+ "rejected_candidates": {
+  "B": {
+   "predicate": "min>=200, spread<=18",
+   "reason": "removes 10,671 px more than A but the nature of that removal is unverified"
+  },
+  "C": {
+   "predicate": "min>=190, spread<=26",
+   "reason": "no demonstrated advantage over B"
+  }
+ },
+ "source": {
+  "sha256": "b5a24a9f51b41268060c9aeae17028a28f2c947cbc7f2b92d0c1c86b20d5c843",
+  "sha256_verified": true,
+  "dimensions": [
+   1536,
+   1024
+  ],
+  "mode": "RGB",
+  "bytes": 2799303,
+  "unchanged": true
+ },
+ "evidence_accepted": [
+  "seven critical regions passed visual inspection under A",
+  "55 components >=120px are visually distinct assets",
+  "40 components >3px classified: 34 BACKGROUND_RESIDUE, 6 REVIEW, 0 PASS_ARTWORK",
+  "261 single-pixel components statistically analysed: all neutral (spread<=10), 251 within 3px of artwork, 0 isolated beyond 20px"
+ ],
+ "limitations": [
+  "Method A leaves approximately 19 small residue specks in region R4",
+  "the 6 REVIEW small components are not resolved",
+  "261 single pixels are statistically characterised, not individually proven to be residue",
+  "the claim that Method B erodes artwork edges is UNVERIFIED - inference only",
+  "NOT every artwork pixel across the full source has been proven preserved"
+ ],
+ "review_register": [
+  {
+   "id": "C12",
+   "bbox": [
+    258,
+    417,
+    186,
+    165
+   ],
+   "px": 23960,
+   "issue": "two distinct pillars joined by a low base wall; single asset or pair undetermined",
+   "action": "do not split, do not modify, retain REVIEW"
+  },
+  {
+   "id": "SMALL_6",
+   "issue": "6 sub-120px components >3px could not be confidently classified",
+   "action": "retain REVIEW"
+  },
+  {
+   "id": "SINGLE_261",
+   "issue": "261 single-pixel components classified by statistics only",
+   "action": "accepted as likely residue with stated uncertainty"
+  },
+  {
+   "id": "AVB_EDGE",
+   "issue": "A vs B difference nature unconfirmed visually",
+   "action": "recorded as inference, not fact"
+  }
+ ],
+ "not_authorized": [
+  "production cleaning",
+  "asset extraction",
+  "final PNG creation",
+  "public/assets changes",
+  "application/database/XP/quest/student-data/UI changes",
+  "commits or pushes",
+  "purchases",
+  "Phase 3 start"
+ ],
+ "historical_evidence_preserved": [
+  "metadata/architecture-phase-2-report-original.md",
+  "metadata/architecture-method-comparison-phase2-original.json",
+  "contact-sheets/architecture-method-comparison.png",
+  "contact-sheets/architecture-method-comparison-corrected.png",
+  "contact-sheets/architecture-critical-region-coordinate-audit.png",
+  "contact-sheets/architecture-a-vs-b-difference-audit.png",
+  "contact-sheets/architecture-stone-formations-audit.png",
+  "contact-sheets/architecture-method-a-component-audit.png",
+  "contact-sheets/architecture-final-evidence-audit.png"
+ ]
+}

@@ -1,0 +1,165 @@
+{
+ "recovered": [
+  {
+   "id": "D1",
+   "file": "water-recovered/water_lilypad_small_37x32.png",
+   "bbox": [
+    972,
+    802,
+    37,
+    32
+   ],
+   "dimensions": [
+    37,
+    32
+   ],
+   "opaque_px": 728,
+   "pixels_identical": true,
+   "rgba": true,
+   "provenance": "sheet-2-water.png via Method B clean (min>=200, spread<=18)",
+   "classification": "PASS",
+   "verified": "visually confirmed complete lily pad"
+  },
+  {
+   "id": "D2",
+   "file": "water-recovered/water_foam_puff_30x33.png",
+   "bbox": [
+    1490,
+    348,
+    30,
+    33
+   ],
+   "dimensions": [
+    30,
+    33
+   ],
+   "opaque_px": 716,
+   "pixels_identical": true,
+   "rgba": true,
+   "provenance": "sheet-2-water.png via Method B clean (min>=200, spread<=18)",
+   "classification": "PASS",
+   "verified": "visually confirmed complete pale foam puff",
+   "correction": "earlier described as a pale stone from a grey colour sample; visual inspection shows pale blue-white foam",
+   "component_px": 675,
+   "foreign_pixels_in_crop": 41,
+   "note": "crop contains 41 px from an adjacent foam component inside the bbox; visual check showed a clear gap, so these are a neighbour's edge pixels, not a merged shape"
+  }
+ ],
+ "pending_review": [],
+ "fragments_kept": [
+  {
+   "id": "W21",
+   "bbox": [
+    1201,
+    476,
+    61,
+    34
+   ],
+   "classification": "REVIEW_CLIPPED_FOAM"
+  },
+  {
+   "id": "W26",
+   "bbox": [
+    1262,
+    480,
+    66,
+    29
+   ],
+   "classification": "REVIEW_CLIPPED_FOAM"
+  }
+ ],
+ "debris_declined": [
+  {
+   "id": "D3",
+   "bbox": [
+    1423,
+    420,
+    19,
+    22
+   ],
+   "decision": "ambiguous, not extracted"
+  },
+  {
+   "id": "D4",
+   "bbox": [
+    1202,
+    477,
+    18,
+    15
+   ],
+   "decision": "ambiguous, not extracted"
+  },
+  {
+   "id": "D5",
+   "bbox": [
+    1497,
+    392,
+    8,
+    11
+   ],
+   "decision": "residue"
+  },
+  {
+   "id": "D6",
+   "bbox": [
+    1380,
+    448,
+    8,
+    11
+   ],
+   "decision": "residue"
+  },
+  {
+   "id": "D7",
+   "bbox": [
+    1500,
+    423,
+    8,
+    10
+   ],
+   "decision": "residue"
+  }
+ ],
+ "audited_reclassifications": {
+  "note": "water-full-manifest.json is preserved unchanged; these verdicts are the overlay from the 25-item visual audit",
+  "REVIEW_to_PASS": [
+   "W16",
+   "W22",
+   "W23",
+   "W37",
+   "W38",
+   "W40",
+   "W41",
+   "W42",
+   "W43",
+   "W44",
+   "W45",
+   "W46",
+   "W49",
+   "W50",
+   "W51",
+   "W60",
+   "W61",
+   "W63",
+   "W64",
+   "W65",
+   "W66",
+   "W67",
+   "W68"
+  ],
+  "remain_REVIEW": [
+   "W21",
+   "W26"
+  ]
+ },
+ "final_counts": {
+  "original_extracted": 68,
+  "recovered": 2,
+  "total_files": 70,
+  "manifest_PASS": 43,
+  "manifest_REVIEW": 25,
+  "effective_PASS": 68,
+  "effective_REVIEW": 2,
+  "declined": 5
+ }
+}

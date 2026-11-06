@@ -1,0 +1,22 @@
+{
+ "total_components": 313,
+ "assets_extracted": 92,
+ "below_threshold": 221,
+ "status_counts": {
+  "PASS": 84,
+  "REVIEW": 7,
+  "CROSS_CATEGORY": 1
+ },
+ "category_counts": {
+  "tree": 17,
+  "bush_or_plant": 11,
+  "leaf_cluster_or_grass": 24,
+  "flower": 22,
+  "leaf_or_flower": 4,
+  "stone_platform": 1,
+  "ground_prop": 13
+ },
+ "pixel_equality_failures": 0,
+ "manifest_reconciled": true,
+ "unresolved": "category labels are y-band heuristics only; REVIEW items under 800px not individually type-verified"
+}

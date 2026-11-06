@@ -1,0 +1,220 @@
+{
+ "region": [
+  1385,
+  415,
+  110,
+  175
+ ],
+ "residues": [
+  {
+   "bbox": [
+    1430,
+    481,
+    50,
+    16
+   ],
+   "px": 798,
+   "removed_by_B": 0,
+   "removed_by_C": 0
+  },
+  {
+   "bbox": [
+    1431,
+    515,
+    50,
+    16
+   ],
+   "px": 798,
+   "removed_by_B": 0,
+   "removed_by_C": 0
+  },
+  {
+   "bbox": [
+    1432,
+    550,
+    51,
+    15
+   ],
+   "px": 719,
+   "removed_by_B": 0,
+   "removed_by_C": 0
+  },
+  {
+   "bbox": [
+    1429,
+    421,
+    5,
+    7
+   ],
+   "px": 20,
+   "removed_by_B": 18,
+   "removed_by_C": 20
+  },
+  {
+   "bbox": [
+    1411,
+    565,
+    1,
+    15
+   ],
+   "px": 15,
+   "removed_by_B": 15,
+   "removed_by_C": 15
+  },
+  {
+   "bbox": [
+    1434,
+    456,
+    6,
+    7
+   ],
+   "px": 12,
+   "removed_by_B": 12,
+   "removed_by_C": 12
+  },
+  {
+   "bbox": [
+    1447,
+    582,
+    11,
+    1
+   ],
+   "px": 11,
+   "removed_by_B": 11,
+   "removed_by_C": 11
+  },
+  {
+   "bbox": [
+    1463,
+    582,
+    10,
+    1
+   ],
+   "px": 10,
+   "removed_by_B": 10,
+   "removed_by_C": 10
+  },
+  {
+   "bbox": [
+    1466,
+    459,
+    6,
+    3
+   ],
+   "px": 9,
+   "removed_by_B": 9,
+   "removed_by_C": 9
+  },
+  {
+   "bbox": [
+    1461,
+    418,
+    3,
+    6
+   ],
+   "px": 8,
+   "removed_by_B": 8,
+   "removed_by_C": 8
+  },
+  {
+   "bbox": [
+    1435,
+    427,
+    4,
+    4
+   ],
+   "px": 8,
+   "removed_by_B": 8,
+   "removed_by_C": 8
+  },
+  {
+   "bbox": [
+    1451,
+    462,
+    7,
+    1
+   ],
+   "px": 7,
+   "removed_by_B": 7,
+   "removed_by_C": 7
+  },
+  {
+   "bbox": [
+    1405,
+    460,
+    1,
+    6
+   ],
+   "px": 6,
+   "removed_by_B": 0,
+   "removed_by_C": 6
+  },
+  {
+   "bbox": [
+    1408,
+    492,
+    1,
+    5
+   ],
+   "px": 5,
+   "removed_by_B": 3,
+   "removed_by_C": 5
+  },
+  {
+   "bbox": [
+    1411,
+    581,
+    1,
+    5
+   ],
+   "px": 5,
+   "removed_by_B": 5,
+   "removed_by_C": 5
+  },
+  {
+   "bbox": [
+    1439,
+    431,
+    4,
+    1
+   ],
+   "px": 4,
+   "removed_by_B": 3,
+   "removed_by_C": 4
+  },
+  {
+   "bbox": [
+    1408,
+    506,
+    1,
+    4
+   ],
+   "px": 4,
+   "removed_by_B": 2,
+   "removed_by_C": 4
+  },
+  {
+   "bbox": [
+    1479,
+    454,
+    1,
+    3
+   ],
+   "px": 3,
+   "removed_by_B": 3,
+   "removed_by_C": 3
+  },
+  {
+   "bbox": [
+    1406,
+    499,
+    2,
+    2
+   ],
+   "px": 3,
+   "removed_by_B": 2,
+   "removed_by_C": 3
+  }
+ ],
+ "note": "candidate residue = opaque in A, neutral light (min>=195, spread<=20); rem_B/C counts pixels of that blob transparent in B/C"
+}

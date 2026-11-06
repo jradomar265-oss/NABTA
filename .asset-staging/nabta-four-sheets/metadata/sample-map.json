@@ -1,0 +1,378 @@
+{
+ "inventory": {
+  "sheet-1-terrain.png": {
+   "mode": "RGBA",
+   "size": [
+    1536,
+    1024
+   ],
+   "corner_alpha": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "transparent_fraction": 0.249,
+   "background_shades_in_corner": 16,
+   "corner_shades": [
+    [
+     58,
+     149,
+     74
+    ],
+    [
+     62,
+     142,
+     68
+    ],
+    [
+     86,
+     157,
+     64
+    ],
+    [
+     87,
+     156,
+     63
+    ]
+   ]
+  },
+  "sheet-2-water.png": {
+   "mode": "RGB",
+   "size": [
+    1536,
+    1024
+   ],
+   "corner_alpha": [
+    255,
+    255,
+    255,
+    255
+   ],
+   "transparent_fraction": 0.0,
+   "background_shades_in_corner": 50,
+   "corner_shades": [
+    [
+     7,
+     37,
+     24
+    ],
+    [
+     7,
+     79,
+     65
+    ],
+    [
+     7,
+     121,
+     35
+    ],
+    [
+     13,
+     62,
+     33
+    ]
+   ]
+  },
+  "sheet-3-vegetation.png": {
+   "mode": "RGB",
+   "size": [
+    1536,
+    1024
+   ],
+   "corner_alpha": [
+    255,
+    255,
+    255,
+    255
+   ],
+   "transparent_fraction": 0.0,
+   "background_shades_in_corner": 37,
+   "corner_shades": [
+    [
+     8,
+     127,
+     106
+    ],
+    [
+     10,
+     131,
+     111
+    ],
+    [
+     16,
+     158,
+     105
+    ],
+    [
+     20,
+     166,
+     87
+    ]
+   ]
+  },
+  "sheet-4-buildings.png": {
+   "mode": "RGB",
+   "size": [
+    1536,
+    1024
+   ],
+   "corner_alpha": [
+    255,
+    255,
+    255,
+    255
+   ],
+   "transparent_fraction": 0.0,
+   "background_shades_in_corner": 34,
+   "corner_shades": [
+    [
+     228,
+     228,
+     228
+    ],
+    [
+     228,
+     229,
+     229
+    ],
+    [
+     230,
+     231,
+     230
+    ],
+    [
+     231,
+     230,
+     230
+    ]
+   ]
+  }
+ },
+ "samples": [
+  {
+   "name": "grass_plain_01",
+   "category": "terrain",
+   "x": 30,
+   "y": 20,
+   "width": 140,
+   "height": 145,
+   "output": "terrain_grass_plain_01.png",
+   "source": "sheet-1-terrain.png",
+   "extracted": [
+    140,
+    145
+   ],
+   "border_pixels": 122,
+   "verdict": "REVIEW"
+  },
+  {
+   "name": "grass_dirt_corner",
+   "category": "terrain",
+   "x": 30,
+   "y": 185,
+   "width": 140,
+   "height": 140,
+   "output": "terrain_grass_dirt_corner.png",
+   "source": "sheet-1-terrain.png",
+   "extracted": [
+    140,
+    140
+   ],
+   "border_pixels": 260,
+   "verdict": "REVIEW"
+  },
+  {
+   "name": "cliff_lip_straight",
+   "category": "terrain",
+   "x": 25,
+   "y": 330,
+   "width": 145,
+   "height": 145,
+   "output": "terrain_cliff_lip_straight.png",
+   "source": "sheet-1-terrain.png",
+   "extracted": [
+    145,
+    145
+   ],
+   "border_pixels": 316,
+   "verdict": "REVIEW"
+  },
+  {
+   "name": "waterfall_wide",
+   "category": "water",
+   "x": 820,
+   "y": 20,
+   "width": 190,
+   "height": 240,
+   "output": "water_waterfall_wide.png",
+   "source": "sheet-2-water.png",
+   "extracted": [
+    190,
+    240
+   ],
+   "border_pixels": 860,
+   "verdict": "REVIEW"
+  },
+  {
+   "name": "waterfall_column",
+   "category": "water",
+   "x": 1080,
+   "y": 275,
+   "width": 110,
+   "height": 235,
+   "output": "water_waterfall_column.png",
+   "source": "sheet-2-water.png",
+   "extracted": [
+    110,
+    235
+   ],
+   "border_pixels": 690,
+   "verdict": "REVIEW"
+  },
+  {
+   "name": "lily_pads",
+   "category": "water",
+   "x": 25,
+   "y": 790,
+   "width": 130,
+   "height": 95,
+   "output": "water_lily_pads.png",
+   "source": "sheet-2-water.png",
+   "extracted": [
+    130,
+    95
+   ],
+   "border_pixels": 450,
+   "verdict": "REVIEW"
+  },
+  {
+   "name": "tree_broadleaf",
+   "category": "vegetation",
+   "x": 25,
+   "y": 20,
+   "width": 220,
+   "height": 250,
+   "output": "veg_tree_broadleaf.png",
+   "source": "sheet-3-vegetation.png",
+   "extracted": [
+    220,
+    250
+   ],
+   "border_pixels": 940,
+   "verdict": "REVIEW"
+  },
+  {
+   "name": "tree_pine",
+   "category": "vegetation",
+   "x": 710,
+   "y": 20,
+   "width": 200,
+   "height": 265,
+   "output": "veg_tree_pine.png",
+   "source": "sheet-3-vegetation.png",
+   "extracted": [
+    200,
+    265
+   ],
+   "border_pixels": 930,
+   "verdict": "REVIEW"
+  },
+  {
+   "name": "mushroom_red",
+   "category": "vegetation",
+   "x": 835,
+   "y": 700,
+   "width": 70,
+   "height": 75,
+   "output": "veg_mushroom_red.png",
+   "source": "sheet-3-vegetation.png",
+   "extracted": [
+    70,
+    75
+   ],
+   "border_pixels": 290,
+   "verdict": "REVIEW"
+  },
+  {
+   "name": "rock_cluster",
+   "category": "vegetation",
+   "x": 960,
+   "y": 880,
+   "width": 140,
+   "height": 95,
+   "output": "veg_rock_cluster.png",
+   "source": "sheet-3-vegetation.png",
+   "extracted": [
+    140,
+    95
+   ],
+   "border_pixels": 470,
+   "verdict": "REVIEW"
+  },
+  {
+   "name": "cabin_learning",
+   "category": "buildings",
+   "x": 25,
+   "y": 20,
+   "width": 400,
+   "height": 310,
+   "output": "building_cabin_learning.png",
+   "source": "sheet-4-buildings.png",
+   "extracted": [
+    400,
+    310
+   ],
+   "border_pixels": 1420,
+   "verdict": "REVIEW"
+  },
+  {
+   "name": "gate_shrine",
+   "category": "buildings",
+   "x": 470,
+   "y": 15,
+   "width": 440,
+   "height": 330,
+   "output": "building_gate_shrine.png",
+   "source": "sheet-4-buildings.png",
+   "extracted": [
+    440,
+    330
+   ],
+   "border_pixels": 1540,
+   "verdict": "REVIEW"
+  },
+  {
+   "name": "bridge_wood_wide",
+   "category": "bridges",
+   "x": 930,
+   "y": 15,
+   "width": 280,
+   "height": 185,
+   "output": "bridge_wood_wide.png",
+   "source": "sheet-4-buildings.png",
+   "extracted": [
+    280,
+    185
+   ],
+   "border_pixels": 930,
+   "verdict": "REVIEW"
+  },
+  {
+   "name": "crate_barrel",
+   "category": "props",
+   "x": 20,
+   "y": 590,
+   "width": 230,
+   "height": 110,
+   "output": "props_crate_barrel.png",
+   "source": "sheet-4-buildings.png",
+   "extracted": [
+    230,
+    110
+   ],
+   "border_pixels": 680,
+   "verdict": "REVIEW"
+  }
+ ]
+}

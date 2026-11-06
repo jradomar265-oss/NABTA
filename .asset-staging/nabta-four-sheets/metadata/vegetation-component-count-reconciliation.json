@@ -1,0 +1,26 @@
+{
+ "source_sheet": "cleaned/vegetation-sheet-methodB.png",
+ "dimensions": [
+  1536,
+  1024
+ ],
+ "opaque_pixels": 756378,
+ "bfs_total_components": 313,
+ "union_find_total_components": 313,
+ "multiset_identical": false,
+ "ge_120": 92,
+ "lt_120": 221,
+ "size_buckets": {
+  "120+": 92,
+  "1": 148,
+  "4-9": 11,
+  "2-3": 57,
+  "10-29": 4,
+  "30-119": 1
+ },
+ "single_pixel_components": 148,
+ "previous_reported_total": 195,
+ "previous_reported_below": 103,
+ "audit_reported_below": 221,
+ "explanation": "see reconciliation_notes"
+}

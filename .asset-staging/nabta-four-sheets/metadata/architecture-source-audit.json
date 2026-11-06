@@ -1,0 +1,218 @@
+{
+ "file": "architecture-source-sheet.png",
+ "sha256": "b5a24a9f51b41268060c9aeae17028a28f2c947cbc7f2b92d0c1c86b20d5c843",
+ "bytes": 2799303,
+ "format": "PNG",
+ "mode": "RGB",
+ "dimensions": [
+  1536,
+  1024
+ ],
+ "alpha_channel": false,
+ "transparent_fraction": 0.0,
+ "background": {
+  "type": "baked white + faint checkerboard",
+  "dominant_colours": [
+   [
+    [
+     254,
+     254,
+     254
+    ],
+    5963
+   ],
+   [
+    [
+     255,
+     255,
+     255
+    ],
+    4771
+   ],
+   [
+    [
+     253,
+     253,
+     253
+    ],
+    4559
+   ],
+   [
+    [
+     252,
+     252,
+     252
+    ],
+    2627
+   ],
+   [
+    [
+     251,
+     251,
+     251
+    ],
+    1829
+   ]
+  ],
+  "note": "no alpha channel; background is opaque pixels and must be flood-filled from the borders"
+ },
+ "multiple_categories": true,
+ "margins": "thin white margin around the sheet; assets laid out in loose rows",
+ "assets_overlap": "most are separated; stone formations and some fences are close or touching",
+ "families": [
+  {
+   "family": "Buildings / cabins",
+   "region": "R1 (20,20)-(320,300)",
+   "count": 1,
+   "touching": "no",
+   "boundaries": "clear",
+   "notes": "green-roofed cottage with chimney smoke, fenced garden, stone path"
+  },
+  {
+   "family": "Shrines / stone gateways",
+   "region": "R1 (320,20)-(560,300)",
+   "count": 1,
+   "touching": "no",
+   "boundaries": "clear",
+   "notes": "mossy stone arch with glowing green sprout emblem and steps"
+  },
+  {
+   "family": "Bridges",
+   "region": "R2 (610,20)-(1050,150)",
+   "count": 2,
+   "touching": "no",
+   "boundaries": "clear",
+   "notes": "one post-and-beam bridge, one long platform bridge; thin legs"
+  },
+  {
+   "family": "Fences / rails",
+   "region": "R2-R5 (600,150)-(1536,900)",
+   "count": 8,
+   "touching": "some segments within 2-4px of each other",
+   "boundaries": "clear but thin (2-4px rails)",
+   "notes": "multiple railing segments; one wooden gate"
+  },
+  {
+   "family": "Banners / signs",
+   "region": "R2,R5 (650,290)-(1536,760)",
+   "count": 6,
+   "touching": "no",
+   "boundaries": "clear",
+   "notes": "green sprout banner, blue star banner, banner-on-pole, signpost"
+  },
+  {
+   "family": "Ladders",
+   "region": "R5 (860,760)-(940,900)",
+   "count": 1,
+   "touching": "no",
+   "boundaries": "thin rails"
+  },
+  {
+   "family": "Lighting (lanterns, braziers)",
+   "region": "R2,R4,R6",
+   "count": 6,
+   "touching": "no",
+   "boundaries": "clear",
+   "notes": "double lamp post, single lantern post, stone lantern, 2 fire braziers"
+  },
+  {
+   "family": "Stone formations / pillars",
+   "region": "R3 (10,290)-(560,520)",
+   "count": 8,
+   "touching": "several formations touch and may merge",
+   "boundaries": "ambiguous - moss bridges gaps",
+   "notes": "mossy rock walls, pillars, plinths; highest merge risk on the sheet"
+  },
+  {
+   "family": "Stairs",
+   "region": "R3,R4 (400,290)-(560,420)",
+   "count": 2,
+   "touching": "no",
+   "boundaries": "clear"
+  },
+  {
+   "family": "Chests / containers",
+   "region": "R4,R6",
+   "count": 5,
+   "touching": "no",
+   "boundaries": "clear",
+   "notes": "2 treasure chests, 2 barrels, 3 crates, 1 stone block"
+  },
+  {
+   "family": "Wheeled props",
+   "region": "R3 (230,420)-(370,520)",
+   "count": 1,
+   "touching": "no",
+   "boundaries": "clear",
+   "notes": "mine cart loaded with ore"
+  },
+  {
+   "family": "Campfire / braziers",
+   "region": "R3,R6",
+   "count": 3,
+   "touching": "no",
+   "boundaries": "clear"
+  },
+  {
+   "family": "Crystal / monument",
+   "region": "R3,R4",
+   "count": 2,
+   "touching": "no",
+   "boundaries": "clear",
+   "notes": "blue crystal on pedestal; stone monument with circular emblem"
+  },
+  {
+   "family": "Garden props",
+   "region": "R3,R4",
+   "count": 4,
+   "touching": "no",
+   "boundaries": "clear",
+   "notes": "flower planter, 2 flower bushes, bench"
+  },
+  {
+   "family": "Wood / ground props",
+   "region": "R3,R6",
+   "count": 6,
+   "touching": "no",
+   "boundaries": "clear",
+   "notes": "stump, log, hay pile, tent/roll, 2 benches, table"
+  },
+  {
+   "family": "Clay pots / urns",
+   "region": "R3 (770,500)-(870,600)",
+   "count": 3,
+   "touching": "no",
+   "boundaries": "clear"
+  },
+  {
+   "family": "Well",
+   "region": "R5 (350,900)-(430,1024)",
+   "count": 1,
+   "touching": "no",
+   "boundaries": "clear"
+  }
+ ],
+ "total_distinguishable_assets_estimate": 62,
+ "extraction_risks": [
+  "Chimney smoke is pale white and sits directly against a white background - highest removal risk on the sheet",
+  "Glowing green shrine emblem has a near-white core that a neutral predicate may erase",
+  "Fence rails and ladder rungs are 2-4 px thick - aggressive tolerance will erase them",
+  "The background is a faint checkerboard, so residual pixels can bridge separate assets (observed on Water)",
+  "Several mossy stone formations touch each other and may merge into single components",
+  "Pale stone highlights on the arch and steps are close to background white"
+ ],
+ "uncertainties": [
+  "exact asset count needs per-component analysis, not visual counting",
+  "whether touching stone formations are one composite or several assets",
+  "whether chimney smoke is intended as part of the cottage asset"
+ ],
+ "phase": "1 source audit only",
+ "not_performed": [
+  "background removal",
+  "mask generation",
+  "any cropping or extraction",
+  "cleaned sheet creation",
+  "component analysis"
+ ],
+ "source_unchanged": true
+}

@@ -1,0 +1,44 @@
+{
+ "A_214_6": {
+  "removed": 795710,
+  "opaque_remaining": 0.492,
+  "components_ge300": 92,
+  "buckets": {
+   "5k-20k": 44,
+   "1k-5k": 39,
+   "300-1k": 9
+  },
+  "erased_by_spread": {
+   "spread_<=6": 795710
+  }
+ },
+ "B_200_18": {
+  "removed": 816486,
+  "opaque_remaining": 0.4792,
+  "components_ge300": 92,
+  "buckets": {
+   "5k-20k": 44,
+   "1k-5k": 39,
+   "300-1k": 9
+  },
+  "erased_by_spread": {
+   "spread_<=6": 804472,
+   "spread_7-18": 12014
+  }
+ },
+ "C_190_26": {
+  "removed": 821104,
+  "opaque_remaining": 0.4762,
+  "components_ge300": 92,
+  "buckets": {
+   "5k-20k": 44,
+   "1k-5k": 39,
+   "300-1k": 9
+  },
+  "erased_by_spread": {
+   "spread_<=6": 805790,
+   "spread_7-18": 13502,
+   "spread_19-40": 1812
+  }
+ }
+}

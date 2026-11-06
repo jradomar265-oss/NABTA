@@ -1,0 +1,85 @@
+{
+ "corrections": [
+  {
+   "id": "VG007",
+   "original": {
+    "file": "vegetation-full/veg_007_234x265.png",
+    "bbox": [
+     1298,
+     23,
+     234,
+     265
+    ],
+    "dimensions": [
+     234,
+     265
+    ],
+    "opaque_px": 40457,
+    "saturated_px": 31619
+   },
+   "corrected": {
+    "file": "vegetation-corrected/veg_007_234x265_corrected_230x265.png",
+    "bbox": [
+     1298,
+     23,
+     230,
+     265
+    ],
+    "dimensions": [
+     230,
+     265
+    ],
+    "opaque_px": 40368,
+    "saturated_px": 31619,
+    "equals_source_crop": true,
+    "equals_left_slice_of_original": true
+   },
+   "residue_columns_removed": 4,
+   "artwork_px_lost": 0,
+   "pixels_identical_to_source_crop": true,
+   "verdict": "PASS",
+   "identity_confirmed": true
+  },
+  {
+   "id": "VG012",
+   "original": {
+    "file": "vegetation-full/veg_012_101x140.png",
+    "bbox": [
+     767,
+     292,
+     101,
+     140
+    ],
+    "dimensions": [
+     101,
+     140
+    ],
+    "opaque_px": 8659,
+    "saturated_px": 6514
+   },
+   "corrected": {
+    "file": "vegetation-corrected/veg_012_101x140_corrected_98x140.png",
+    "bbox": [
+     767,
+     292,
+     98,
+     140
+    ],
+    "dimensions": [
+     98,
+     140
+    ],
+    "opaque_px": 8627,
+    "saturated_px": 6514,
+    "equals_source_crop": true,
+    "equals_left_slice_of_original": true
+   },
+   "residue_columns_removed": 3,
+   "artwork_px_lost": 0,
+   "pixels_identical_to_source_crop": true,
+   "verdict": "PASS",
+   "identity_confirmed": true
+  }
+ ],
+ "note": "original files preserved; corrections are separate outputs"
+}

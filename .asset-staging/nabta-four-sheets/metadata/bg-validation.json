@@ -1,0 +1,17 @@
+[
+ {
+  "sample": "cliff_lip_original",
+  "interior_near_white_px": 0,
+  "opaque_px": 15110
+ },
+ {
+  "sample": "lily_pads_original",
+  "interior_near_white_px": 0,
+  "opaque_px": 11927
+ },
+ {
+  "sample": "crate_barrel_original",
+  "interior_near_white_px": 0,
+  "opaque_px": 18590
+ }
+]

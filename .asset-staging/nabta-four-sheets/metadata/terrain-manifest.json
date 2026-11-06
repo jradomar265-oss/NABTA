@@ -1,0 +1,2074 @@
+{
+ "source": "sheet-1-terrain.png",
+ "repaired": true,
+ "pitch_evidence": {
+  "grass": {
+   "pitch": 168.0,
+   "evidence": "median gap between 8 consecutive run x-origins",
+   "clean_tile_widths": [
+    142,
+    151,
+    148,
+    133,
+    142,
+    144,
+    146,
+    151,
+    147
+   ]
+  },
+  "transition": {
+   "pitch": 170,
+   "evidence": "median gap between 5 consecutive run x-origins",
+   "clean_tile_widths": []
+  },
+  "cliff_lip_a": {
+   "pitch": 679.0,
+   "evidence": "median gap between 2 consecutive run x-origins",
+   "clean_tile_widths": []
+  },
+  "cliff_lip_b": {
+   "pitch": 235,
+   "evidence": "median gap between 3 consecutive run x-origins",
+   "clean_tile_widths": []
+  },
+  "cliff_tall": {
+   "pitch": 127.0,
+   "evidence": "median gap between 10 consecutive run x-origins",
+   "clean_tile_widths": [
+    119,
+    130,
+    80,
+    97
+   ]
+  },
+  "plateau": {
+   "pitch": 263,
+   "evidence": "median gap between 5 consecutive run x-origins",
+   "clean_tile_widths": [
+    217,
+    176
+   ]
+  }
+ },
+ "assets": [
+  {
+   "id": "terrain_grass_01",
+   "file": "terrain/terrain_grass_01.png",
+   "category": "terrain",
+   "source": "sheet-1-terrain.png",
+   "source_size": [
+    1536,
+    1024
+   ],
+   "bbox": [
+    33,
+    23,
+    142,
+    141
+   ],
+   "dimensions": [
+    142,
+    141
+   ],
+   "transparent_fraction": 0.024,
+   "border_pixels": 0,
+   "padding": 2,
+   "status": "PASS",
+   "origin": "original",
+   "verified": true,
+   "verification": "visually inspected in terrain contact sheet: complete tile"
+  },
+  {
+   "id": "terrain_grass_02",
+   "file": "terrain/terrain_grass_02.png",
+   "category": "terrain",
+   "source": "sheet-1-terrain.png",
+   "source_size": [
+    1536,
+    1024
+   ],
+   "bbox": [
+    199,
+    22,
+    151,
+    141
+   ],
+   "dimensions": [
+    151,
+    141
+   ],
+   "transparent_fraction": 0.011,
+   "border_pixels": 0,
+   "padding": 2,
+   "status": "PASS",
+   "origin": "original",
+   "verified": true,
+   "verification": "visually inspected in terrain contact sheet: complete tile"
+  },
+  {
+   "id": "terrain_grass_03",
+   "file": "terrain/terrain_grass_03.png",
+   "category": "terrain",
+   "source": "sheet-1-terrain.png",
+   "source_size": [
+    1536,
+    1024
+   ],
+   "bbox": [
+    366,
+    22,
+    148,
+    140
+   ],
+   "dimensions": [
+    148,
+    140
+   ],
+   "transparent_fraction": 0.017,
+   "border_pixels": 0,
+   "padding": 2,
+   "status": "PASS",
+   "origin": "original",
+   "verified": true,
+   "verification": "visually inspected in terrain contact sheet: complete tile"
+  },
+  {
+   "id": "terrain_grass_04",
+   "file": "terrain/terrain_grass_04.png",
+   "category": "terrain",
+   "source": "sheet-1-terrain.png",
+   "source_size": [
+    1536,
+    1024
+   ],
+   "bbox": [
+    539,
+    21,
+    133,
+    139
+   ],
+   "dimensions": [
+    133,
+    139
+   ],
+   "transparent_fraction": 0.018,
+   "border_pixels": 0,
+   "padding": 2,
+   "status": "PASS",
+   "origin": "original",
+   "verified": true,
+   "verification": "visually inspected in terrain contact sheet: complete tile"
+  },
+  {
+   "id": "terrain_grass_05",
+   "file": "terrain/terrain_grass_05.png",
+   "category": "terrain",
+   "source": "sheet-1-terrain.png",
+   "source_size": [
+    1536,
+    1024
+   ],
+   "bbox": [
+    690,
+    21,
+    142,
+    140
+   ],
+   "dimensions": [
+    142,
+    140
+   ],
+   "transparent_fraction": 0.017,
+   "border_pixels": 0,
+   "padding": 2,
+   "status": "PASS",
+   "origin": "original",
+   "verified": true,
+   "verification": "visually inspected in terrain contact sheet: complete tile"
+  },
+  {
+   "id": "terrain_grass_06",
+   "file": "terrain/terrain_grass_06.png",
+   "category": "terrain",
+   "source": "sheet-1-terrain.png",
+   "source_size": [
+    1536,
+    1024
+   ],
+   "bbox": [
+    851,
+    21,
+    144,
+    139
+   ],
+   "dimensions": [
+    144,
+    139
+   ],
+   "transparent_fraction": 0.009,
+   "border_pixels": 0,
+   "padding": 2,
+   "status": "PASS",
+   "origin": "original",
+   "verified": true,
+   "verification": "visually inspected in terrain contact sheet: complete tile"
+  },
+  {
+   "id": "terrain_grass_07",
+   "file": "terrain/terrain_grass_07.png",
+   "category": "terrain",
+   "source": "sheet-1-terrain.png",
+   "source_size": [
+    1536,
+    1024
+   ],
+   "bbox": [
+    1020,
+    20,
+    146,
+    141
+   ],
+   "dimensions": [
+    146,
+    141
+   ],
+   "transparent_fraction": 0.015,
+   "border_pixels": 0,
+   "padding": 2,
+   "status": "PASS",
+   "origin": "original",
+   "verified": true,
+   "verification": "visually inspected in terrain contact sheet: complete tile"
+  },
+  {
+   "id": "terrain_grass_08",
+   "file": "terrain/terrain_grass_08.png",
+   "category": "terrain",
+   "source": "sheet-1-terrain.png",
+   "source_size": [
+    1536,
+    1024
+   ],
+   "bbox": [
+    1190,
+    20,
+    151,
+    141
+   ],
+   "dimensions": [
+    151,
+    141
+   ],
+   "transparent_fraction": 0.022,
+   "border_pixels": 0,
+   "padding": 2,
+   "status": "PASS",
+   "origin": "original",
+   "verified": true,
+   "verification": "visually inspected in terrain contact sheet: complete tile"
+  },
+  {
+   "id": "terrain_grass_09",
+   "file": "terrain/terrain_grass_09.png",
+   "category": "terrain",
+   "source": "sheet-1-terrain.png",
+   "source_size": [
+    1536,
+    1024
+   ],
+   "bbox": [
+    1361,
+    21,
+    147,
+    140
+   ],
+   "dimensions": [
+    147,
+    140
+   ],
+   "transparent_fraction": 0.012,
+   "border_pixels": 0,
+   "padding": 2,
+   "status": "PASS",
+   "origin": "original",
+   "verified": true,
+   "verification": "visually inspected in terrain contact sheet: complete tile"
+  },
+  {
+   "id": "terrain_transition_01",
+   "file": "terrain/terrain_transition_01.png",
+   "category": "terrain",
+   "source": "sheet-1-terrain.png",
+   "source_size": [
+    1536,
+    1024
+   ],
+   "bbox": [
+    27,
+    176,
+    147,
+    152
+   ],
+   "dimensions": [
+    147,
+    152
+   ],
+   "transparent_fraction": 0.105,
+   "border_pixels": 145,
+   "padding": 2,
+   "status": "REVIEW"
+  },
+  {
+   "id": "terrain_transition_02",
+   "file": "terrain/terrain_transition_02.png",
+   "category": "terrain",
+   "source": "sheet-1-terrain.png",
+   "source_size": [
+    1536,
+    1024
+   ],
+   "bbox": [
+    197,
+    177,
+    145,
+    151
+   ],
+   "dimensions": [
+    145,
+    151
+   ],
+   "transparent_fraction": 0.052,
+   "border_pixels": 143,
+   "padding": 2,
+   "status": "REVIEW"
+  },
+  {
+   "id": "terrain_transition_03",
+   "file": "terrain/terrain_transition_03.png",
+   "category": "terrain",
+   "source": "sheet-1-terrain.png",
+   "source_size": [
+    1536,
+    1024
+   ],
+   "bbox": [
+    352,
+    176,
+    400,
+    152
+   ],
+   "dimensions": [
+    400,
+    152
+   ],
+   "transparent_fraction": 0.06,
+   "border_pixels": 303,
+   "padding": 2,
+   "status": "SPLIT_SOURCE",
+   "note": "source retained; pieces extracted and individually verified",
+   "decision": "split",
+   "evidence": "visible background gutters between independent tiles in merged-candidates-inspection.png",
+   "corrected_pieces": [
+    {
+     "id": "terrain_transition_03_split1",
+     "bbox": [
+      352,
+      176,
+      123,
+      122
+     ],
+     "dimensions": [
+      123,
+      122
+     ]
+    },
+    {
+     "id": "terrain_transition_03_split2",
+     "bbox": [
+      495,
+      176,
+      100,
+      122
+     ],
+     "dimensions": [
+      100,
+      122
+     ]
+    },
+    {
+     "id": "terrain_transition_03_split3",
+     "bbox": [
+      618,
+      176,
+      136,
+      122
+     ],
+     "dimensions": [
+      136,
+      122
+     ]
+    }
+   ]
+  },
+  {
+   "id": "terrain_transition_04",
+   "file": "terrain/terrain_transition_04.png",
+   "category": "terrain",
+   "source": "sheet-1-terrain.png",
+   "source_size": [
+    1536,
+    1024
+   ],
+   "bbox": [
+    771,
+    176,
+    125,
+    152
+   ],
+   "dimensions": [
+    125,
+    152
+   ],
+   "transparent_fraction": 0.063,
+   "border_pixels": 73,
+   "padding": 2,
+   "status": "REVIEW"
+  },
+  {
+   "id": "terrain_transition_05",
+   "file": "terrain/terrain_transition_05.png",
+   "category": "terrain",
+   "source": "sheet-1-terrain.png",
+   "source_size": [
+    1536,
+    1024
+   ],
+   "bbox": [
+    920,
+    176,
+    442,
+    152
+   ],
+   "dimensions": [
+    442,
+    152
+   ],
+   "transparent_fraction": 0.085,
+   "border_pixels": 262,
+   "padding": 2,
+   "status": "SPLIT_SOURCE",
+   "note": "source retained; pieces extracted and individually verified",
+   "decision": "split",
+   "evidence": "visible background gutters between independent tiles in merged-candidates-inspection.png",
+   "corrected_pieces": [
+    {
+     "id": "terrain_transition_05_split1",
+     "bbox": [
+      920,
+      176,
+      124,
+      125
+     ],
+     "dimensions": [
+      124,
+      125
+     ]
+    },
+    {
+     "id": "terrain_transition_05_split2",
+     "bbox": [
+      1067,
+      176,
+      132,
+      126
+     ],
+     "dimensions": [
+      132,
+      126
+     ]
+    },
+    {
+     "id": "terrain_transition_05_split3",
+     "bbox": [
+      1223,
+      176,
+      130,
+      126
+     ],
+     "dimensions": [
+      130,
+      126
+     ]
+    }
+   ]
+  },
+  {
+   "id": "terrain_transition_06",
+   "file": "terrain/terrain_transition_06.png",
+   "category": "terrain",
+   "source": "sheet-1-terrain.png",
+   "source_size": [
+    1536,
+    1024
+   ],
+   "bbox": [
+    1376,
+    176,
+    131,
+    152
+   ],
+   "dimensions": [
+    131,
+    152
+   ],
+   "transparent_fraction": 0.024,
+   "border_pixels": 119,
+   "padding": 2,
+   "status": "REVIEW"
+  },
+  {
+   "id": "terrain_cliff_lip_a_01",
+   "file": "terrain/terrain_cliff_lip_a_01.png",
+   "category": "terrain",
+   "source": "sheet-1-terrain.png",
+   "source_size": [
+    1536,
+    1024
+   ],
+   "bbox": [
+    24,
+    328,
+    853,
+    144
+   ],
+   "dimensions": [
+    853,
+    144
+   ],
+   "transparent_fraction": 0.168,
+   "border_pixels": 1316,
+   "padding": 2,
+   "status": "RESOLVED",
+   "decision": "split",
+   "evidence": "visible background gutters between independent tiles in merged-candidates-inspection.png",
+   "corrected_pieces": [
+    {
+     "id": "terrain_cliff_lip_a_01_split1",
+     "bbox": [
+      24,
+      328,
+      604,
+      136
+     ],
+     "dimensions": [
+      604,
+      136
+     ]
+    },
+    {
+     "id": "terrain_cliff_lip_a_01_split2",
+     "bbox": [
+      640,
+      328,
+      239,
+      136
+     ],
+     "dimensions": [
+      239,
+      136
+     ]
+    }
+   ],
+   "note": "automated split produced wrong piece count; hand-measured boxes required",
+   "failure_reason": "automated split produced 2 of 6 tiles",
+   "previous_status": "FAILED_SOURCE",
+   "resolved_by": [
+    "A1",
+    "A2",
+    "A3",
+    "A5",
+    "A6"
+   ],
+   "status_reason": "region covered by approved corrected3 pieces"
+  },
+  {
+   "id": "terrain_cliff_lip_a_02",
+   "file": "terrain/terrain_cliff_lip_a_02.png",
+   "category": "terrain",
+   "source": "sheet-1-terrain.png",
+   "source_size": [
+    1536,
+    1024
+   ],
+   "bbox": [
+    883,
+    328,
+    479,
+    144
+   ],
+   "dimensions": [
+    479,
+    144
+   ],
+   "transparent_fraction": 0.207,
+   "border_pixels": 658,
+   "padding": 2,
+   "status": "SPLIT_SOURCE",
+   "decision": "split",
+   "evidence": "visible background gutters between independent tiles in merged-candidates-inspection.png",
+   "corrected_pieces": [
+    {
+     "id": "terrain_cliff_lip_a_02_split1",
+     "bbox": [
+      892,
+      328,
+      114,
+      136
+     ],
+     "dimensions": [
+      114,
+      136
+     ]
+    },
+    {
+     "id": "terrain_cliff_lip_a_02_split2",
+     "bbox": [
+      1023,
+      328,
+      102,
+      114
+     ],
+     "dimensions": [
+      102,
+      114
+     ]
+    },
+    {
+     "id": "terrain_cliff_lip_a_02_split3",
+     "bbox": [
+      1137,
+      328,
+      87,
+      115
+     ],
+     "dimensions": [
+      87,
+      115
+     ]
+    },
+    {
+     "id": "terrain_cliff_lip_a_02_split4",
+     "bbox": [
+      1237,
+      328,
+      127,
+      136
+     ],
+     "dimensions": [
+      127,
+      136
+     ]
+    }
+   ],
+   "note": "source retained; pieces extracted and individually verified"
+  },
+  {
+   "id": "terrain_cliff_lip_a_03",
+   "file": "terrain/terrain_cliff_lip_a_03.png",
+   "category": "terrain",
+   "source": "sheet-1-terrain.png",
+   "source_size": [
+    1536,
+    1024
+   ],
+   "bbox": [
+    1382,
+    328,
+    124,
+    144
+   ],
+   "dimensions": [
+    124,
+    144
+   ],
+   "transparent_fraction": 0.129,
+   "border_pixels": 237,
+   "padding": 2,
+   "status": "REVIEW"
+  },
+  {
+   "id": "terrain_cliff_lip_b_01",
+   "file": "terrain/terrain_cliff_lip_b_01.png",
+   "category": "terrain",
+   "source": "sheet-1-terrain.png",
+   "source_size": [
+    1536,
+    1024
+   ],
+   "bbox": [
+    31,
+    466,
+    128,
+    146
+   ],
+   "dimensions": [
+    128,
+    146
+   ],
+   "transparent_fraction": 0.157,
+   "border_pixels": 209,
+   "padding": 2,
+   "status": "REVIEW"
+  },
+  {
+   "id": "terrain_cliff_lip_b_02",
+   "file": "terrain/terrain_cliff_lip_b_02.png",
+   "category": "terrain",
+   "source": "sheet-1-terrain.png",
+   "source_size": [
+    1536,
+    1024
+   ],
+   "bbox": [
+    166,
+    466,
+    220,
+    146
+   ],
+   "dimensions": [
+    220,
+    146
+   ],
+   "transparent_fraction": 0.112,
+   "border_pixels": 337,
+   "padding": 2,
+   "status": "SPLIT_SOURCE",
+   "decision": "split",
+   "evidence": "visible background gutters between independent tiles in merged-candidates-inspection.png",
+   "corrected_pieces": [
+    {
+     "id": "terrain_cliff_lip_b_02_split1",
+     "bbox": [
+      165,
+      464,
+      106,
+      130
+     ],
+     "dimensions": [
+      106,
+      130
+     ]
+    },
+    {
+     "id": "terrain_cliff_lip_b_02_split2",
+     "bbox": [
+      280,
+      464,
+      108,
+      128
+     ],
+     "dimensions": [
+      108,
+      128
+     ]
+    }
+   ],
+   "note": "source retained; pieces extracted and individually verified"
+  },
+  {
+   "id": "terrain_cliff_lip_b_03",
+   "file": "terrain/terrain_cliff_lip_b_03.png",
+   "category": "terrain",
+   "source": "sheet-1-terrain.png",
+   "source_size": [
+    1536,
+    1024
+   ],
+   "bbox": [
+    401,
+    466,
+    803,
+    146
+   ],
+   "dimensions": [
+    803,
+    146
+   ],
+   "transparent_fraction": 0.209,
+   "border_pixels": 1141,
+   "padding": 2,
+   "status": "SPLIT_SOURCE",
+   "note": "source retained; pieces extracted and individually verified",
+   "decision": "split",
+   "evidence": "visible background gutters between independent tiles in merged-candidates-inspection.png",
+   "corrected_pieces": [
+    {
+     "id": "terrain_cliff_lip_b_03_split1",
+     "bbox": [
+      401,
+      464,
+      125,
+      121
+     ],
+     "dimensions": [
+      125,
+      121
+     ]
+    },
+    {
+     "id": "terrain_cliff_lip_b_03_split2",
+     "bbox": [
+      548,
+      464,
+      116,
+      104
+     ],
+     "dimensions": [
+      116,
+      104
+     ]
+    },
+    {
+     "id": "terrain_cliff_lip_b_03_split3",
+     "bbox": [
+      681,
+      464,
+      106,
+      134
+     ],
+     "dimensions": [
+      106,
+      134
+     ]
+    },
+    {
+     "id": "terrain_cliff_lip_b_03_split4",
+     "bbox": [
+      808,
+      464,
+      222,
+      134
+     ],
+     "dimensions": [
+      222,
+      134
+     ]
+    },
+    {
+     "id": "terrain_cliff_lip_b_03_split5",
+     "bbox": [
+      1053,
+      464,
+      137,
+      134
+     ],
+     "dimensions": [
+      137,
+      134
+     ]
+    }
+   ]
+  },
+  {
+   "id": "terrain_cliff_lip_b_04",
+   "file": "terrain/terrain_cliff_lip_b_04.png",
+   "category": "terrain",
+   "source": "sheet-1-terrain.png",
+   "source_size": [
+    1536,
+    1024
+   ],
+   "bbox": [
+    1210,
+    466,
+    297,
+    146
+   ],
+   "dimensions": [
+    297,
+    146
+   ],
+   "transparent_fraction": 0.237,
+   "border_pixels": 449,
+   "padding": 2,
+   "status": "RESOLVED",
+   "decision": "split",
+   "evidence": "visible background gutters between independent tiles in merged-candidates-inspection.png",
+   "corrected_pieces": [
+    {
+     "id": "terrain_cliff_lip_b_04_split1",
+     "bbox": [
+      1210,
+      464,
+      299,
+      134
+     ],
+     "dimensions": [
+      299,
+      134
+     ]
+    }
+   ],
+   "note": "automated split produced wrong piece count; hand-measured boxes required",
+   "failure_reason": "automated split produced 1 of 2 tiles",
+   "previous_status": "FAILED_SOURCE",
+   "resolved_by": [
+    "C1",
+    "C2"
+   ],
+   "status_reason": "region covered by approved corrected3 pieces"
+  },
+  {
+   "id": "terrain_cliff_tall_01",
+   "file": "terrain/terrain_cliff_tall_01.png",
+   "category": "terrain",
+   "source": "sheet-1-terrain.png",
+   "source_size": [
+    1536,
+    1024
+   ],
+   "bbox": [
+    28,
+    601,
+    119,
+    136
+   ],
+   "dimensions": [
+    119,
+    136
+   ],
+   "transparent_fraction": 0.04,
+   "border_pixels": 0,
+   "padding": 2,
+   "status": "PASS",
+   "origin": "original",
+   "verified": true,
+   "verification": "visually inspected in terrain contact sheet: complete tile"
+  },
+  {
+   "id": "terrain_cliff_tall_02",
+   "file": "terrain/terrain_cliff_tall_02.png",
+   "category": "terrain",
+   "source": "sheet-1-terrain.png",
+   "source_size": [
+    1536,
+    1024
+   ],
+   "bbox": [
+    163,
+    601,
+    130,
+    136
+   ],
+   "dimensions": [
+    130,
+    136
+   ],
+   "transparent_fraction": 0.038,
+   "border_pixels": 0,
+   "padding": 2,
+   "status": "PASS",
+   "origin": "original",
+   "verified": true,
+   "verification": "visually inspected in terrain contact sheet: complete tile"
+  },
+  {
+   "id": "terrain_cliff_tall_03",
+   "file": "terrain/terrain_cliff_tall_03.png",
+   "category": "terrain",
+   "source": "sheet-1-terrain.png",
+   "source_size": [
+    1536,
+    1024
+   ],
+   "bbox": [
+    308,
+    601,
+    80,
+    136
+   ],
+   "dimensions": [
+    80,
+    136
+   ],
+   "transparent_fraction": 0.039,
+   "border_pixels": 0,
+   "padding": 2,
+   "status": "PASS",
+   "origin": "original",
+   "verified": true,
+   "verification": "visually inspected in terrain contact sheet: complete tile"
+  },
+  {
+   "id": "terrain_cliff_tall_04",
+   "file": "terrain/terrain_cliff_tall_04.png",
+   "category": "terrain",
+   "source": "sheet-1-terrain.png",
+   "source_size": [
+    1536,
+    1024
+   ],
+   "bbox": [
+    408,
+    602,
+    99,
+    140
+   ],
+   "dimensions": [
+    99,
+    140
+   ],
+   "transparent_fraction": 0.023,
+   "border_pixels": 62,
+   "padding": 2,
+   "status": "REVIEW"
+  },
+  {
+   "id": "terrain_cliff_tall_05",
+   "file": "terrain/terrain_cliff_tall_05.png",
+   "category": "terrain",
+   "source": "sheet-1-terrain.png",
+   "source_size": [
+    1536,
+    1024
+   ],
+   "bbox": [
+    520,
+    602,
+    97,
+    127
+   ],
+   "dimensions": [
+    97,
+    127
+   ],
+   "transparent_fraction": 0.104,
+   "border_pixels": 0,
+   "padding": 2,
+   "status": "PASS",
+   "origin": "original",
+   "verified": true,
+   "verification": "visually inspected in terrain contact sheet: complete tile"
+  },
+  {
+   "id": "terrain_cliff_tall_06",
+   "file": "terrain/terrain_cliff_tall_06.png",
+   "category": "terrain",
+   "source": "sheet-1-terrain.png",
+   "source_size": [
+    1536,
+    1024
+   ],
+   "bbox": [
+    639,
+    598,
+    174,
+    144
+   ],
+   "dimensions": [
+    174,
+    144
+   ],
+   "transparent_fraction": 0.061,
+   "border_pixels": 165,
+   "padding": 2,
+   "status": "REVIEW"
+  },
+  {
+   "id": "terrain_cliff_tall_07",
+   "file": "terrain/terrain_cliff_tall_07.png",
+   "category": "terrain",
+   "source": "sheet-1-terrain.png",
+   "source_size": [
+    1536,
+    1024
+   ],
+   "bbox": [
+    828,
+    598,
+    146,
+    144
+   ],
+   "dimensions": [
+    146,
+    144
+   ],
+   "transparent_fraction": 0.025,
+   "border_pixels": 171,
+   "padding": 2,
+   "status": "REVIEW"
+  },
+  {
+   "id": "terrain_cliff_tall_08",
+   "file": "terrain/terrain_cliff_tall_08.png",
+   "category": "terrain",
+   "source": "sheet-1-terrain.png",
+   "source_size": [
+    1536,
+    1024
+   ],
+   "bbox": [
+    995,
+    598,
+    76,
+    144
+   ],
+   "dimensions": [
+    76,
+    144
+   ],
+   "transparent_fraction": 0.026,
+   "border_pixels": 88,
+   "padding": 2,
+   "status": "REVIEW"
+  },
+  {
+   "id": "terrain_cliff_tall_09",
+   "file": "terrain/terrain_cliff_tall_09.png",
+   "category": "terrain",
+   "source": "sheet-1-terrain.png",
+   "source_size": [
+    1536,
+    1024
+   ],
+   "bbox": [
+    1091,
+    598,
+    187,
+    144
+   ],
+   "dimensions": [
+    187,
+    144
+   ],
+   "transparent_fraction": 0.048,
+   "border_pixels": 121,
+   "padding": 2,
+   "status": "REVIEW"
+  },
+  {
+   "id": "terrain_cliff_tall_10",
+   "file": "terrain/terrain_cliff_tall_10.png",
+   "category": "terrain",
+   "source": "sheet-1-terrain.png",
+   "source_size": [
+    1536,
+    1024
+   ],
+   "bbox": [
+    1296,
+    598,
+    94,
+    144
+   ],
+   "dimensions": [
+    94,
+    144
+   ],
+   "transparent_fraction": 0.056,
+   "border_pixels": 62,
+   "padding": 2,
+   "status": "REVIEW"
+  },
+  {
+   "id": "terrain_cliff_tall_11",
+   "file": "terrain/terrain_cliff_tall_11.png",
+   "category": "terrain",
+   "source": "sheet-1-terrain.png",
+   "source_size": [
+    1536,
+    1024
+   ],
+   "bbox": [
+    1407,
+    598,
+    101,
+    144
+   ],
+   "dimensions": [
+    101,
+    144
+   ],
+   "transparent_fraction": 0.115,
+   "border_pixels": 80,
+   "padding": 2,
+   "status": "REVIEW"
+  },
+  {
+   "id": "terrain_plateau_01",
+   "file": "terrain/terrain_plateau_01.png",
+   "category": "terrain",
+   "source": "sheet-1-terrain.png",
+   "source_size": [
+    1536,
+    1024
+   ],
+   "bbox": [
+    25,
+    750,
+    217,
+    213
+   ],
+   "dimensions": [
+    217,
+    213
+   ],
+   "transparent_fraction": 0.054,
+   "border_pixels": 0,
+   "padding": 2,
+   "status": "PASS",
+   "origin": "original",
+   "verified": true,
+   "verification": "visually inspected in terrain contact sheet: complete tile"
+  },
+  {
+   "id": "terrain_plateau_02",
+   "file": "terrain/terrain_plateau_02.png",
+   "category": "terrain",
+   "source": "sheet-1-terrain.png",
+   "source_size": [
+    1536,
+    1024
+   ],
+   "bbox": [
+    263,
+    748,
+    246,
+    215
+   ],
+   "dimensions": [
+    246,
+    215
+   ],
+   "transparent_fraction": 0.093,
+   "border_pixels": 46,
+   "padding": 2,
+   "status": "REVIEW"
+  },
+  {
+   "id": "terrain_plateau_03",
+   "file": "terrain/terrain_plateau_03.png",
+   "category": "terrain",
+   "source": "sheet-1-terrain.png",
+   "source_size": [
+    1536,
+    1024
+   ],
+   "bbox": [
+    526,
+    751,
+    176,
+    212
+   ],
+   "dimensions": [
+    176,
+    212
+   ],
+   "transparent_fraction": 0.105,
+   "border_pixels": 0,
+   "padding": 2,
+   "status": "PASS",
+   "origin": "original",
+   "verified": true,
+   "verification": "visually inspected in terrain contact sheet: complete tile"
+  },
+  {
+   "id": "terrain_plateau_04",
+   "file": "terrain/terrain_plateau_04.png",
+   "category": "terrain",
+   "source": "sheet-1-terrain.png",
+   "source_size": [
+    1536,
+    1024
+   ],
+   "bbox": [
+    719,
+    748,
+    254,
+    229
+   ],
+   "dimensions": [
+    254,
+    229
+   ],
+   "transparent_fraction": 0.236,
+   "border_pixels": 77,
+   "padding": 2,
+   "status": "REVIEW"
+  },
+  {
+   "id": "terrain_plateau_05",
+   "file": "terrain/terrain_plateau_05.png",
+   "category": "terrain",
+   "source": "sheet-1-terrain.png",
+   "source_size": [
+    1536,
+    1024
+   ],
+   "bbox": [
+    991,
+    748,
+    264,
+    229
+   ],
+   "dimensions": [
+    264,
+    229
+   ],
+   "transparent_fraction": 0.216,
+   "border_pixels": 175,
+   "padding": 2,
+   "status": "REVIEW"
+  },
+  {
+   "id": "terrain_plateau_06",
+   "file": "terrain/terrain_plateau_06.png",
+   "category": "terrain",
+   "source": "sheet-1-terrain.png",
+   "source_size": [
+    1536,
+    1024
+   ],
+   "bbox": [
+    1292,
+    748,
+    213,
+    229
+   ],
+   "dimensions": [
+    213,
+    229
+   ],
+   "transparent_fraction": 0.148,
+   "border_pixels": 121,
+   "padding": 2,
+   "status": "REVIEW"
+  },
+  {
+   "id": "terrain_cliff_lip_a_01_split1",
+   "file": "corrected/terrain_cliff_lip_a_01_split1.png",
+   "category": "terrain",
+   "source": "sheet-1-terrain.png",
+   "bbox": [
+    24,
+    328,
+    604,
+    136
+   ],
+   "dimensions": [
+    604,
+    136
+   ],
+   "status": "SUPERSEDED",
+   "split_from": "terrain_cliff_lip_a_01",
+   "padding": 2,
+   "transparent_fraction": null,
+   "note": "visually verified gutter split",
+   "origin": "generated",
+   "verified": true,
+   "failure_reason": "bottom-row contamination",
+   "previous_status": "FAILED",
+   "superseded_by": [
+    "A1",
+    "A2",
+    "A3",
+    "A5",
+    "A6"
+   ],
+   "status_reason": "replaced by six approved pieces; A4 excluded"
+  },
+  {
+   "id": "terrain_cliff_lip_a_01_split2",
+   "file": "corrected/terrain_cliff_lip_a_01_split2.png",
+   "category": "terrain",
+   "source": "sheet-1-terrain.png",
+   "bbox": [
+    640,
+    328,
+    239,
+    136
+   ],
+   "dimensions": [
+    239,
+    136
+   ],
+   "status": "SUPERSEDED",
+   "split_from": "terrain_cliff_lip_a_01",
+   "padding": 2,
+   "transparent_fraction": null,
+   "note": "visually verified gutter split",
+   "origin": "generated",
+   "verified": true,
+   "failure_reason": "contamination and two tiles still joined",
+   "previous_status": "FAILED",
+   "superseded_by": [
+    "A1",
+    "A2",
+    "A3",
+    "A5",
+    "A6"
+   ],
+   "status_reason": "replaced by six approved pieces; A4 excluded"
+  },
+  {
+   "id": "terrain_cliff_lip_a_02_split1",
+   "file": "corrected/terrain_cliff_lip_a_02_split1.png",
+   "category": "terrain",
+   "source": "sheet-1-terrain.png",
+   "bbox": [
+    892,
+    328,
+    114,
+    136
+   ],
+   "dimensions": [
+    114,
+    136
+   ],
+   "status": "FAILED",
+   "split_from": "terrain_cliff_lip_a_02",
+   "padding": 2,
+   "transparent_fraction": null,
+   "note": "visually verified gutter split",
+   "origin": "generated",
+   "verified": true,
+   "failure_reason": "checker fragments and partial neighbour"
+  },
+  {
+   "id": "terrain_cliff_lip_a_02_split2",
+   "file": "corrected/terrain_cliff_lip_a_02_split2.png",
+   "category": "terrain",
+   "source": "sheet-1-terrain.png",
+   "bbox": [
+    1023,
+    328,
+    102,
+    114
+   ],
+   "dimensions": [
+    102,
+    114
+   ],
+   "status": "FAILED",
+   "split_from": "terrain_cliff_lip_a_02",
+   "padding": 2,
+   "transparent_fraction": null,
+   "note": "visually verified gutter split",
+   "origin": "generated",
+   "verified": true,
+   "failure_reason": "checker bleeding through interior"
+  },
+  {
+   "id": "terrain_cliff_lip_a_02_split3",
+   "file": "corrected/terrain_cliff_lip_a_02_split3.png",
+   "category": "terrain",
+   "source": "sheet-1-terrain.png",
+   "bbox": [
+    1137,
+    328,
+    87,
+    115
+   ],
+   "dimensions": [
+    87,
+    115
+   ],
+   "status": "PASS",
+   "split_from": "terrain_cliff_lip_a_02",
+   "padding": 2,
+   "transparent_fraction": null,
+   "note": "visually verified gutter split",
+   "origin": "generated",
+   "verified": true,
+   "verification": "visually inspected: complete, clean edges, no contamination"
+  },
+  {
+   "id": "terrain_cliff_lip_a_02_split4",
+   "file": "corrected/terrain_cliff_lip_a_02_split4.png",
+   "category": "terrain",
+   "source": "sheet-1-terrain.png",
+   "bbox": [
+    1237,
+    328,
+    127,
+    136
+   ],
+   "dimensions": [
+    127,
+    136
+   ],
+   "status": "PASS",
+   "split_from": "terrain_cliff_lip_a_02",
+   "padding": 2,
+   "transparent_fraction": null,
+   "note": "visually verified gutter split",
+   "origin": "generated",
+   "verified": true,
+   "verification": "visually inspected: complete, clean edges, no contamination"
+  },
+  {
+   "id": "terrain_cliff_lip_b_02_split1",
+   "file": "corrected/terrain_cliff_lip_b_02_split1.png",
+   "category": "terrain",
+   "source": "sheet-1-terrain.png",
+   "bbox": [
+    165,
+    464,
+    106,
+    130
+   ],
+   "dimensions": [
+    106,
+    130
+   ],
+   "status": "PASS",
+   "split_from": "terrain_cliff_lip_b_02",
+   "padding": 2,
+   "transparent_fraction": null,
+   "note": "visually verified gutter split",
+   "origin": "generated",
+   "verified": true,
+   "verification": "visually inspected: complete, clean edges, no contamination"
+  },
+  {
+   "id": "terrain_cliff_lip_b_02_split2",
+   "file": "corrected/terrain_cliff_lip_b_02_split2.png",
+   "category": "terrain",
+   "source": "sheet-1-terrain.png",
+   "bbox": [
+    280,
+    464,
+    108,
+    128
+   ],
+   "dimensions": [
+    108,
+    128
+   ],
+   "status": "PASS",
+   "split_from": "terrain_cliff_lip_b_02",
+   "padding": 2,
+   "transparent_fraction": null,
+   "note": "visually verified gutter split",
+   "origin": "generated",
+   "verified": true,
+   "verification": "visually inspected: complete, clean edges, no contamination"
+  },
+  {
+   "id": "terrain_cliff_lip_b_03_split1",
+   "file": "corrected/terrain_cliff_lip_b_03_split1.png",
+   "category": "terrain",
+   "source": "sheet-1-terrain.png",
+   "bbox": [
+    401,
+    464,
+    125,
+    121
+   ],
+   "dimensions": [
+    125,
+    121
+   ],
+   "status": "PASS",
+   "split_from": "terrain_cliff_lip_b_03",
+   "padding": 2,
+   "transparent_fraction": null,
+   "note": "visually verified gutter split",
+   "origin": "generated",
+   "verified": true,
+   "verification": "visually inspected: complete, clean edges, no contamination"
+  },
+  {
+   "id": "terrain_cliff_lip_b_03_split2",
+   "file": "corrected/terrain_cliff_lip_b_03_split2.png",
+   "category": "terrain",
+   "source": "sheet-1-terrain.png",
+   "bbox": [
+    548,
+    464,
+    116,
+    104
+   ],
+   "dimensions": [
+    116,
+    104
+   ],
+   "status": "PASS",
+   "split_from": "terrain_cliff_lip_b_03",
+   "padding": 2,
+   "transparent_fraction": null,
+   "note": "visually verified gutter split",
+   "origin": "generated",
+   "verified": true,
+   "verification": "visually inspected: complete, clean edges, no contamination"
+  },
+  {
+   "id": "terrain_cliff_lip_b_03_split3",
+   "file": "corrected/terrain_cliff_lip_b_03_split3.png",
+   "category": "terrain",
+   "source": "sheet-1-terrain.png",
+   "bbox": [
+    681,
+    464,
+    106,
+    134
+   ],
+   "dimensions": [
+    106,
+    134
+   ],
+   "status": "PASS",
+   "split_from": "terrain_cliff_lip_b_03",
+   "padding": 2,
+   "transparent_fraction": null,
+   "note": "visually verified gutter split",
+   "origin": "generated",
+   "verified": true,
+   "verification": "visually inspected: complete, clean edges, no contamination"
+  },
+  {
+   "id": "terrain_cliff_lip_b_03_split4",
+   "file": "corrected/terrain_cliff_lip_b_03_split4.png",
+   "category": "terrain",
+   "source": "sheet-1-terrain.png",
+   "bbox": [
+    808,
+    464,
+    222,
+    134
+   ],
+   "dimensions": [
+    222,
+    134
+   ],
+   "status": "SUPERSEDED",
+   "split_from": "terrain_cliff_lip_b_03",
+   "padding": 2,
+   "transparent_fraction": null,
+   "note": "visually verified gutter split",
+   "origin": "generated",
+   "verified": true,
+   "failure_reason": "two tiles merged",
+   "previous_status": "FAILED",
+   "superseded_by": [
+    "B1",
+    "B2"
+   ],
+   "status_reason": "the two merged tiles were measured separately"
+  },
+  {
+   "id": "terrain_cliff_lip_b_03_split5",
+   "file": "corrected/terrain_cliff_lip_b_03_split5.png",
+   "category": "terrain",
+   "source": "sheet-1-terrain.png",
+   "bbox": [
+    1053,
+    464,
+    137,
+    134
+   ],
+   "dimensions": [
+    137,
+    134
+   ],
+   "status": "PASS",
+   "split_from": "terrain_cliff_lip_b_03",
+   "padding": 2,
+   "transparent_fraction": null,
+   "note": "visually verified gutter split",
+   "origin": "generated",
+   "verified": true,
+   "verification": "visually inspected: complete, clean edges, no contamination"
+  },
+  {
+   "id": "terrain_cliff_lip_b_04_split1",
+   "file": "corrected/terrain_cliff_lip_b_04_split1.png",
+   "category": "terrain",
+   "source": "sheet-1-terrain.png",
+   "bbox": [
+    1210,
+    464,
+    299,
+    134
+   ],
+   "dimensions": [
+    299,
+    134
+   ],
+   "status": "SUPERSEDED",
+   "split_from": "terrain_cliff_lip_b_04",
+   "padding": 2,
+   "transparent_fraction": null,
+   "note": "visually verified gutter split",
+   "origin": "generated",
+   "verified": true,
+   "failure_reason": "two tiles merged",
+   "previous_status": "FAILED",
+   "superseded_by": [
+    "C1",
+    "C2"
+   ],
+   "status_reason": "the two merged tiles were measured separately"
+  },
+  {
+   "id": "terrain_transition_03_split1",
+   "file": "corrected/terrain_transition_03_split1.png",
+   "category": "terrain",
+   "source": "sheet-1-terrain.png",
+   "bbox": [
+    352,
+    176,
+    123,
+    122
+   ],
+   "dimensions": [
+    123,
+    122
+   ],
+   "status": "PASS",
+   "split_from": "terrain_transition_03",
+   "padding": 2,
+   "transparent_fraction": null,
+   "note": "visually verified gutter split",
+   "origin": "generated",
+   "verified": true,
+   "verification": "visually inspected: complete, clean edges, no contamination"
+  },
+  {
+   "id": "terrain_transition_03_split2",
+   "file": "corrected/terrain_transition_03_split2.png",
+   "category": "terrain",
+   "source": "sheet-1-terrain.png",
+   "bbox": [
+    495,
+    176,
+    100,
+    122
+   ],
+   "dimensions": [
+    100,
+    122
+   ],
+   "status": "PASS",
+   "split_from": "terrain_transition_03",
+   "padding": 2,
+   "transparent_fraction": null,
+   "note": "visually verified gutter split",
+   "origin": "generated",
+   "verified": true,
+   "verification": "visually inspected: complete, clean edges, no contamination"
+  },
+  {
+   "id": "terrain_transition_03_split3",
+   "file": "corrected/terrain_transition_03_split3.png",
+   "category": "terrain",
+   "source": "sheet-1-terrain.png",
+   "bbox": [
+    618,
+    176,
+    136,
+    122
+   ],
+   "dimensions": [
+    136,
+    122
+   ],
+   "status": "PASS",
+   "split_from": "terrain_transition_03",
+   "padding": 2,
+   "transparent_fraction": null,
+   "note": "visually verified gutter split",
+   "origin": "generated",
+   "verified": true,
+   "verification": "visually inspected: complete, clean edges, no contamination"
+  },
+  {
+   "id": "terrain_transition_05_split1",
+   "file": "corrected/terrain_transition_05_split1.png",
+   "category": "terrain",
+   "source": "sheet-1-terrain.png",
+   "bbox": [
+    920,
+    176,
+    124,
+    125
+   ],
+   "dimensions": [
+    124,
+    125
+   ],
+   "status": "PASS",
+   "split_from": "terrain_transition_05",
+   "padding": 2,
+   "transparent_fraction": null,
+   "note": "visually verified gutter split",
+   "origin": "generated",
+   "verified": true,
+   "verification": "visually inspected: complete, clean edges, no contamination"
+  },
+  {
+   "id": "terrain_transition_05_split2",
+   "file": "corrected/terrain_transition_05_split2.png",
+   "category": "terrain",
+   "source": "sheet-1-terrain.png",
+   "bbox": [
+    1067,
+    176,
+    132,
+    126
+   ],
+   "dimensions": [
+    132,
+    126
+   ],
+   "status": "PASS",
+   "split_from": "terrain_transition_05",
+   "padding": 2,
+   "transparent_fraction": null,
+   "note": "visually verified gutter split",
+   "origin": "generated",
+   "verified": true,
+   "verification": "visually inspected: complete, clean edges, no contamination"
+  },
+  {
+   "id": "terrain_transition_05_split3",
+   "file": "corrected/terrain_transition_05_split3.png",
+   "category": "terrain",
+   "source": "sheet-1-terrain.png",
+   "bbox": [
+    1223,
+    176,
+    130,
+    126
+   ],
+   "dimensions": [
+    130,
+    126
+   ],
+   "status": "PASS",
+   "split_from": "terrain_transition_05",
+   "padding": 2,
+   "transparent_fraction": null,
+   "note": "visually verified gutter split",
+   "origin": "generated",
+   "verified": true,
+   "verification": "visually inspected: complete, clean edges, no contamination"
+  },
+  {
+   "id": "A1",
+   "file": "corrected3/terrain_cliff_lip_a_01_tile1.png",
+   "category": "terrain",
+   "source": "sheet-1-terrain.png",
+   "bbox": [
+    26,
+    315,
+    147,
+    101
+   ],
+   "dimensions": [
+    147,
+    101
+   ],
+   "status": "PASS",
+   "origin": "corrected3",
+   "verified": true,
+   "padding": 0,
+   "note": "byte-identical to source crop; visually approved"
+  },
+  {
+   "id": "A2",
+   "file": "corrected3/terrain_cliff_lip_a_01_tile2.png",
+   "category": "terrain",
+   "source": "sheet-1-terrain.png",
+   "bbox": [
+    195,
+    315,
+    147,
+    100
+   ],
+   "dimensions": [
+    147,
+    100
+   ],
+   "status": "PASS",
+   "origin": "corrected3",
+   "verified": true,
+   "padding": 0,
+   "note": "byte-identical to source crop; visually approved"
+  },
+  {
+   "id": "A3",
+   "file": "corrected3/terrain_cliff_lip_a_01_tile3.png",
+   "category": "terrain",
+   "source": "sheet-1-terrain.png",
+   "bbox": [
+    358,
+    315,
+    137,
+    101
+   ],
+   "dimensions": [
+    137,
+    101
+   ],
+   "status": "PASS",
+   "origin": "corrected3",
+   "verified": true,
+   "padding": 0,
+   "note": "byte-identical to source crop; visually approved"
+  },
+  {
+   "id": "A4",
+   "file": "corrected3/terrain_cliff_lip_a_01_tile4.png",
+   "category": "terrain",
+   "source": "sheet-1-terrain.png",
+   "bbox": [
+    402,
+    429,
+    123,
+    154
+   ],
+   "dimensions": [
+    123,
+    154
+   ],
+   "status": "REJECTED",
+   "origin": "corrected3",
+   "verified": false,
+   "padding": 0,
+   "note": "byte-identical to source crop; visually approved",
+   "verdict": "DUPLICATE_REJECTED",
+   "duplicate_of": "terrain_cliff_lip_b_03_split1",
+   "duplicate_of_file": "corrected/terrain_cliff_lip_b_03_split1.png",
+   "evidence": "0 differing pixels across the shared 123x119 region; 3782 extra opaque px above split1 top",
+   "rejection_reason": "duplicate artwork plus contamination from the row above; never counted"
+  },
+  {
+   "id": "A5",
+   "file": "corrected3/terrain_cliff_lip_a_01_tile5.png",
+   "category": "terrain",
+   "source": "sheet-1-terrain.png",
+   "bbox": [
+    642,
+    316,
+    102,
+    131
+   ],
+   "dimensions": [
+    102,
+    131
+   ],
+   "status": "PASS",
+   "origin": "corrected3",
+   "verified": true,
+   "padding": 0,
+   "note": "byte-identical to source crop; visually approved"
+  },
+  {
+   "id": "A6",
+   "file": "corrected3/terrain_cliff_lip_a_01_tile6.png",
+   "category": "terrain",
+   "source": "sheet-1-terrain.png",
+   "bbox": [
+    762,
+    318,
+    112,
+    127
+   ],
+   "dimensions": [
+    112,
+    127
+   ],
+   "status": "PASS",
+   "origin": "corrected3",
+   "verified": true,
+   "padding": 0,
+   "note": "byte-identical to source crop; visually approved"
+  },
+  {
+   "id": "B1",
+   "file": "corrected3/terrain_cliff_lip_b_03_tile1.png",
+   "category": "terrain",
+   "source": "sheet-1-terrain.png",
+   "bbox": [
+    810,
+    463,
+    55,
+    112
+   ],
+   "dimensions": [
+    55,
+    112
+   ],
+   "status": "PASS",
+   "origin": "corrected3",
+   "verified": true,
+   "padding": 0,
+   "note": "byte-identical to source crop; visually approved"
+  },
+  {
+   "id": "B2",
+   "file": "corrected3/terrain_cliff_lip_b_03_tile2.png",
+   "category": "terrain",
+   "source": "sheet-1-terrain.png",
+   "bbox": [
+    880,
+    458,
+    149,
+    120
+   ],
+   "dimensions": [
+    149,
+    120
+   ],
+   "status": "PASS",
+   "origin": "corrected3",
+   "verified": true,
+   "padding": 0,
+   "note": "byte-identical to source crop; visually approved"
+  },
+  {
+   "id": "C1",
+   "file": "corrected3/terrain_cliff_lip_b_04_tile1.png",
+   "category": "terrain",
+   "source": "sheet-1-terrain.png",
+   "bbox": [
+    1212,
+    460,
+    137,
+    131
+   ],
+   "dimensions": [
+    137,
+    131
+   ],
+   "status": "PASS",
+   "origin": "corrected3",
+   "verified": true,
+   "padding": 0,
+   "note": "byte-identical to source crop; visually approved"
+  },
+  {
+   "id": "C2",
+   "file": "corrected3/terrain_cliff_lip_b_04_tile2.png",
+   "category": "terrain",
+   "source": "sheet-1-terrain.png",
+   "bbox": [
+    1385,
+    460,
+    118,
+    113
+   ],
+   "dimensions": [
+    118,
+    113
+   ],
+   "status": "PASS",
+   "origin": "corrected3",
+   "verified": true,
+   "padding": 0,
+   "note": "byte-identical to source crop; visually approved"
+  }
+ ]
+}

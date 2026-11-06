@@ -1,0 +1,15 @@
+{
+ "stone_verdicts": {
+  "C11": "PASS_COMPOSITE",
+  "C12": "REVIEW",
+  "C15": "PASS",
+  "C38": "PASS",
+  "C39": "PASS"
+ },
+ "recommendation": "Method A",
+ "difference_regions": 3772,
+ "difference_px": 10671,
+ "sub120_total": 436,
+ "sub120_gt3px": 40,
+ "sub120_audited": 0
+}

@@ -1,0 +1,336 @@
+{
+ "bands": {
+  "trees": [
+   0,
+   300
+  ],
+  "bushes_plants": [
+   300,
+   560
+  ],
+  "grass": [
+   560,
+   700
+  ],
+  "flowers_mush": [
+   700,
+   830
+  ],
+  "leaves": [
+   830,
+   905
+  ],
+  "ground": [
+   905,
+   1024
+  ]
+ },
+ "samples": [
+  {
+   "id": "T1",
+   "band": "trees",
+   "file": "vegetation-types/vegT_01_trees_234x265.png",
+   "bbox": [
+    1298,
+    23,
+    234,
+    265
+   ],
+   "dimensions": [
+    234,
+    265
+   ],
+   "opaque_px": 40457,
+   "pixels_identical": true
+  },
+  {
+   "id": "T2",
+   "band": "trees",
+   "file": "vegetation-types/vegT_02_trees_229x262.png",
+   "bbox": [
+    474,
+    17,
+    229,
+    262
+   ],
+   "dimensions": [
+    229,
+    262
+   ],
+   "opaque_px": 37987,
+   "pixels_identical": true
+  },
+  {
+   "id": "T3",
+   "band": "trees",
+   "file": "vegetation-types/vegT_03_trees_227x250.png",
+   "bbox": [
+    10,
+    14,
+    227,
+    250
+   ],
+   "dimensions": [
+    227,
+    250
+   ],
+   "opaque_px": 37689,
+   "pixels_identical": true
+  },
+  {
+   "id": "T4",
+   "band": "bushes_plants",
+   "file": "vegetation-types/vegT_04_bushes_plants_159x152.png",
+   "bbox": [
+    599,
+    303,
+    159,
+    152
+   ],
+   "dimensions": [
+    159,
+    152
+   ],
+   "opaque_px": 15511,
+   "pixels_identical": true
+  },
+  {
+   "id": "T5",
+   "band": "bushes_plants",
+   "file": "vegetation-types/vegT_05_bushes_plants_155x130.png",
+   "bbox": [
+    1220,
+    424,
+    155,
+    130
+   ],
+   "dimensions": [
+    155,
+    130
+   ],
+   "opaque_px": 14799,
+   "pixels_identical": true
+  },
+  {
+   "id": "T6",
+   "band": "bushes_plants",
+   "file": "vegetation-types/vegT_06_bushes_plants_173x107.png",
+   "bbox": [
+    318,
+    467,
+    173,
+    107
+   ],
+   "dimensions": [
+    173,
+    107
+   ],
+   "opaque_px": 14351,
+   "pixels_identical": true
+  },
+  {
+   "id": "T7",
+   "band": "grass",
+   "file": "vegetation-types/vegT_07_grass_109x90.png",
+   "bbox": [
+    1128,
+    697,
+    109,
+    90
+   ],
+   "dimensions": [
+    109,
+    90
+   ],
+   "opaque_px": 7843,
+   "pixels_identical": true
+  },
+  {
+   "id": "T8",
+   "band": "grass",
+   "file": "vegetation-types/vegT_08_grass_130x82.png",
+   "bbox": [
+    125,
+    590,
+    130,
+    82
+   ],
+   "dimensions": [
+    130,
+    82
+   ],
+   "opaque_px": 7788,
+   "pixels_identical": true
+  },
+  {
+   "id": "T9",
+   "band": "grass",
+   "file": "vegetation-types/vegT_09_grass_124x93.png",
+   "bbox": [
+    1204,
+    581,
+    124,
+    93
+   ],
+   "dimensions": [
+    124,
+    93
+   ],
+   "opaque_px": 7261,
+   "pixels_identical": true
+  },
+  {
+   "id": "T10",
+   "band": "flowers_mush",
+   "file": "vegetation-types/vegT_10_flowers_mush_92x76.png",
+   "bbox": [
+    1242,
+    711,
+    92,
+    76
+   ],
+   "dimensions": [
+    92,
+    76
+   ],
+   "opaque_px": 5332,
+   "pixels_identical": true
+  },
+  {
+   "id": "T11",
+   "band": "flowers_mush",
+   "file": "vegetation-types/vegT_11_flowers_mush_93x83.png",
+   "bbox": [
+    11,
+    796,
+    93,
+    83
+   ],
+   "dimensions": [
+    93,
+    83
+   ],
+   "opaque_px": 5164,
+   "pixels_identical": true
+  },
+  {
+   "id": "T12",
+   "band": "flowers_mush",
+   "file": "vegetation-types/vegT_12_flowers_mush_94x80.png",
+   "bbox": [
+    608,
+    790,
+    94,
+    80
+   ],
+   "dimensions": [
+    94,
+    80
+   ],
+   "opaque_px": 4480,
+   "pixels_identical": true
+  },
+  {
+   "id": "T13",
+   "band": "leaves",
+   "file": "vegetation-types/vegT_13_leaves_160x116.png",
+   "bbox": [
+    979,
+    885,
+    160,
+    116
+   ],
+   "dimensions": [
+    160,
+    116
+   ],
+   "opaque_px": 12669,
+   "pixels_identical": true
+  },
+  {
+   "id": "T14",
+   "band": "leaves",
+   "file": "vegetation-types/vegT_14_leaves_170x112.png",
+   "bbox": [
+    792,
+    885,
+    170,
+    112
+   ],
+   "dimensions": [
+    170,
+    112
+   ],
+   "opaque_px": 11842,
+   "pixels_identical": true
+  },
+  {
+   "id": "T15",
+   "band": "leaves",
+   "file": "vegetation-types/vegT_15_leaves_179x95.png",
+   "bbox": [
+    15,
+    899,
+    179,
+    95
+   ],
+   "dimensions": [
+    179,
+    95
+   ],
+   "opaque_px": 10692,
+   "pixels_identical": true
+  },
+  {
+   "id": "T16",
+   "band": "ground",
+   "file": "vegetation-types/vegT_16_ground_112x82.png",
+   "bbox": [
+    218,
+    908,
+    112,
+    82
+   ],
+   "dimensions": [
+    112,
+    82
+   ],
+   "opaque_px": 5931,
+   "pixels_identical": true
+  },
+  {
+   "id": "T17",
+   "band": "ground",
+   "file": "vegetation-types/vegT_17_ground_84x88.png",
+   "bbox": [
+    1159,
+    910,
+    84,
+    88
+   ],
+   "dimensions": [
+    84,
+    88
+   ],
+   "opaque_px": 5135,
+   "pixels_identical": true
+  },
+  {
+   "id": "T18",
+   "band": "ground",
+   "file": "vegetation-types/vegT_18_ground_84x78.png",
+   "bbox": [
+    1309,
+    922,
+    84,
+    78
+   ],
+   "dimensions": [
+    84,
+    78
+   ],
+   "opaque_px": 4210,
+   "pixels_identical": true
+  }
+ ]
+}

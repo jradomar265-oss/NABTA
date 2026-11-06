@@ -1,0 +1,48 @@
+{
+ "C1": {
+  "file": "terrain_cliff_lip_b_04_tile1",
+  "bbox": [
+   1212,
+   460,
+   137,
+   131
+  ],
+  "corner_window": [
+   103,
+   0,
+   34,
+   32
+  ],
+  "source_corner_origin": [
+   1315,
+   460
+  ],
+  "corner_opaque_px": 963,
+  "corner_area": 1088,
+  "verdict": "REVIEW",
+  "evidence": "see c1-c2-corner-alpha-review-v2.png"
+ },
+ "C2": {
+  "file": "terrain_cliff_lip_b_04_tile2",
+  "bbox": [
+   1385,
+   460,
+   118,
+   113
+  ],
+  "corner_window": [
+   89,
+   0,
+   29,
+   28
+  ],
+  "source_corner_origin": [
+   1474,
+   460
+  ],
+  "corner_opaque_px": 723,
+  "corner_area": 812,
+  "verdict": "REVIEW",
+  "evidence": "see c1-c2-corner-alpha-review-v2.png"
+ }
+}

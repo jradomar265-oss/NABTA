@@ -1,0 +1,93 @@
+{
+ "source_sha256": "b5a24a9f51b41268060c9aeae17028a28f2c947cbc7f2b92d0c1c86b20d5c843",
+ "hash_verified": true,
+ "corrected_region": {
+  "id": "R4",
+  "name": "R4 ladder rails+rungs",
+  "bbox": [
+   1395,
+   425,
+   90,
+   150
+  ],
+  "note": "Phase 2 used (1370,550,120,160) which contained a lamp post; corrected to the ladder",
+  "previous": [
+   1370,
+   550,
+   120,
+   160
+  ]
+ },
+ "regions": [
+  {
+   "id": "R1",
+   "name": "R1 chimney smoke",
+   "bbox": [
+    150,
+    5,
+    120,
+    110
+   ]
+  },
+  {
+   "id": "R2",
+   "name": "R2 shrine emblem core",
+   "bbox": [
+    560,
+    80,
+    200,
+    240
+   ]
+  },
+  {
+   "id": "R3",
+   "name": "R3 thin fence rails",
+   "bbox": [
+    970,
+    215,
+    130,
+    95
+   ]
+  },
+  {
+   "id": "R4",
+   "name": "R4 ladder rails+rungs",
+   "bbox": [
+    1395,
+    425,
+    90,
+    150
+   ]
+  },
+  {
+   "id": "R5",
+   "name": "R5 arch + stone steps",
+   "bbox": [
+    560,
+    240,
+    220,
+    160
+   ]
+  },
+  {
+   "id": "R6",
+   "name": "R6 touching moss rocks",
+   "bbox": [
+    0,
+    390,
+    400,
+    180
+   ]
+  },
+  {
+   "id": "R7",
+   "name": "R7 braziers + glow",
+   "bbox": [
+    280,
+    830,
+    190,
+    120
+   ]
+  }
+ ]
+}

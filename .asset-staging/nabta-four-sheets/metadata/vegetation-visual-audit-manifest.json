@@ -1,0 +1,22 @@
+{
+ "audited_assets": 92,
+ "status_counts": {
+  "PASS": 84,
+  "REVIEW": 7,
+  "CROSS_CATEGORY": 1
+ },
+ "visually_verified_by_agent": 0,
+ "note": "Category labels remain y-band heuristics; the 92-asset sheet was generated for human inspection. Agent-side per-asset visual verification was NOT completed.",
+ "review_items": [
+  "VG057",
+  "VG081",
+  "VG082",
+  "VG083",
+  "VG084",
+  "VG088",
+  "VG092"
+ ],
+ "below_threshold_count": 221,
+ "below_threshold_candidates": 1,
+ "v10": "unchanged, identity UNCERTAIN"
+}

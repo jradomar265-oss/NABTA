@@ -1,0 +1,19 @@
+{
+ "sub120_gt3px_inspected": 40,
+ "classified": {
+  "BACKGROUND_RESIDUE": 34,
+  "REVIEW": 6,
+  "PASS_ARTWORK": 0
+ },
+ "c12": "REVIEW - two pillars joined by base wall",
+ "single_px": {
+  "count": 261,
+  "within_3px_of_art": 251,
+  "isolated_gt20px": 0,
+  "neutral_spread_le10": 261,
+  "near_white": 258,
+  "conclusion": "neutral edge specks; statistical not individual inspection"
+ },
+ "avsb_difference": "not visually resolved; inference only",
+ "recommendation": "Method A (preferred, not approved)"
+}

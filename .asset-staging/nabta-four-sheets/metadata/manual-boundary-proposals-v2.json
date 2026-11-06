@@ -1,0 +1,167 @@
+{
+ "calibration": {
+  "tile_bbox": [
+   35,
+   25,
+   139,
+   137
+  ],
+  "enlargement": 2
+ },
+ "objects": {
+  "A1": {
+   "bbox": [
+    26,
+    315,
+    147,
+    101
+   ],
+   "pixels": 13639,
+   "seed": [
+    99,
+    365
+   ],
+   "merged": false,
+   "edge": false,
+   "verdict": "PASS",
+   "reason": "complete component, no clipping"
+  },
+  "A2": {
+   "bbox": [
+    195,
+    315,
+    147,
+    100
+   ],
+   "pixels": 13287,
+   "seed": [
+    268,
+    365
+   ],
+   "merged": false,
+   "edge": false,
+   "verdict": "PASS",
+   "reason": "complete component, no clipping"
+  },
+  "A3": {
+   "bbox": [
+    358,
+    315,
+    137,
+    101
+   ],
+   "pixels": 12079,
+   "seed": [
+    410,
+    360
+   ],
+   "merged": false,
+   "edge": false,
+   "verdict": "PASS",
+   "reason": "complete component, no clipping"
+  },
+  "A4": null,
+  "A5": {
+   "bbox": [
+    642,
+    316,
+    102,
+    131
+   ],
+   "pixels": 9826,
+   "seed": [
+    690,
+    370
+   ],
+   "merged": false,
+   "edge": false,
+   "verdict": "PASS",
+   "reason": "complete component, no clipping"
+  },
+  "A6": {
+   "bbox": [
+    762,
+    318,
+    112,
+    127
+   ],
+   "pixels": 10556,
+   "seed": [
+    815,
+    375
+   ],
+   "merged": false,
+   "edge": false,
+   "verdict": "PASS",
+   "reason": "complete component, no clipping"
+  },
+  "B1": {
+   "bbox": [
+    810,
+    463,
+    55,
+    112
+   ],
+   "pixels": 5451,
+   "seed": [
+    835,
+    520
+   ],
+   "merged": false,
+   "edge": false,
+   "verdict": "PASS",
+   "reason": "complete component, no clipping"
+  },
+  "B2": {
+   "bbox": [
+    880,
+    458,
+    149,
+    120
+   ],
+   "pixels": 15419,
+   "seed": [
+    950,
+    520
+   ],
+   "merged": false,
+   "edge": false,
+   "verdict": "PASS",
+   "reason": "complete component, no clipping"
+  },
+  "C1": {
+   "bbox": [
+    1212,
+    460,
+    137,
+    131
+   ],
+   "pixels": 14951,
+   "seed": [
+    1270,
+    520
+   ],
+   "merged": false,
+   "edge": false,
+   "verdict": "PASS",
+   "reason": "complete component, no clipping"
+  },
+  "C2": {
+   "bbox": [
+    1385,
+    460,
+    118,
+    113
+   ],
+   "pixels": 10975,
+   "seed": [
+    1400,
+    520
+   ],
+   "merged": false,
+   "edge": false,
+   "verdict": "PASS",
+   "reason": "complete component, no clipping"
+  }
+ }
+}

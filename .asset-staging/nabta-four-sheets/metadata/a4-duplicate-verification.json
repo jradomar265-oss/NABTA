@@ -1,0 +1,31 @@
+{
+ "A4": {
+  "file": ".asset-staging\\nabta-four-sheets\\corrected3\\terrain_cliff_lip_a_01_tile4.png",
+  "bbox": [
+   402,
+   429,
+   123,
+   154
+  ]
+ },
+ "split1": {
+  "file": ".asset-staging\\nabta-four-sheets\\corrected\\terrain_cliff_lip_b_03_split1.png",
+  "bbox": [
+   401,
+   464,
+   125,
+   121
+  ]
+ },
+ "common_source_region": [
+  402,
+  464,
+  123,
+  119
+ ],
+ "opaque_in_both": 10845,
+ "differing_pixels": 0,
+ "max_channel_delta": 0,
+ "a4_only_pixels_above_split1_top": 3782,
+ "verdict": "SAME_ARTWORK_EXTRA_PIXELS"
+}

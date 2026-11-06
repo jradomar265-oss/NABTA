@@ -1,0 +1,153 @@
+{
+ "calibration": {
+  "tile_bbox": [
+   35,
+   25,
+   139,
+   137
+  ],
+  "enlargement": 2
+ },
+ "approved": {
+  "A1": [
+   26,
+   315,
+   147,
+   101
+  ],
+  "A2": [
+   195,
+   315,
+   147,
+   100
+  ],
+  "A3": [
+   358,
+   315,
+   137,
+   101
+  ],
+  "A5": [
+   642,
+   316,
+   102,
+   131
+  ],
+  "A6": [
+   762,
+   318,
+   112,
+   127
+  ],
+  "B2": [
+   880,
+   458,
+   149,
+   120
+  ],
+  "C1": [
+   1212,
+   460,
+   137,
+   131
+  ]
+ },
+ "A4": {
+  "bbox": [
+   402,
+   429,
+   123,
+   154
+  ],
+  "seed": [
+   472,
+   484
+  ],
+  "pixels": 14627,
+  "method": "unbounded component over full 1536x1024 source",
+  "attempts": [
+   {
+    "seed": [
+     472,
+     484
+    ],
+    "bbox": [
+     402,
+     429,
+     123,
+     154
+    ],
+    "pixels": 14627
+   },
+   {
+    "seed": [
+     430,
+     470
+    ],
+    "bbox": [
+     402,
+     429,
+     123,
+     154
+    ],
+    "pixels": 14627
+   },
+   {
+    "seed": [
+     500,
+     500
+    ],
+    "bbox": [
+     402,
+     429,
+     123,
+     154
+    ],
+    "pixels": 14627
+   },
+   {
+    "seed": [
+     455,
+     450
+    ],
+    "bbox": [
+     402,
+     429,
+     123,
+     154
+    ],
+    "pixels": 14627
+   }
+  ],
+  "verdict": "PASS",
+  "reason": "all four edges inside artwork"
+ },
+ "B1": {
+  "bbox": [
+   810,
+   463,
+   55,
+   112
+  ],
+  "seed": [
+   835,
+   520
+  ],
+  "verdict": "REVIEW: artwork continues left",
+  "reason": "opaque columns found at x<760 while bbox starts at 810"
+ },
+ "C2": {
+  "bbox": [
+   1385,
+   460,
+   118,
+   113
+  ],
+  "seed": [
+   1400,
+   520
+  ],
+  "verdict": "complete",
+  "reason": "edge confirmed"
+ }
+}

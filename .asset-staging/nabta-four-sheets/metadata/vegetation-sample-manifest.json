@@ -1,0 +1,257 @@
+{
+ "source": "sheet-3-vegetation.png",
+ "source_size": [
+  1536,
+  1024
+ ],
+ "mode": "RGB",
+ "corner_colours": [
+  [
+   [
+    254,
+    254,
+    254
+   ],
+   205
+  ],
+  [
+   [
+    253,
+    253,
+    253
+   ],
+   120
+  ],
+  [
+   [
+    225,
+    225,
+    225
+   ],
+   48
+  ],
+  [
+   [
+    226,
+    226,
+    226
+   ],
+   44
+  ],
+  [
+   [
+    228,
+    228,
+    228
+   ],
+   44
+  ]
+ ],
+ "methods": {
+  "A_214_6": {
+   "removed": 795710,
+   "coloured_erased": 0
+  },
+  "B_200_18": {
+   "removed": 816486,
+   "coloured_erased": 0
+  },
+  "C_190_26": {
+   "removed": 821104,
+   "coloured_erased": 0
+  }
+ },
+ "components_ge_300": 92,
+ "samples": [
+  {
+   "id": "V1",
+   "file": "vegetation-sample/veg_sample_01_234x265.png",
+   "bbox": [
+    1298,
+    23,
+    234,
+    265
+   ],
+   "dimensions": [
+    234,
+    265
+   ],
+   "component_px": 40453,
+   "opaque_px": 40457,
+   "transparent_px": 21553,
+   "pixels_identical": true,
+   "rgba": true
+  },
+  {
+   "id": "V2",
+   "file": "vegetation-sample/veg_sample_02_229x262.png",
+   "bbox": [
+    474,
+    17,
+    229,
+    262
+   ],
+   "dimensions": [
+    229,
+    262
+   ],
+   "component_px": 37981,
+   "opaque_px": 37987,
+   "transparent_px": 22011,
+   "pixels_identical": true,
+   "rgba": true
+  },
+  {
+   "id": "V3",
+   "file": "vegetation-sample/veg_sample_03_227x250.png",
+   "bbox": [
+    10,
+    14,
+    227,
+    250
+   ],
+   "dimensions": [
+    227,
+    250
+   ],
+   "component_px": 37680,
+   "opaque_px": 37689,
+   "transparent_px": 19061,
+   "pixels_identical": true,
+   "rgba": true
+  },
+  {
+   "id": "V4",
+   "file": "vegetation-sample/veg_sample_04_115x112.png",
+   "bbox": [
+    1406,
+    889,
+    115,
+    112
+   ],
+   "dimensions": [
+    115,
+    112
+   ],
+   "component_px": 8496,
+   "opaque_px": 8498,
+   "transparent_px": 4382,
+   "pixels_identical": true,
+   "rgba": true
+  },
+  {
+   "id": "V5",
+   "file": "vegetation-sample/veg_sample_05_109x90.png",
+   "bbox": [
+    1128,
+    697,
+    109,
+    90
+   ],
+   "dimensions": [
+    109,
+    90
+   ],
+   "component_px": 7840,
+   "opaque_px": 7843,
+   "transparent_px": 1967,
+   "pixels_identical": true,
+   "rgba": true
+  },
+  {
+   "id": "V6",
+   "file": "vegetation-sample/veg_sample_06_130x82.png",
+   "bbox": [
+    125,
+    590,
+    130,
+    82
+   ],
+   "dimensions": [
+    130,
+    82
+   ],
+   "component_px": 7785,
+   "opaque_px": 7788,
+   "transparent_px": 2872,
+   "pixels_identical": true,
+   "rgba": true
+  },
+  {
+   "id": "V7",
+   "file": "vegetation-sample/veg_sample_07_30x20.png",
+   "bbox": [
+    403,
+    951,
+    30,
+    20
+   ],
+   "dimensions": [
+    30,
+    20
+   ],
+   "component_px": 421,
+   "opaque_px": 421,
+   "transparent_px": 179,
+   "pixels_identical": true,
+   "rgba": true
+  },
+  {
+   "id": "V8",
+   "file": "vegetation-sample/veg_sample_08_32x22.png",
+   "bbox": [
+    345,
+    926,
+    32,
+    22
+   ],
+   "dimensions": [
+    32,
+    22
+   ],
+   "component_px": 421,
+   "opaque_px": 421,
+   "transparent_px": 283,
+   "pixels_identical": true,
+   "rgba": true
+  },
+  {
+   "id": "V9",
+   "file": "vegetation-sample/veg_sample_09_26x22.png",
+   "bbox": [
+    384,
+    930,
+    26,
+    22
+   ],
+   "dimensions": [
+    26,
+    22
+   ],
+   "component_px": 401,
+   "opaque_px": 401,
+   "transparent_px": 171,
+   "pixels_identical": true,
+   "rgba": true
+  },
+  {
+   "id": "V10",
+   "file": "vegetation-sample/veg_sample_10_27x20.png",
+   "bbox": [
+    674,
+    941,
+    27,
+    20
+   ],
+   "dimensions": [
+    27,
+    20
+   ],
+   "component_px": 386,
+   "opaque_px": 386,
+   "transparent_px": 154,
+   "pixels_identical": true,
+   "rgba": true
+  }
+ ]
+}

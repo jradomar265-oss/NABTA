@@ -1,0 +1,46 @@
+{
+ "standalone": {
+  "file": "vegetation-sample/veg_sample_10_27x20.png",
+  "bbox": [
+   674,
+   941,
+   27,
+   20
+  ],
+  "dims": [
+   27,
+   20
+  ]
+ },
+ "full_extraction_overlap": [
+  {
+   "id": "VG087",
+   "file": "vegetation-full/veg_087_71x59.png",
+   "bbox": [
+    609,
+    923,
+    71,
+    59
+   ],
+   "dims": [
+    71,
+    59
+   ]
+  },
+  {
+   "id": "VG088",
+   "file": "vegetation-full/veg_088_27x20.png",
+   "bbox": [
+    674,
+    941,
+    27,
+    20
+   ],
+   "dims": [
+    27,
+    20
+   ]
+  }
+ ],
+ "standalone_vs_methodB_crop_diff_px": 0
+}

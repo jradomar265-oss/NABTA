@@ -1,0 +1,105 @@
+{
+ "note": "10 boxes measured manually from measurement-grid.png (2x, 10px grid). Requirement text said 12; the source contains 6+2+2 = 10 independent objects.",
+ "boxes": [
+  {
+   "region": "A",
+   "asset": "terrain_cliff_lip_a_01",
+   "piece": 1,
+   "x": 30,
+   "y": 330,
+   "w": 130,
+   "h": 78,
+   "verdict": "PENDING_VISUAL_CHECK"
+  },
+  {
+   "region": "A",
+   "asset": "terrain_cliff_lip_a_01",
+   "piece": 2,
+   "x": 190,
+   "y": 330,
+   "w": 122,
+   "h": 80,
+   "verdict": "PENDING_VISUAL_CHECK"
+  },
+  {
+   "region": "A",
+   "asset": "terrain_cliff_lip_a_01",
+   "piece": 3,
+   "x": 340,
+   "y": 332,
+   "w": 92,
+   "h": 74,
+   "verdict": "PENDING_VISUAL_CHECK"
+  },
+  {
+   "region": "A",
+   "asset": "terrain_cliff_lip_a_01",
+   "piece": 4,
+   "x": 470,
+   "y": 372,
+   "w": 92,
+   "h": 84,
+   "verdict": "PENDING_VISUAL_CHECK"
+  },
+  {
+   "region": "A",
+   "asset": "terrain_cliff_lip_a_01",
+   "piece": 5,
+   "x": 620,
+   "y": 332,
+   "w": 122,
+   "h": 80,
+   "verdict": "PENDING_VISUAL_CHECK"
+  },
+  {
+   "region": "A",
+   "asset": "terrain_cliff_lip_a_01",
+   "piece": 6,
+   "x": 760,
+   "y": 330,
+   "w": 122,
+   "h": 78,
+   "verdict": "PENDING_VISUAL_CHECK"
+  },
+  {
+   "region": "B",
+   "asset": "terrain_cliff_lip_b_03_split4",
+   "piece": 1,
+   "x": 790,
+   "y": 476,
+   "w": 90,
+   "h": 80,
+   "verdict": "PENDING_VISUAL_CHECK"
+  },
+  {
+   "region": "B",
+   "asset": "terrain_cliff_lip_b_03_split4",
+   "piece": 2,
+   "x": 896,
+   "y": 480,
+   "w": 106,
+   "h": 84,
+   "verdict": "PENDING_VISUAL_CHECK"
+  },
+  {
+   "region": "C",
+   "asset": "terrain_cliff_lip_b_04",
+   "piece": 1,
+   "x": 1196,
+   "y": 466,
+   "w": 124,
+   "h": 96,
+   "verdict": "PENDING_VISUAL_CHECK"
+  },
+  {
+   "region": "C",
+   "asset": "terrain_cliff_lip_b_04",
+   "piece": 2,
+   "x": 1330,
+   "y": 470,
+   "w": 120,
+   "h": 94,
+   "verdict": "PENDING_VISUAL_CHECK"
+  }
+ ]
+}

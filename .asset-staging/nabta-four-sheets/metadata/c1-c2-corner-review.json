@@ -1,0 +1,34 @@
+{
+ "C1": {
+  "corner_window": [
+   103,
+   0,
+   34,
+   32
+  ],
+  "opaque_px": 963,
+  "transparent_px": 19,
+  "opaque_bbox": [
+   103,
+   1,
+   34,
+   31
+  ]
+ },
+ "C2": {
+  "corner_window": [
+   89,
+   0,
+   29,
+   28
+  ],
+  "opaque_px": 723,
+  "transparent_px": 7,
+  "opaque_bbox": [
+   89,
+   2,
+   29,
+   26
+  ]
+ }
+}

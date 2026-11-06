@@ -1,0 +1,260 @@
+{
+ "source": "sheet-1-terrain.png",
+ "source_size": [
+  1536,
+  1024
+ ],
+ "note": "cropped from the background-removed source at approved coordinates; no resizing",
+ "assets": [
+  {
+   "id": "A1",
+   "file": "corrected3/terrain_cliff_lip_a_01_tile1.png",
+   "source": "sheet-1-terrain.png",
+   "bbox": [
+    26,
+    315,
+    147,
+    101
+   ],
+   "dimensions": [
+    147,
+    101
+   ],
+   "approved_dimensions": [
+    147,
+    101
+   ],
+   "opaque_px": 13639,
+   "transparent_px": 285,
+   "dims_match": true,
+   "pixels_identical": true,
+   "rgba": true,
+   "verdict": "PASS"
+  },
+  {
+   "id": "A2",
+   "file": "corrected3/terrain_cliff_lip_a_01_tile2.png",
+   "source": "sheet-1-terrain.png",
+   "bbox": [
+    195,
+    315,
+    147,
+    100
+   ],
+   "dimensions": [
+    147,
+    100
+   ],
+   "approved_dimensions": [
+    147,
+    100
+   ],
+   "opaque_px": 13288,
+   "transparent_px": 280,
+   "dims_match": true,
+   "pixels_identical": true,
+   "rgba": true,
+   "verdict": "PASS"
+  },
+  {
+   "id": "A3",
+   "file": "corrected3/terrain_cliff_lip_a_01_tile3.png",
+   "source": "sheet-1-terrain.png",
+   "bbox": [
+    358,
+    315,
+    137,
+    101
+   ],
+   "dimensions": [
+    137,
+    101
+   ],
+   "approved_dimensions": [
+    137,
+    101
+   ],
+   "opaque_px": 12081,
+   "transparent_px": 371,
+   "dims_match": true,
+   "pixels_identical": true,
+   "rgba": true,
+   "verdict": "PASS"
+  },
+  {
+   "id": "A4",
+   "file": "corrected3/terrain_cliff_lip_a_01_tile4.png",
+   "source": "sheet-1-terrain.png",
+   "bbox": [
+    402,
+    429,
+    123,
+    154
+   ],
+   "dimensions": [
+    123,
+    154
+   ],
+   "approved_dimensions": [
+    123,
+    154
+   ],
+   "opaque_px": 14627,
+   "transparent_px": 2838,
+   "dims_match": true,
+   "pixels_identical": true,
+   "rgba": true,
+   "verdict": "PASS"
+  },
+  {
+   "id": "A5",
+   "file": "corrected3/terrain_cliff_lip_a_01_tile5.png",
+   "source": "sheet-1-terrain.png",
+   "bbox": [
+    642,
+    316,
+    102,
+    131
+   ],
+   "dimensions": [
+    102,
+    131
+   ],
+   "approved_dimensions": [
+    102,
+    131
+   ],
+   "opaque_px": 9826,
+   "transparent_px": 2008,
+   "dims_match": true,
+   "pixels_identical": true,
+   "rgba": true,
+   "verdict": "PASS"
+  },
+  {
+   "id": "A6",
+   "file": "corrected3/terrain_cliff_lip_a_01_tile6.png",
+   "source": "sheet-1-terrain.png",
+   "bbox": [
+    762,
+    318,
+    112,
+    127
+   ],
+   "dimensions": [
+    112,
+    127
+   ],
+   "approved_dimensions": [
+    112,
+    127
+   ],
+   "opaque_px": 10559,
+   "transparent_px": 1742,
+   "dims_match": true,
+   "pixels_identical": true,
+   "rgba": true,
+   "verdict": "PASS"
+  },
+  {
+   "id": "B1",
+   "file": "corrected3/terrain_cliff_lip_b_03_tile1.png",
+   "source": "sheet-1-terrain.png",
+   "bbox": [
+    810,
+    463,
+    55,
+    112
+   ],
+   "dimensions": [
+    55,
+    112
+   ],
+   "approved_dimensions": [
+    55,
+    112
+   ],
+   "opaque_px": 5451,
+   "transparent_px": 114,
+   "dims_match": true,
+   "pixels_identical": true,
+   "rgba": true,
+   "verdict": "PASS"
+  },
+  {
+   "id": "B2",
+   "file": "corrected3/terrain_cliff_lip_b_03_tile2.png",
+   "source": "sheet-1-terrain.png",
+   "bbox": [
+    880,
+    458,
+    149,
+    120
+   ],
+   "dimensions": [
+    149,
+    120
+   ],
+   "approved_dimensions": [
+    149,
+    120
+   ],
+   "opaque_px": 15419,
+   "transparent_px": 436,
+   "dims_match": true,
+   "pixels_identical": true,
+   "rgba": true,
+   "verdict": "PASS"
+  },
+  {
+   "id": "C1",
+   "file": "corrected3/terrain_cliff_lip_b_04_tile1.png",
+   "source": "sheet-1-terrain.png",
+   "bbox": [
+    1212,
+    460,
+    137,
+    131
+   ],
+   "dimensions": [
+    137,
+    131
+   ],
+   "approved_dimensions": [
+    137,
+    131
+   ],
+   "opaque_px": 14952,
+   "transparent_px": 1389,
+   "dims_match": true,
+   "pixels_identical": true,
+   "rgba": true,
+   "verdict": "PASS"
+  },
+  {
+   "id": "C2",
+   "file": "corrected3/terrain_cliff_lip_b_04_tile2.png",
+   "source": "sheet-1-terrain.png",
+   "bbox": [
+    1385,
+    460,
+    118,
+    113
+   ],
+   "dimensions": [
+    118,
+    113
+   ],
+   "approved_dimensions": [
+    118,
+    113
+   ],
+   "opaque_px": 10975,
+   "transparent_px": 915,
+   "dims_match": true,
+   "pixels_identical": true,
+   "rgba": true,
+   "verdict": "PASS"
+  }
+ ]
+}

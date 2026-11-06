@@ -1,0 +1,166 @@
+{
+ "source": "sheet-2-water.png",
+ "source_size": [
+  1536,
+  1024
+ ],
+ "mode": "RGB",
+ "background": "two-tone: white margin + light-grey checker; both neutral >=214",
+ "note": "terrain remover (230+-12) and a white-only target each failed; combined neutral predicate removes both",
+ "removed_pixels": 504106,
+ "component_count": 48,
+ "samples": [
+  {
+   "id": "W1",
+   "file": "water/water_sample_01_248x226.png",
+   "bbox": [
+    0,
+    11,
+    248,
+    226
+   ],
+   "dimensions": [
+    248,
+    226
+   ],
+   "component_px": 45992,
+   "opaque_px": 47252,
+   "transparent_px": 8796,
+   "pixels_identical": true,
+   "rgba": true
+  },
+  {
+   "id": "W2",
+   "file": "water/water_sample_02_285x201.png",
+   "bbox": [
+    259,
+    241,
+    285,
+    201
+   ],
+   "dimensions": [
+    285,
+    201
+   ],
+   "component_px": 41403,
+   "opaque_px": 42628,
+   "transparent_px": 14657,
+   "pixels_identical": true,
+   "rgba": true
+  },
+  {
+   "id": "W3",
+   "file": "water/water_sample_03_92x81.png",
+   "bbox": [
+    1357,
+    447,
+    92,
+    81
+   ],
+   "dimensions": [
+    92,
+    81
+   ],
+   "component_px": 4239,
+   "opaque_px": 4538,
+   "transparent_px": 2914,
+   "pixels_identical": true,
+   "rgba": true
+  },
+  {
+   "id": "W4",
+   "file": "water/water_sample_04_122x164.png",
+   "bbox": [
+    975,
+    493,
+    122,
+    164
+   ],
+   "dimensions": [
+    122,
+    164
+   ],
+   "component_px": 14304,
+   "opaque_px": 14990,
+   "transparent_px": 5018,
+   "pixels_identical": true,
+   "rgba": true
+  },
+  {
+   "id": "W5",
+   "file": "water/water_sample_05_313x159.png",
+   "bbox": [
+    261,
+    625,
+    313,
+    159
+   ],
+   "dimensions": [
+    313,
+    159
+   ],
+   "component_px": 35347,
+   "opaque_px": 36831,
+   "transparent_px": 12936,
+   "pixels_identical": true,
+   "rgba": true
+  },
+  {
+   "id": "W6",
+   "file": "water/water_sample_06_225x132.png",
+   "bbox": [
+    21,
+    644,
+    225,
+    132
+   ],
+   "dimensions": [
+    225,
+    132
+   ],
+   "component_px": 22365,
+   "opaque_px": 22932,
+   "transparent_px": 6768,
+   "pixels_identical": true,
+   "rgba": true
+  },
+  {
+   "id": "W7",
+   "file": "water/water_sample_07_99x164.png",
+   "bbox": [
+    845,
+    748,
+    99,
+    164
+   ],
+   "dimensions": [
+    99,
+    164
+   ],
+   "component_px": 9724,
+   "opaque_px": 10589,
+   "transparent_px": 5647,
+   "pixels_identical": true,
+   "rgba": true
+  },
+  {
+   "id": "W8",
+   "file": "water/water_sample_08_81x79.png",
+   "bbox": [
+    931,
+    834,
+    81,
+    79
+   ],
+   "dimensions": [
+    81,
+    79
+   ],
+   "component_px": 3891,
+   "opaque_px": 4295,
+   "transparent_px": 2104,
+   "pixels_identical": true,
+   "rgba": true
+  }
+ ]
+}

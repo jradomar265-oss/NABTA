@@ -1,0 +1,246 @@
+{
+ "source_sha256": "b5a24a9f51b41268060c9aeae17028a28f2c947cbc7f2b92d0c1c86b20d5c843",
+ "hash_verified": true,
+ "phase": "2-corrected",
+ "note": "corrected after Phase 2 region windows were found to miss 5 of 7 targets",
+ "global": {
+  "A": {
+   "removed_px": 804683,
+   "sampled_coloured_erased": 0
+  },
+  "B": {
+   "removed_px": 815354,
+   "sampled_coloured_erased": 0
+  },
+  "C": {
+   "removed_px": 818273,
+   "sampled_coloured_erased": 0
+  }
+ },
+ "regions": {
+  "R1 chimney smoke": {
+   "bbox": [
+    150,
+    5,
+    120,
+    110
+   ],
+   "methods": {
+    "A": {
+     "opaque_remaining": 6671,
+     "saturated_remaining": 4132,
+     "residual_neutral": 1385,
+     "strongly_coloured_erased": 0,
+     "pale_erased": 6529
+    },
+    "B": {
+     "opaque_remaining": 6462,
+     "saturated_remaining": 4132,
+     "residual_neutral": 1176,
+     "strongly_coloured_erased": 0,
+     "pale_erased": 6738
+    },
+    "C": {
+     "opaque_remaining": 6382,
+     "saturated_remaining": 4132,
+     "residual_neutral": 1096,
+     "strongly_coloured_erased": 0,
+     "pale_erased": 6818
+    },
+    "original_opaque": 13200
+   }
+  },
+  "R2 shrine emblem core": {
+   "bbox": [
+    560,
+    80,
+    200,
+    240
+   ],
+   "methods": {
+    "A": {
+     "opaque_remaining": 47791,
+     "saturated_remaining": 29593,
+     "residual_neutral": 4583,
+     "strongly_coloured_erased": 0,
+     "pale_erased": 209
+    },
+    "B": {
+     "opaque_remaining": 47778,
+     "saturated_remaining": 29593,
+     "residual_neutral": 4570,
+     "strongly_coloured_erased": 0,
+     "pale_erased": 222
+    },
+    "C": {
+     "opaque_remaining": 47776,
+     "saturated_remaining": 29593,
+     "residual_neutral": 4568,
+     "strongly_coloured_erased": 0,
+     "pale_erased": 224
+    },
+    "original_opaque": 48000
+   }
+  },
+  "R3 thin fence rails": {
+   "bbox": [
+    970,
+    215,
+    130,
+    95
+   ],
+   "methods": {
+    "A": {
+     "opaque_remaining": 7275,
+     "saturated_remaining": 3864,
+     "residual_neutral": 671,
+     "strongly_coloured_erased": 0,
+     "pale_erased": 5075
+    },
+    "B": {
+     "opaque_remaining": 7125,
+     "saturated_remaining": 3864,
+     "residual_neutral": 521,
+     "strongly_coloured_erased": 0,
+     "pale_erased": 5225
+    },
+    "C": {
+     "opaque_remaining": 7088,
+     "saturated_remaining": 3864,
+     "residual_neutral": 484,
+     "strongly_coloured_erased": 0,
+     "pale_erased": 5262
+    },
+    "original_opaque": 12350
+   }
+  },
+  "R4 ladder rails+rungs": {
+   "bbox": [
+    1395,
+    425,
+    90,
+    150
+   ],
+   "methods": {
+    "A": {
+     "opaque_remaining": 9385,
+     "saturated_remaining": 4530,
+     "residual_neutral": 2454,
+     "strongly_coloured_erased": 0,
+     "pale_erased": 4115
+    },
+    "B": {
+     "opaque_remaining": 9290,
+     "saturated_remaining": 4530,
+     "residual_neutral": 2359,
+     "strongly_coloured_erased": 0,
+     "pale_erased": 4210
+    },
+    "C": {
+     "opaque_remaining": 9254,
+     "saturated_remaining": 4530,
+     "residual_neutral": 2323,
+     "strongly_coloured_erased": 0,
+     "pale_erased": 4246
+    },
+    "original_opaque": 13500
+   }
+  },
+  "R5 arch + stone steps": {
+   "bbox": [
+    560,
+    240,
+    220,
+    160
+   ],
+   "methods": {
+    "A": {
+     "opaque_remaining": 30948,
+     "saturated_remaining": 12256,
+     "residual_neutral": 4234,
+     "strongly_coloured_erased": 0,
+     "pale_erased": 4252
+    },
+    "B": {
+     "opaque_remaining": 30878,
+     "saturated_remaining": 12256,
+     "residual_neutral": 4164,
+     "strongly_coloured_erased": 0,
+     "pale_erased": 4322
+    },
+    "C": {
+     "opaque_remaining": 30859,
+     "saturated_remaining": 12256,
+     "residual_neutral": 4145,
+     "strongly_coloured_erased": 0,
+     "pale_erased": 4341
+    },
+    "original_opaque": 35200
+   }
+  },
+  "R6 touching moss rocks": {
+   "bbox": [
+    0,
+    390,
+    400,
+    180
+   ],
+   "methods": {
+    "A": {
+     "opaque_remaining": 47185,
+     "saturated_remaining": 21584,
+     "residual_neutral": 3747,
+     "strongly_coloured_erased": 0,
+     "pale_erased": 24815
+    },
+    "B": {
+     "opaque_remaining": 46718,
+     "saturated_remaining": 21584,
+     "residual_neutral": 3280,
+     "strongly_coloured_erased": 0,
+     "pale_erased": 25282
+    },
+    "C": {
+     "opaque_remaining": 46583,
+     "saturated_remaining": 21584,
+     "residual_neutral": 3145,
+     "strongly_coloured_erased": 0,
+     "pale_erased": 25417
+    },
+    "original_opaque": 72000
+   }
+  },
+  "R7 braziers + glow": {
+   "bbox": [
+    280,
+    830,
+    190,
+    120
+   ],
+   "methods": {
+    "A": {
+     "opaque_remaining": 10191,
+     "saturated_remaining": 5115,
+     "residual_neutral": 1237,
+     "strongly_coloured_erased": 0,
+     "pale_erased": 12609
+    },
+    "B": {
+     "opaque_remaining": 9923,
+     "saturated_remaining": 5115,
+     "residual_neutral": 969,
+     "strongly_coloured_erased": 0,
+     "pale_erased": 12877
+    },
+    "C": {
+     "opaque_remaining": 9830,
+     "saturated_remaining": 5115,
+     "residual_neutral": 876,
+     "strongly_coloured_erased": 0,
+     "pale_erased": 12970
+    },
+    "original_opaque": 22800
+   }
+  }
+ }
+}

@@ -1,0 +1,243 @@
+{
+ "source_sha256": "b5a24a9f51b41268060c9aeae17028a28f2c947cbc7f2b92d0c1c86b20d5c843",
+ "hash_verified": true,
+ "global": {
+  "A": {
+   "removed_px": 804683,
+   "remaining_opaque_fraction": 0.4878,
+   "components_ge120": 55,
+   "sampled_coloured_erased": 0
+  },
+  "B": {
+   "removed_px": 815354,
+   "remaining_opaque_fraction": 0.4816,
+   "components_ge120": 55,
+   "sampled_coloured_erased": 0
+  },
+  "C": {
+   "removed_px": 818273,
+   "remaining_opaque_fraction": 0.4797,
+   "components_ge120": 55,
+   "sampled_coloured_erased": 0
+  }
+ },
+ "regions": {
+  "chimney smoke": {
+   "bbox": [
+    60,
+    10,
+    170,
+    110
+   ],
+   "methods": {
+    "A": {
+     "opaque": 6642,
+     "saturated": 4247,
+     "residual_neutral": 1092,
+     "coloured_erased": 0,
+     "pale_erased": 12058
+    },
+    "B": {
+     "opaque": 6454,
+     "saturated": 4247,
+     "residual_neutral": 904,
+     "coloured_erased": 0,
+     "pale_erased": 12246
+    },
+    "C": {
+     "opaque": 6380,
+     "saturated": 4247,
+     "residual_neutral": 830,
+     "coloured_erased": 0,
+     "pale_erased": 12320
+    }
+   }
+  },
+  "shrine emblem core": {
+   "bbox": [
+    450,
+    90,
+    150,
+    150
+   ],
+   "methods": {
+    "A": {
+     "opaque": 16964,
+     "saturated": 7920,
+     "residual_neutral": 1255,
+     "coloured_erased": 0,
+     "pale_erased": 5536
+    },
+    "B": {
+     "opaque": 16847,
+     "saturated": 7920,
+     "residual_neutral": 1138,
+     "coloured_erased": 0,
+     "pale_erased": 5653
+    },
+    "C": {
+     "opaque": 16831,
+     "saturated": 7920,
+     "residual_neutral": 1122,
+     "coloured_erased": 0,
+     "pale_erased": 5669
+    }
+   }
+  },
+  "fence rails": {
+   "bbox": [
+    140,
+    200,
+    190,
+    90
+   ],
+   "methods": {
+    "A": {
+     "opaque": 17100,
+     "saturated": 12177,
+     "residual_neutral": 465,
+     "coloured_erased": 0,
+     "pale_erased": 0
+    },
+    "B": {
+     "opaque": 17100,
+     "saturated": 12177,
+     "residual_neutral": 465,
+     "coloured_erased": 0,
+     "pale_erased": 0
+    },
+    "C": {
+     "opaque": 17100,
+     "saturated": 12177,
+     "residual_neutral": 465,
+     "coloured_erased": 0,
+     "pale_erased": 0
+    }
+   }
+  },
+  "ladder rungs": {
+   "bbox": [
+    1370,
+    550,
+    120,
+    160
+   ],
+   "methods": {
+    "A": {
+     "opaque": 10656,
+     "saturated": 4614,
+     "residual_neutral": 1743,
+     "coloured_erased": 0,
+     "pale_erased": 8544
+    },
+    "B": {
+     "opaque": 10512,
+     "saturated": 4614,
+     "residual_neutral": 1599,
+     "coloured_erased": 0,
+     "pale_erased": 8688
+    },
+    "C": {
+     "opaque": 10485,
+     "saturated": 4614,
+     "residual_neutral": 1572,
+     "coloured_erased": 0,
+     "pale_erased": 8715
+    }
+   }
+  },
+  "stone arch/steps": {
+   "bbox": [
+    320,
+    200,
+    270,
+    130
+   ],
+   "methods": {
+    "A": {
+     "opaque": 28031,
+     "saturated": 15479,
+     "residual_neutral": 1718,
+     "coloured_erased": 0,
+     "pale_erased": 7069
+    },
+    "B": {
+     "opaque": 27821,
+     "saturated": 15479,
+     "residual_neutral": 1508,
+     "coloured_erased": 0,
+     "pale_erased": 7279
+    },
+    "C": {
+     "opaque": 27773,
+     "saturated": 15479,
+     "residual_neutral": 1460,
+     "coloured_erased": 0,
+     "pale_erased": 7327
+    }
+   }
+  },
+  "touching moss": {
+   "bbox": [
+    0,
+    280,
+    330,
+    150
+   ],
+   "methods": {
+    "A": {
+     "opaque": 28899,
+     "saturated": 16848,
+     "residual_neutral": 1268,
+     "coloured_erased": 0,
+     "pale_erased": 20601
+    },
+    "B": {
+     "opaque": 28582,
+     "saturated": 16848,
+     "residual_neutral": 951,
+     "coloured_erased": 0,
+     "pale_erased": 20918
+    },
+    "C": {
+     "opaque": 28508,
+     "saturated": 16848,
+     "residual_neutral": 877,
+     "coloured_erased": 0,
+     "pale_erased": 20992
+    }
+   }
+  },
+  "braziers glow": {
+   "bbox": [
+    180,
+    600,
+    210,
+    130
+   ],
+   "methods": {
+    "A": {
+     "opaque": 9272,
+     "saturated": 5183,
+     "residual_neutral": 208,
+     "coloured_erased": 0,
+     "pale_erased": 18028
+    },
+    "B": {
+     "opaque": 9140,
+     "saturated": 5183,
+     "residual_neutral": 76,
+     "coloured_erased": 0,
+     "pale_erased": 18160
+    },
+    "C": {
+     "opaque": 9107,
+     "saturated": 5183,
+     "residual_neutral": 43,
+     "coloured_erased": 0,
+     "pale_erased": 18193
+    }
+   }
+  }
+ }
+}

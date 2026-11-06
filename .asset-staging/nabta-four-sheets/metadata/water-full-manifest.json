@@ -1,0 +1,1781 @@
+{
+ "method": "B min>=200 spread<=18",
+ "source_size": [
+  1536,
+  1024
+ ],
+ "components_total": 1951,
+ "debris_below_800": 1883,
+ "assets_extracted": 68,
+ "pixel_equality_failures": 0,
+ "assets": [
+  {
+   "id": "W01",
+   "file": "water-full/water_01_231x213.png",
+   "source": "sheet-2-water.png",
+   "source_size": [
+    1536,
+    1024
+   ],
+   "bbox": [
+    12,
+    17,
+    231,
+    213
+   ],
+   "dimensions": [
+    231,
+    213
+   ],
+   "component_px": 44755,
+   "opaque_px": 44787,
+   "transparent_px": 4416,
+   "pixels_identical": true,
+   "rgba": true,
+   "method": "B min>=200 spread<=18",
+   "classification": "PASS"
+  },
+  {
+   "id": "W02",
+   "file": "water-full/water_02_234x210.png",
+   "source": "sheet-2-water.png",
+   "source_size": [
+    1536,
+    1024
+   ],
+   "bbox": [
+    262,
+    23,
+    234,
+    210
+   ],
+   "dimensions": [
+    234,
+    210
+   ],
+   "component_px": 43705,
+   "opaque_px": 43739,
+   "transparent_px": 5401,
+   "pixels_identical": true,
+   "rgba": true,
+   "method": "B min>=200 spread<=18",
+   "classification": "PASS"
+  },
+  {
+   "id": "W03",
+   "file": "water-full/water_03_280x215.png",
+   "source": "sheet-2-water.png",
+   "source_size": [
+    1536,
+    1024
+   ],
+   "bbox": [
+    518,
+    15,
+    280,
+    215
+   ],
+   "dimensions": [
+    280,
+    215
+   ],
+   "component_px": 44856,
+   "opaque_px": 44927,
+   "transparent_px": 15273,
+   "pixels_identical": true,
+   "rgba": true,
+   "method": "B min>=200 spread<=18",
+   "classification": "PASS"
+  },
+  {
+   "id": "W04",
+   "file": "water-full/water_04_224x251.png",
+   "source": "sheet-2-water.png",
+   "source_size": [
+    1536,
+    1024
+   ],
+   "bbox": [
+    815,
+    17,
+    224,
+    251
+   ],
+   "dimensions": [
+    224,
+    251
+   ],
+   "component_px": 48112,
+   "opaque_px": 48183,
+   "transparent_px": 8041,
+   "pixels_identical": true,
+   "rgba": true,
+   "method": "B min>=200 spread<=18",
+   "classification": "PASS"
+  },
+  {
+   "id": "W05",
+   "file": "water-full/water_05_174x247.png",
+   "source": "sheet-2-water.png",
+   "source_size": [
+    1536,
+    1024
+   ],
+   "bbox": [
+    1042,
+    17,
+    174,
+    247
+   ],
+   "dimensions": [
+    174,
+    247
+   ],
+   "component_px": 35749,
+   "opaque_px": 35800,
+   "transparent_px": 7178,
+   "pixels_identical": true,
+   "rgba": true,
+   "method": "B min>=200 spread<=18",
+   "classification": "PASS"
+  },
+  {
+   "id": "W06",
+   "file": "water-full/water_06_163x246.png",
+   "source": "sheet-2-water.png",
+   "source_size": [
+    1536,
+    1024
+   ],
+   "bbox": [
+    1219,
+    22,
+    163,
+    246
+   ],
+   "dimensions": [
+    163,
+    246
+   ],
+   "component_px": 33359,
+   "opaque_px": 33441,
+   "transparent_px": 6657,
+   "pixels_identical": true,
+   "rgba": true,
+   "method": "B min>=200 spread<=18",
+   "classification": "PASS"
+  },
+  {
+   "id": "W07",
+   "file": "water-full/water_07_138x254.png",
+   "source": "sheet-2-water.png",
+   "source_size": [
+    1536,
+    1024
+   ],
+   "bbox": [
+    1391,
+    17,
+    138,
+    254
+   ],
+   "dimensions": [
+    138,
+    254
+   ],
+   "component_px": 28834,
+   "opaque_px": 28863,
+   "transparent_px": 6189,
+   "pixels_identical": true,
+   "rgba": true,
+   "method": "B min>=200 spread<=18",
+   "classification": "PASS"
+  },
+  {
+   "id": "W08",
+   "file": "water-full/water_08_228x188.png",
+   "source": "sheet-2-water.png",
+   "source_size": [
+    1536,
+    1024
+   ],
+   "bbox": [
+    15,
+    246,
+    228,
+    188
+   ],
+   "dimensions": [
+    228,
+    188
+   ],
+   "component_px": 39435,
+   "opaque_px": 39466,
+   "transparent_px": 3398,
+   "pixels_identical": true,
+   "rgba": true,
+   "method": "B min>=200 spread<=18",
+   "classification": "PASS"
+  },
+  {
+   "id": "W09",
+   "file": "water-full/water_09_279x187.png",
+   "source": "sheet-2-water.png",
+   "source_size": [
+    1536,
+    1024
+   ],
+   "bbox": [
+    261,
+    247,
+    279,
+    187
+   ],
+   "dimensions": [
+    279,
+    187
+   ],
+   "component_px": 40287,
+   "opaque_px": 40371,
+   "transparent_px": 11802,
+   "pixels_identical": true,
+   "rgba": true,
+   "method": "B min>=200 spread<=18",
+   "classification": "PASS"
+  },
+  {
+   "id": "W10",
+   "file": "water-full/water_10_249x209.png",
+   "source": "sheet-2-water.png",
+   "source_size": [
+    1536,
+    1024
+   ],
+   "bbox": [
+    559,
+    247,
+    249,
+    209
+   ],
+   "dimensions": [
+    249,
+    209
+   ],
+   "component_px": 46302,
+   "opaque_px": 46327,
+   "transparent_px": 5714,
+   "pixels_identical": true,
+   "rgba": true,
+   "method": "B min>=200 spread<=18",
+   "classification": "PASS"
+  },
+  {
+   "id": "W11",
+   "file": "water-full/water_11_185x196.png",
+   "source": "sheet-2-water.png",
+   "source_size": [
+    1536,
+    1024
+   ],
+   "bbox": [
+    853,
+    285,
+    185,
+    196
+   ],
+   "dimensions": [
+    185,
+    196
+   ],
+   "component_px": 31899,
+   "opaque_px": 31948,
+   "transparent_px": 4312,
+   "pixels_identical": true,
+   "rgba": true,
+   "method": "B min>=200 spread<=18",
+   "classification": "PASS"
+  },
+  {
+   "id": "W12",
+   "file": "water-full/water_12_95x226.png",
+   "source": "sheet-2-water.png",
+   "source_size": [
+    1536,
+    1024
+   ],
+   "bbox": [
+    1081,
+    285,
+    95,
+    226
+   ],
+   "dimensions": [
+    95,
+    226
+   ],
+   "component_px": 18416,
+   "opaque_px": 18448,
+   "transparent_px": 3022,
+   "pixels_identical": true,
+   "rgba": true,
+   "method": "B min>=200 spread<=18",
+   "classification": "PASS"
+  },
+  {
+   "id": "W13",
+   "file": "water-full/water_13_61x194.png",
+   "source": "sheet-2-water.png",
+   "source_size": [
+    1536,
+    1024
+   ],
+   "bbox": [
+    1199,
+    286,
+    61,
+    194
+   ],
+   "dimensions": [
+    61,
+    194
+   ],
+   "component_px": 10178,
+   "opaque_px": 10258,
+   "transparent_px": 1576,
+   "pixels_identical": true,
+   "rgba": true,
+   "method": "B min>=200 spread<=18",
+   "classification": "PASS"
+  },
+  {
+   "id": "W14",
+   "file": "water-full/water_14_67x205.png",
+   "source": "sheet-2-water.png",
+   "source_size": [
+    1536,
+    1024
+   ],
+   "bbox": [
+    1285,
+    287,
+    67,
+    205
+   ],
+   "dimensions": [
+    67,
+    205
+   ],
+   "component_px": 10785,
+   "opaque_px": 11073,
+   "transparent_px": 2662,
+   "pixels_identical": true,
+   "rgba": true,
+   "method": "B min>=200 spread<=18",
+   "classification": "PASS"
+  },
+  {
+   "id": "WB3",
+   "file": "water-full/water_15_64x60.png",
+   "source": "sheet-2-water.png",
+   "source_size": [
+    1536,
+    1024
+   ],
+   "bbox": [
+    1378,
+    311,
+    64,
+    60
+   ],
+   "dimensions": [
+    64,
+    60
+   ],
+   "component_px": 3023,
+   "opaque_px": 3039,
+   "transparent_px": 801,
+   "pixels_identical": true,
+   "rgba": true,
+   "method": "B min>=200 spread<=18",
+   "classification": "PASS"
+  },
+  {
+   "id": "W16",
+   "file": "water-full/water_16_41x52.png",
+   "source": "sheet-2-water.png",
+   "source_size": [
+    1536,
+    1024
+   ],
+   "bbox": [
+    1456,
+    328,
+    41,
+    52
+   ],
+   "dimensions": [
+    41,
+    52
+   ],
+   "component_px": 1209,
+   "opaque_px": 1335,
+   "transparent_px": 797,
+   "pixels_identical": true,
+   "rgba": true,
+   "method": "B min>=200 spread<=18",
+   "classification": "REVIEW"
+  },
+  {
+   "id": "WB4",
+   "file": "water-full/water_17_27x49.png",
+   "source": "sheet-2-water.png",
+   "source_size": [
+    1536,
+    1024
+   ],
+   "bbox": [
+    1376,
+    389,
+    27,
+    49
+   ],
+   "dimensions": [
+    27,
+    49
+   ],
+   "component_px": 889,
+   "opaque_px": 889,
+   "transparent_px": 434,
+   "pixels_identical": true,
+   "rgba": true,
+   "method": "B min>=200 spread<=18",
+   "classification": "PASS"
+  },
+  {
+   "id": "WB5",
+   "file": "water-full/water_18_340x189.png",
+   "source": "sheet-2-water.png",
+   "source_size": [
+    1536,
+    1024
+   ],
+   "bbox": [
+    11,
+    454,
+    340,
+    189
+   ],
+   "dimensions": [
+    340,
+    189
+   ],
+   "component_px": 51011,
+   "opaque_px": 51200,
+   "transparent_px": 13060,
+   "pixels_identical": true,
+   "rgba": true,
+   "method": "B min>=200 spread<=18",
+   "classification": "PASS"
+  },
+  {
+   "id": "W19",
+   "file": "water-full/water_19_215x170.png",
+   "source": "sheet-2-water.png",
+   "source_size": [
+    1536,
+    1024
+   ],
+   "bbox": [
+    371,
+    455,
+    215,
+    170
+   ],
+   "dimensions": [
+    215,
+    170
+   ],
+   "component_px": 29695,
+   "opaque_px": 29738,
+   "transparent_px": 6812,
+   "pixels_identical": true,
+   "rgba": true,
+   "method": "B min>=200 spread<=18",
+   "classification": "PASS"
+  },
+  {
+   "id": "W20",
+   "file": "water-full/water_20_169x161.png",
+   "source": "sheet-2-water.png",
+   "source_size": [
+    1536,
+    1024
+   ],
+   "bbox": [
+    603,
+    461,
+    169,
+    161
+   ],
+   "dimensions": [
+    169,
+    161
+   ],
+   "component_px": 20944,
+   "opaque_px": 20988,
+   "transparent_px": 6221,
+   "pixels_identical": true,
+   "rgba": true,
+   "method": "B min>=200 spread<=18",
+   "classification": "PASS"
+  },
+  {
+   "id": "W21",
+   "file": "water-full/water_21_61x34.png",
+   "source": "sheet-2-water.png",
+   "source_size": [
+    1536,
+    1024
+   ],
+   "bbox": [
+    1201,
+    476,
+    61,
+    34
+   ],
+   "dimensions": [
+    61,
+    34
+   ],
+   "component_px": 908,
+   "opaque_px": 1137,
+   "transparent_px": 937,
+   "pixels_identical": true,
+   "rgba": true,
+   "method": "B min>=200 spread<=18",
+   "classification": "REVIEW"
+  },
+  {
+   "id": "W22",
+   "file": "water-full/water_22_73x69.png",
+   "source": "sheet-2-water.png",
+   "source_size": [
+    1536,
+    1024
+   ],
+   "bbox": [
+    1367,
+    458,
+    73,
+    69
+   ],
+   "dimensions": [
+    73,
+    69
+   ],
+   "component_px": 2776,
+   "opaque_px": 2816,
+   "transparent_px": 2221,
+   "pixels_identical": true,
+   "rgba": true,
+   "method": "B min>=200 spread<=18",
+   "classification": "REVIEW"
+  },
+  {
+   "id": "W23",
+   "file": "water-full/water_23_70x72.png",
+   "source": "sheet-2-water.png",
+   "source_size": [
+    1536,
+    1024
+   ],
+   "bbox": [
+    1455,
+    456,
+    70,
+    72
+   ],
+   "dimensions": [
+    70,
+    72
+   ],
+   "component_px": 3238,
+   "opaque_px": 3258,
+   "transparent_px": 1782,
+   "pixels_identical": true,
+   "rgba": true,
+   "method": "B min>=200 spread<=18",
+   "classification": "REVIEW"
+  },
+  {
+   "id": "W24",
+   "file": "water-full/water_24_167x131.png",
+   "source": "sheet-2-water.png",
+   "source_size": [
+    1536,
+    1024
+   ],
+   "bbox": [
+    795,
+    482,
+    167,
+    131
+   ],
+   "dimensions": [
+    167,
+    131
+   ],
+   "component_px": 16965,
+   "opaque_px": 16998,
+   "transparent_px": 4879,
+   "pixels_identical": true,
+   "rgba": true,
+   "method": "B min>=200 spread<=18",
+   "classification": "PASS"
+  },
+  {
+   "id": "W25",
+   "file": "water-full/water_25_107x152.png",
+   "source": "sheet-2-water.png",
+   "source_size": [
+    1536,
+    1024
+   ],
+   "bbox": [
+    982,
+    502,
+    107,
+    152
+   ],
+   "dimensions": [
+    107,
+    152
+   ],
+   "component_px": 13602,
+   "opaque_px": 13646,
+   "transparent_px": 2618,
+   "pixels_identical": true,
+   "rgba": true,
+   "method": "B min>=200 spread<=18",
+   "classification": "PASS"
+  },
+  {
+   "id": "W26",
+   "file": "water-full/water_26_66x29.png",
+   "source": "sheet-2-water.png",
+   "source_size": [
+    1536,
+    1024
+   ],
+   "bbox": [
+    1282,
+    480,
+    66,
+    29
+   ],
+   "dimensions": [
+    66,
+    29
+   ],
+   "component_px": 811,
+   "opaque_px": 1014,
+   "transparent_px": 900,
+   "pixels_identical": true,
+   "rgba": true,
+   "method": "B min>=200 spread<=18",
+   "classification": "REVIEW"
+  },
+  {
+   "id": "W27",
+   "file": "water-full/water_27_219x119.png",
+   "source": "sheet-2-water.png",
+   "source_size": [
+    1536,
+    1024
+   ],
+   "bbox": [
+    1304,
+    539,
+    219,
+    119
+   ],
+   "dimensions": [
+    219,
+    119
+   ],
+   "component_px": 21233,
+   "opaque_px": 21278,
+   "transparent_px": 4783,
+   "pixels_identical": true,
+   "rgba": true,
+   "method": "B min>=200 spread<=18",
+   "classification": "PASS"
+  },
+  {
+   "id": "W28",
+   "file": "water-full/water_28_184x114.png",
+   "source": "sheet-2-water.png",
+   "source_size": [
+    1536,
+    1024
+   ],
+   "bbox": [
+    1105,
+    543,
+    184,
+    114
+   ],
+   "dimensions": [
+    184,
+    114
+   ],
+   "component_px": 18749,
+   "opaque_px": 18757,
+   "transparent_px": 2219,
+   "pixels_identical": true,
+   "rgba": true,
+   "method": "B min>=200 spread<=18",
+   "classification": "PASS"
+  },
+  {
+   "id": "W29",
+   "file": "water-full/water_29_225x122.png",
+   "source": "sheet-2-water.png",
+   "source_size": [
+    1536,
+    1024
+   ],
+   "bbox": [
+    21,
+    652,
+    225,
+    122
+   ],
+   "dimensions": [
+    225,
+    122
+   ],
+   "component_px": 21790,
+   "opaque_px": 21840,
+   "transparent_px": 5610,
+   "pixels_identical": true,
+   "rgba": true,
+   "method": "B min>=200 spread<=18",
+   "classification": "PASS"
+  },
+  {
+   "id": "W30",
+   "file": "water-full/water_30_298x145.png",
+   "source": "sheet-2-water.png",
+   "source_size": [
+    1536,
+    1024
+   ],
+   "bbox": [
+    272,
+    631,
+    298,
+    145
+   ],
+   "dimensions": [
+    298,
+    145
+   ],
+   "component_px": 34360,
+   "opaque_px": 34403,
+   "transparent_px": 8807,
+   "pixels_identical": true,
+   "rgba": true,
+   "method": "B min>=200 spread<=18",
+   "classification": "PASS"
+  },
+  {
+   "id": "W31",
+   "file": "water-full/water_31_184x116.png",
+   "source": "sheet-2-water.png",
+   "source_size": [
+    1536,
+    1024
+   ],
+   "bbox": [
+    584,
+    633,
+    184,
+    116
+   ],
+   "dimensions": [
+    184,
+    116
+   ],
+   "component_px": 15348,
+   "opaque_px": 15376,
+   "transparent_px": 5968,
+   "pixels_identical": true,
+   "rgba": true,
+   "method": "B min>=200 spread<=18",
+   "classification": "PASS"
+  },
+  {
+   "id": "W32",
+   "file": "water-full/water_32_123x114.png",
+   "source": "sheet-2-water.png",
+   "source_size": [
+    1536,
+    1024
+   ],
+   "bbox": [
+    793,
+    635,
+    123,
+    114
+   ],
+   "dimensions": [
+    123,
+    114
+   ],
+   "component_px": 10067,
+   "opaque_px": 10089,
+   "transparent_px": 3933,
+   "pixels_identical": true,
+   "rgba": true,
+   "method": "B min>=200 spread<=18",
+   "classification": "PASS"
+  },
+  {
+   "id": "W33",
+   "file": "water-full/water_33_150x118.png",
+   "source": "sheet-2-water.png",
+   "source_size": [
+    1536,
+    1024
+   ],
+   "bbox": [
+    932,
+    655,
+    150,
+    118
+   ],
+   "dimensions": [
+    150,
+    118
+   ],
+   "component_px": 14066,
+   "opaque_px": 14105,
+   "transparent_px": 3595,
+   "pixels_identical": true,
+   "rgba": true,
+   "method": "B min>=200 spread<=18",
+   "classification": "PASS"
+  },
+  {
+   "id": "W34",
+   "file": "water-full/water_34_197x116.png",
+   "source": "sheet-2-water.png",
+   "source_size": [
+    1536,
+    1024
+   ],
+   "bbox": [
+    1099,
+    664,
+    197,
+    116
+   ],
+   "dimensions": [
+    197,
+    116
+   ],
+   "component_px": 19571,
+   "opaque_px": 19587,
+   "transparent_px": 3265,
+   "pixels_identical": true,
+   "rgba": true,
+   "method": "B min>=200 spread<=18",
+   "classification": "PASS"
+  },
+  {
+   "id": "W35",
+   "file": "water-full/water_35_176x112.png",
+   "source": "sheet-2-water.png",
+   "source_size": [
+    1536,
+    1024
+   ],
+   "bbox": [
+    1315,
+    663,
+    176,
+    112
+   ],
+   "dimensions": [
+    176,
+    112
+   ],
+   "component_px": 17501,
+   "opaque_px": 17523,
+   "transparent_px": 2189,
+   "pixels_identical": true,
+   "rgba": true,
+   "method": "B min>=200 spread<=18",
+   "classification": "PASS"
+  },
+  {
+   "id": "W36",
+   "file": "water-full/water_36_91x158.png",
+   "source": "sheet-2-water.png",
+   "source_size": [
+    1536,
+    1024
+   ],
+   "bbox": [
+    850,
+    748,
+    91,
+    158
+   ],
+   "dimensions": [
+    91,
+    158
+   ],
+   "component_px": 8815,
+   "opaque_px": 9000,
+   "transparent_px": 5378,
+   "pixels_identical": true,
+   "rgba": true,
+   "method": "B min>=200 spread<=18",
+   "classification": "PASS"
+  },
+  {
+   "id": "W37",
+   "file": "water-full/water_37_84x69.png",
+   "source": "sheet-2-water.png",
+   "source_size": [
+    1536,
+    1024
+   ],
+   "bbox": [
+    15,
+    791,
+    84,
+    69
+   ],
+   "dimensions": [
+    84,
+    69
+   ],
+   "component_px": 4241,
+   "opaque_px": 4262,
+   "transparent_px": 1534,
+   "pixels_identical": true,
+   "rgba": true,
+   "method": "B min>=200 spread<=18",
+   "classification": "REVIEW"
+  },
+  {
+   "id": "W38",
+   "file": "water-full/water_38_79x68.png",
+   "source": "sheet-2-water.png",
+   "source_size": [
+    1536,
+    1024
+   ],
+   "bbox": [
+    115,
+    790,
+    79,
+    68
+   ],
+   "dimensions": [
+    79,
+    68
+   ],
+   "component_px": 4206,
+   "opaque_px": 4216,
+   "transparent_px": 1156,
+   "pixels_identical": true,
+   "rgba": true,
+   "method": "B min>=200 spread<=18",
+   "classification": "REVIEW"
+  },
+  {
+   "id": "W39",
+   "file": "water-full/water_39_122x84.png",
+   "source": "sheet-2-water.png",
+   "source_size": [
+    1536,
+    1024
+   ],
+   "bbox": [
+    208,
+    780,
+    122,
+    84
+   ],
+   "dimensions": [
+    122,
+    84
+   ],
+   "component_px": 5626,
+   "opaque_px": 5657,
+   "transparent_px": 4591,
+   "pixels_identical": true,
+   "rgba": true,
+   "method": "B min>=200 spread<=18",
+   "classification": "PASS"
+  },
+  {
+   "id": "W40",
+   "file": "water-full/water_40_84x64.png",
+   "source": "sheet-2-water.png",
+   "source_size": [
+    1536,
+    1024
+   ],
+   "bbox": [
+    342,
+    790,
+    84,
+    64
+   ],
+   "dimensions": [
+    84,
+    64
+   ],
+   "component_px": 3900,
+   "opaque_px": 3925,
+   "transparent_px": 1451,
+   "pixels_identical": true,
+   "rgba": true,
+   "method": "B min>=200 spread<=18",
+   "classification": "REVIEW"
+  },
+  {
+   "id": "W41",
+   "file": "water-full/water_41_55x64.png",
+   "source": "sheet-2-water.png",
+   "source_size": [
+    1536,
+    1024
+   ],
+   "bbox": [
+    439,
+    793,
+    55,
+    64
+   ],
+   "dimensions": [
+    55,
+    64
+   ],
+   "component_px": 2346,
+   "opaque_px": 2351,
+   "transparent_px": 1169,
+   "pixels_identical": true,
+   "rgba": true,
+   "method": "B min>=200 spread<=18",
+   "classification": "REVIEW"
+  },
+  {
+   "id": "W42",
+   "file": "water-full/water_42_55x47.png",
+   "source": "sheet-2-water.png",
+   "source_size": [
+    1536,
+    1024
+   ],
+   "bbox": [
+    511,
+    805,
+    55,
+    47
+   ],
+   "dimensions": [
+    55,
+    47
+   ],
+   "component_px": 2027,
+   "opaque_px": 2038,
+   "transparent_px": 547,
+   "pixels_identical": true,
+   "rgba": true,
+   "method": "B min>=200 spread<=18",
+   "classification": "REVIEW"
+  },
+  {
+   "id": "W43",
+   "file": "water-full/water_43_75x66.png",
+   "source": "sheet-2-water.png",
+   "source_size": [
+    1536,
+    1024
+   ],
+   "bbox": [
+    598,
+    790,
+    75,
+    66
+   ],
+   "dimensions": [
+    75,
+    66
+   ],
+   "component_px": 3698,
+   "opaque_px": 3719,
+   "transparent_px": 1231,
+   "pixels_identical": true,
+   "rgba": true,
+   "method": "B min>=200 spread<=18",
+   "classification": "REVIEW"
+  },
+  {
+   "id": "W44",
+   "file": "water-full/water_44_57x56.png",
+   "source": "sheet-2-water.png",
+   "source_size": [
+    1536,
+    1024
+   ],
+   "bbox": [
+    690,
+    790,
+    57,
+    56
+   ],
+   "dimensions": [
+    57,
+    56
+   ],
+   "component_px": 2367,
+   "opaque_px": 2376,
+   "transparent_px": 816,
+   "pixels_identical": true,
+   "rgba": true,
+   "method": "B min>=200 spread<=18",
+   "classification": "REVIEW"
+  },
+  {
+   "id": "W45",
+   "file": "water-full/water_45_69x68.png",
+   "source": "sheet-2-water.png",
+   "source_size": [
+    1536,
+    1024
+   ],
+   "bbox": [
+    767,
+    790,
+    69,
+    68
+   ],
+   "dimensions": [
+    69,
+    68
+   ],
+   "component_px": 3187,
+   "opaque_px": 3213,
+   "transparent_px": 1479,
+   "pixels_identical": true,
+   "rgba": true,
+   "method": "B min>=200 spread<=18",
+   "classification": "REVIEW"
+  },
+  {
+   "id": "W46",
+   "file": "water-full/water_46_75x67.png",
+   "source": "sheet-2-water.png",
+   "source_size": [
+    1536,
+    1024
+   ],
+   "bbox": [
+    936,
+    839,
+    75,
+    67
+   ],
+   "dimensions": [
+    75,
+    67
+   ],
+   "component_px": 3596,
+   "opaque_px": 3629,
+   "transparent_px": 1396,
+   "pixels_identical": true,
+   "rgba": true,
+   "method": "B min>=200 spread<=18",
+   "classification": "REVIEW"
+  },
+  {
+   "id": "W47",
+   "file": "water-full/water_47_157x121.png",
+   "source": "sheet-2-water.png",
+   "source_size": [
+    1536,
+    1024
+   ],
+   "bbox": [
+    1022,
+    796,
+    157,
+    121
+   ],
+   "dimensions": [
+    157,
+    121
+   ],
+   "component_px": 11461,
+   "opaque_px": 11495,
+   "transparent_px": 7502,
+   "pixels_identical": true,
+   "rgba": true,
+   "method": "B min>=200 spread<=18",
+   "classification": "PASS"
+  },
+  {
+   "id": "W48",
+   "file": "water-full/water_48_98x82.png",
+   "source": "sheet-2-water.png",
+   "source_size": [
+    1536,
+    1024
+   ],
+   "bbox": [
+    1183,
+    790,
+    98,
+    82
+   ],
+   "dimensions": [
+    98,
+    82
+   ],
+   "component_px": 5461,
+   "opaque_px": 5489,
+   "transparent_px": 2547,
+   "pixels_identical": true,
+   "rgba": true,
+   "method": "B min>=200 spread<=18",
+   "classification": "PASS"
+  },
+  {
+   "id": "W49",
+   "file": "water-full/water_49_49x45.png",
+   "source": "sheet-2-water.png",
+   "source_size": [
+    1536,
+    1024
+   ],
+   "bbox": [
+    1287,
+    791,
+    49,
+    45
+   ],
+   "dimensions": [
+    49,
+    45
+   ],
+   "component_px": 1648,
+   "opaque_px": 1649,
+   "transparent_px": 556,
+   "pixels_identical": true,
+   "rgba": true,
+   "method": "B min>=200 spread<=18",
+   "classification": "REVIEW"
+  },
+  {
+   "id": "W50",
+   "file": "water-full/water_50_76x58.png",
+   "source": "sheet-2-water.png",
+   "source_size": [
+    1536,
+    1024
+   ],
+   "bbox": [
+    1359,
+    802,
+    76,
+    58
+   ],
+   "dimensions": [
+    76,
+    58
+   ],
+   "component_px": 3416,
+   "opaque_px": 3429,
+   "transparent_px": 979,
+   "pixels_identical": true,
+   "rgba": true,
+   "method": "B min>=200 spread<=18",
+   "classification": "REVIEW"
+  },
+  {
+   "id": "W51",
+   "file": "water-full/water_51_66x70.png",
+   "source": "sheet-2-water.png",
+   "source_size": [
+    1536,
+    1024
+   ],
+   "bbox": [
+    1454,
+    790,
+    66,
+    70
+   ],
+   "dimensions": [
+    66,
+    70
+   ],
+   "component_px": 3295,
+   "opaque_px": 3307,
+   "transparent_px": 1313,
+   "pixels_identical": true,
+   "rgba": true,
+   "method": "B min>=200 spread<=18",
+   "classification": "REVIEW"
+  },
+  {
+   "id": "W52",
+   "file": "water-full/water_52_115x108.png",
+   "source": "sheet-2-water.png",
+   "source_size": [
+    1536,
+    1024
+   ],
+   "bbox": [
+    16,
+    888,
+    115,
+    108
+   ],
+   "dimensions": [
+    115,
+    108
+   ],
+   "component_px": 11128,
+   "opaque_px": 11136,
+   "transparent_px": 1284,
+   "pixels_identical": true,
+   "rgba": true,
+   "method": "B min>=200 spread<=18",
+   "classification": "PASS"
+  },
+  {
+   "id": "W53",
+   "file": "water-full/water_53_111x105.png",
+   "source": "sheet-2-water.png",
+   "source_size": [
+    1536,
+    1024
+   ],
+   "bbox": [
+    140,
+    889,
+    111,
+    105
+   ],
+   "dimensions": [
+    111,
+    105
+   ],
+   "component_px": 10516,
+   "opaque_px": 10521,
+   "transparent_px": 1134,
+   "pixels_identical": true,
+   "rgba": true,
+   "method": "B min>=200 spread<=18",
+   "classification": "PASS"
+  },
+  {
+   "id": "W54",
+   "file": "water-full/water_54_110x102.png",
+   "source": "sheet-2-water.png",
+   "source_size": [
+    1536,
+    1024
+   ],
+   "bbox": [
+    262,
+    890,
+    110,
+    102
+   ],
+   "dimensions": [
+    110,
+    102
+   ],
+   "component_px": 10058,
+   "opaque_px": 10070,
+   "transparent_px": 1150,
+   "pixels_identical": true,
+   "rgba": true,
+   "method": "B min>=200 spread<=18",
+   "classification": "PASS"
+  },
+  {
+   "id": "W55",
+   "file": "water-full/water_55_107x99.png",
+   "source": "sheet-2-water.png",
+   "source_size": [
+    1536,
+    1024
+   ],
+   "bbox": [
+    381,
+    893,
+    107,
+    99
+   ],
+   "dimensions": [
+    107,
+    99
+   ],
+   "component_px": 9325,
+   "opaque_px": 9343,
+   "transparent_px": 1250,
+   "pixels_identical": true,
+   "rgba": true,
+   "method": "B min>=200 spread<=18",
+   "classification": "PASS"
+  },
+  {
+   "id": "W56",
+   "file": "water-full/water_56_115x109.png",
+   "source": "sheet-2-water.png",
+   "source_size": [
+    1536,
+    1024
+   ],
+   "bbox": [
+    491,
+    891,
+    115,
+    109
+   ],
+   "dimensions": [
+    115,
+    109
+   ],
+   "component_px": 9941,
+   "opaque_px": 9973,
+   "transparent_px": 2562,
+   "pixels_identical": true,
+   "rgba": true,
+   "method": "B min>=200 spread<=18",
+   "classification": "PASS"
+  },
+  {
+   "id": "W57",
+   "file": "water-full/water_57_111x100.png",
+   "source": "sheet-2-water.png",
+   "source_size": [
+    1536,
+    1024
+   ],
+   "bbox": [
+    605,
+    892,
+    111,
+    100
+   ],
+   "dimensions": [
+    111,
+    100
+   ],
+   "component_px": 9782,
+   "opaque_px": 9803,
+   "transparent_px": 1297,
+   "pixels_identical": true,
+   "rgba": true,
+   "method": "B min>=200 spread<=18",
+   "classification": "PASS"
+  },
+  {
+   "id": "W58",
+   "file": "water-full/water_58_109x100.png",
+   "source": "sheet-2-water.png",
+   "source_size": [
+    1536,
+    1024
+   ],
+   "bbox": [
+    717,
+    892,
+    109,
+    100
+   ],
+   "dimensions": [
+    109,
+    100
+   ],
+   "component_px": 9982,
+   "opaque_px": 9997,
+   "transparent_px": 903,
+   "pixels_identical": true,
+   "rgba": true,
+   "method": "B min>=200 spread<=18",
+   "classification": "PASS"
+  },
+  {
+   "id": "W59",
+   "file": "water-full/water_59_95x75.png",
+   "source": "sheet-2-water.png",
+   "source_size": [
+    1536,
+    1024
+   ],
+   "bbox": [
+    1284,
+    841,
+    95,
+    75
+   ],
+   "dimensions": [
+    95,
+    75
+   ],
+   "component_px": 5089,
+   "opaque_px": 5347,
+   "transparent_px": 1778,
+   "pixels_identical": true,
+   "rgba": true,
+   "method": "B min>=200 spread<=18",
+   "classification": "PASS"
+  },
+  {
+   "id": "W60",
+   "file": "water-full/water_60_38x36.png",
+   "source": "sheet-2-water.png",
+   "source_size": [
+    1536,
+    1024
+   ],
+   "bbox": [
+    1401,
+    880,
+    38,
+    36
+   ],
+   "dimensions": [
+    38,
+    36
+   ],
+   "component_px": 1046,
+   "opaque_px": 1047,
+   "transparent_px": 321,
+   "pixels_identical": true,
+   "rgba": true,
+   "method": "B min>=200 spread<=18",
+   "classification": "REVIEW"
+  },
+  {
+   "id": "W61",
+   "file": "water-full/water_61_52x35.png",
+   "source": "sheet-2-water.png",
+   "source_size": [
+    1536,
+    1024
+   ],
+   "bbox": [
+    1468,
+    875,
+    52,
+    35
+   ],
+   "dimensions": [
+    52,
+    35
+   ],
+   "component_px": 1221,
+   "opaque_px": 1226,
+   "transparent_px": 594,
+   "pixels_identical": true,
+   "rgba": true,
+   "method": "B min>=200 spread<=18",
+   "classification": "REVIEW"
+  },
+  {
+   "id": "W62",
+   "file": "water-full/water_62_90x78.png",
+   "source": "sheet-2-water.png",
+   "source_size": [
+    1536,
+    1024
+   ],
+   "bbox": [
+    843,
+    922,
+    90,
+    78
+   ],
+   "dimensions": [
+    90,
+    78
+   ],
+   "component_px": 6087,
+   "opaque_px": 6102,
+   "transparent_px": 918,
+   "pixels_identical": true,
+   "rgba": true,
+   "method": "B min>=200 spread<=18",
+   "classification": "PASS"
+  },
+  {
+   "id": "W63",
+   "file": "water-full/water_63_89x60.png",
+   "source": "sheet-2-water.png",
+   "source_size": [
+    1536,
+    1024
+   ],
+   "bbox": [
+    961,
+    932,
+    89,
+    60
+   ],
+   "dimensions": [
+    89,
+    60
+   ],
+   "component_px": 3886,
+   "opaque_px": 3898,
+   "transparent_px": 1442,
+   "pixels_identical": true,
+   "rgba": true,
+   "method": "B min>=200 spread<=18",
+   "classification": "REVIEW"
+  },
+  {
+   "id": "W64",
+   "file": "water-full/water_64_64x49.png",
+   "source": "sheet-2-water.png",
+   "source_size": [
+    1536,
+    1024
+   ],
+   "bbox": [
+    1080,
+    937,
+    64,
+    49
+   ],
+   "dimensions": [
+    64,
+    49
+   ],
+   "component_px": 2123,
+   "opaque_px": 2124,
+   "transparent_px": 1012,
+   "pixels_identical": true,
+   "rgba": true,
+   "method": "B min>=200 spread<=18",
+   "classification": "REVIEW"
+  },
+  {
+   "id": "W65",
+   "file": "water-full/water_65_54x46.png",
+   "source": "sheet-2-water.png",
+   "source_size": [
+    1536,
+    1024
+   ],
+   "bbox": [
+    1166,
+    938,
+    54,
+    46
+   ],
+   "dimensions": [
+    54,
+    46
+   ],
+   "component_px": 1508,
+   "opaque_px": 1514,
+   "transparent_px": 970,
+   "pixels_identical": true,
+   "rgba": true,
+   "method": "B min>=200 spread<=18",
+   "classification": "REVIEW"
+  },
+  {
+   "id": "W66",
+   "file": "water-full/water_66_78x71.png",
+   "source": "sheet-2-water.png",
+   "source_size": [
+    1536,
+    1024
+   ],
+   "bbox": [
+    1235,
+    929,
+    78,
+    71
+   ],
+   "dimensions": [
+    78,
+    71
+   ],
+   "component_px": 3953,
+   "opaque_px": 3968,
+   "transparent_px": 1570,
+   "pixels_identical": true,
+   "rgba": true,
+   "method": "B min>=200 spread<=18",
+   "classification": "REVIEW"
+  },
+  {
+   "id": "W67",
+   "file": "water-full/water_67_74x68.png",
+   "source": "sheet-2-water.png",
+   "source_size": [
+    1536,
+    1024
+   ],
+   "bbox": [
+    1331,
+    932,
+    74,
+    68
+   ],
+   "dimensions": [
+    74,
+    68
+   ],
+   "component_px": 3927,
+   "opaque_px": 3943,
+   "transparent_px": 1089,
+   "pixels_identical": true,
+   "rgba": true,
+   "method": "B min>=200 spread<=18",
+   "classification": "REVIEW"
+  },
+  {
+   "id": "W68",
+   "file": "water-full/water_68_48x44.png",
+   "source": "sheet-2-water.png",
+   "source_size": [
+    1536,
+    1024
+   ],
+   "bbox": [
+    1472,
+    955,
+    48,
+    44
+   ],
+   "dimensions": [
+    48,
+    44
+   ],
+   "component_px": 1488,
+   "opaque_px": 1499,
+   "transparent_px": 613,
+   "pixels_identical": true,
+   "rgba": true,
+   "method": "B min>=200 spread<=18",
+   "classification": "REVIEW"
+  }
+ ]
+}

@@ -1,0 +1,322 @@
+{
+ "current_manifest_counts": {
+  "PASS": 29,
+  "REVIEW": 17,
+  "SPLIT_SOURCE": 5,
+  "FAILED_SOURCE": 2,
+  "FAILED": 6
+ },
+ "original_pass": 15,
+ "generated_pass": 14,
+ "corrected3_pieces": 10,
+ "unique_verified_total": 39,
+ "new_records": [
+  {
+   "new_id": "A1",
+   "file": "corrected3/terrain_cliff_lip_a_01_tile1.png",
+   "bbox": [
+    26,
+    315,
+    147,
+    101
+   ],
+   "overlaps": "terrain_cliff_lip_a_01",
+   "overlap_px": 12936,
+   "previous_status": "FAILED_SOURCE"
+  },
+  {
+   "new_id": "A2",
+   "file": "corrected3/terrain_cliff_lip_a_01_tile2.png",
+   "bbox": [
+    195,
+    315,
+    147,
+    100
+   ],
+   "overlaps": "terrain_cliff_lip_a_01",
+   "overlap_px": 12789,
+   "previous_status": "FAILED_SOURCE"
+  },
+  {
+   "new_id": "A3",
+   "file": "corrected3/terrain_cliff_lip_a_01_tile3.png",
+   "bbox": [
+    358,
+    315,
+    137,
+    101
+   ],
+   "overlaps": "terrain_cliff_lip_a_01",
+   "overlap_px": 12056,
+   "previous_status": "FAILED_SOURCE"
+  },
+  {
+   "new_id": "A4",
+   "file": "corrected3/terrain_cliff_lip_a_01_tile4.png",
+   "bbox": [
+    402,
+    429,
+    123,
+    154
+   ],
+   "overlaps": "terrain_cliff_lip_b_03_split1",
+   "overlap_px": 14637,
+   "previous_status": "PASS",
+   "verdict": "DUPLICATE_REJECTED",
+   "duplicate_of": "terrain_cliff_lip_b_03_split1",
+   "overlap_reference_file": "corrected/terrain_cliff_lip_b_03_split1.png",
+   "kept": false
+  },
+  {
+   "new_id": "A5",
+   "file": "corrected3/terrain_cliff_lip_a_01_tile5.png",
+   "bbox": [
+    642,
+    316,
+    102,
+    131
+   ],
+   "overlaps": "terrain_cliff_lip_a_01",
+   "overlap_px": 12138,
+   "previous_status": "FAILED_SOURCE"
+  },
+  {
+   "new_id": "A6",
+   "file": "corrected3/terrain_cliff_lip_a_01_tile6.png",
+   "bbox": [
+    762,
+    318,
+    112,
+    127
+   ],
+   "overlaps": "terrain_cliff_lip_a_01",
+   "overlap_px": 13104,
+   "previous_status": "FAILED_SOURCE"
+  },
+  {
+   "new_id": "B1",
+   "file": "corrected3/terrain_cliff_lip_b_03_tile1.png",
+   "bbox": [
+    810,
+    463,
+    55,
+    112
+   ],
+   "overlaps": "terrain_cliff_lip_b_03_split4",
+   "overlap_px": 6105,
+   "previous_status": "FAILED"
+  },
+  {
+   "new_id": "B2",
+   "file": "corrected3/terrain_cliff_lip_b_03_tile2.png",
+   "bbox": [
+    880,
+    458,
+    149,
+    120
+   ],
+   "overlaps": "terrain_cliff_lip_b_03_split4",
+   "overlap_px": 16986,
+   "previous_status": "FAILED"
+  },
+  {
+   "new_id": "C1",
+   "file": "corrected3/terrain_cliff_lip_b_04_tile1.png",
+   "bbox": [
+    1212,
+    460,
+    137,
+    131
+   ],
+   "overlaps": "terrain_cliff_lip_b_04_split1",
+   "overlap_px": 17399,
+   "previous_status": "FAILED"
+  },
+  {
+   "new_id": "C2",
+   "file": "corrected3/terrain_cliff_lip_b_04_tile2.png",
+   "bbox": [
+    1385,
+    460,
+    118,
+    113
+   ],
+   "overlaps": "terrain_cliff_lip_b_04_split1",
+   "overlap_px": 12862,
+   "previous_status": "FAILED"
+  }
+ ],
+ "proposed_changes": [
+  {
+   "record": "terrain_cliff_lip_a_01_split1",
+   "from": "FAILED",
+   "to": "SUPERSEDED",
+   "superseded_by": [
+    "A1",
+    "A2",
+    "A3",
+    "A5",
+    "A6"
+   ],
+   "reason": "replaced by six independently measured, visually approved pieces",
+   "note": "A4 excluded: rejected as duplicate of b_03_split1 plus row-above contamination"
+  },
+  {
+   "record": "terrain_cliff_lip_a_01_split2",
+   "from": "FAILED",
+   "to": "SUPERSEDED",
+   "superseded_by": [
+    "A1",
+    "A2",
+    "A3",
+    "A5",
+    "A6"
+   ],
+   "reason": "same region as split1; replaced by the six approved pieces",
+   "note": "A4 excluded: rejected as duplicate of b_03_split1 plus row-above contamination"
+  },
+  {
+   "record": "terrain_cliff_lip_b_03_split4",
+   "from": "FAILED",
+   "to": "SUPERSEDED",
+   "superseded_by": [
+    "B1",
+    "B2"
+   ],
+   "reason": "the two tiles it merged were measured separately"
+  },
+  {
+   "record": "terrain_cliff_lip_b_04_split1",
+   "from": "FAILED",
+   "to": "SUPERSEDED",
+   "superseded_by": [
+    "C1",
+    "C2"
+   ],
+   "reason": "the two tiles it merged were measured separately"
+  },
+  {
+   "record": "terrain_cliff_lip_a_01",
+   "from": "FAILED_SOURCE",
+   "to": "RESOLVED",
+   "resolved_by": [
+    "A1",
+    "A2",
+    "A3",
+    "A5",
+    "A6"
+   ],
+   "reason": "its region is covered by six approved pieces",
+   "note": "A4 excluded"
+  },
+  {
+   "record": "terrain_cliff_lip_b_04",
+   "from": "FAILED_SOURCE",
+   "to": "RESOLVED",
+   "resolved_by": [
+    "C1",
+    "C2"
+   ],
+   "reason": "its region is covered by two approved pieces"
+  },
+  {
+   "record": "A4 (corrected3/terrain_cliff_lip_a_01_tile4.png)",
+   "from": "proposed PASS",
+   "to": "REJECTED",
+   "reason": "0 differing pixels against b_03_split1 in the shared region, plus 3782 opaque pixels above it belonging to the row above",
+   "duplicate_of": "terrain_cliff_lip_b_03_split1",
+   "must_not_be_referenced_as_replacement": true
+  }
+ ],
+ "unresolved": {
+  "FAILED_remaining": [
+   "terrain_cliff_lip_a_01_split1",
+   "terrain_cliff_lip_a_01_split2",
+   "terrain_cliff_lip_a_02_split1",
+   "terrain_cliff_lip_a_02_split2",
+   "terrain_cliff_lip_b_03_split4",
+   "terrain_cliff_lip_b_04_split1"
+  ],
+  "REVIEW_remaining": [
+   "terrain_cliff_lip_a_03",
+   "terrain_cliff_lip_b_01",
+   "terrain_cliff_tall_04",
+   "terrain_cliff_tall_06",
+   "terrain_cliff_tall_07",
+   "terrain_cliff_tall_08",
+   "terrain_cliff_tall_09",
+   "terrain_cliff_tall_10",
+   "terrain_cliff_tall_11",
+   "terrain_plateau_02",
+   "terrain_plateau_04",
+   "terrain_plateau_05",
+   "terrain_plateau_06",
+   "terrain_transition_01",
+   "terrain_transition_02",
+   "terrain_transition_04",
+   "terrain_transition_06"
+  ]
+ },
+ "review_records_exact": [
+  "terrain_cliff_lip_a_03",
+  "terrain_cliff_lip_b_01",
+  "terrain_cliff_tall_04",
+  "terrain_cliff_tall_06",
+  "terrain_cliff_tall_07",
+  "terrain_cliff_tall_08",
+  "terrain_cliff_tall_09",
+  "terrain_cliff_tall_10",
+  "terrain_cliff_tall_11",
+  "terrain_plateau_02",
+  "terrain_plateau_04",
+  "terrain_plateau_05",
+  "terrain_plateau_06",
+  "terrain_transition_01",
+  "terrain_transition_02",
+  "terrain_transition_04",
+  "terrain_transition_06"
+ ],
+ "review_count": 17,
+ "failed_records_exact": [
+  "terrain_cliff_lip_a_01_split1",
+  "terrain_cliff_lip_a_01_split2",
+  "terrain_cliff_lip_a_02_split1",
+  "terrain_cliff_lip_a_02_split2",
+  "terrain_cliff_lip_b_03_split4",
+  "terrain_cliff_lip_b_04_split1"
+ ],
+ "failed_source_exact": [
+  "terrain_cliff_lip_a_01",
+  "terrain_cliff_lip_b_04"
+ ],
+ "split_source_exact": [
+  "terrain_cliff_lip_a_02",
+  "terrain_cliff_lip_b_02",
+  "terrain_cliff_lip_b_03",
+  "terrain_transition_03",
+  "terrain_transition_05"
+ ],
+ "review_inside_superseded_parent": [],
+ "classification_before": {
+  "PASS": 29,
+  "REVIEW": 17,
+  "SPLIT_SOURCE": 5,
+  "FAILED_SOURCE": 2,
+  "FAILED": 6
+ },
+ "unique_verified": 38,
+ "approved_corrected3": [
+  "A1",
+  "A2",
+  "A3",
+  "A5",
+  "A6",
+  "B1",
+  "B2",
+  "C1",
+  "C2"
+ ],
+ "rejected_corrected3": [
+  "A4"
+ ]
+}
